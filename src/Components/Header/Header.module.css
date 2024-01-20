@@ -1,0 +1,16 @@
+.navContainer {
+    display: flex;
+    padding: 10px 10px 5px;
+    justify-content: left;
+    gap: 10px;
+}
+
+.item a {
+    text-decoration: none ;
+}
+
+.item a:hover {
+    text-decoration: underline;
+}
+
+

@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex: 1 1 auto;
+    height: 868px;
+}
+
+.app-wrapper {
+    display: flex;
+    flex: 1;
+background-color: rgb(158, 198, 234);
+align-items: self-end;
+border-bottom: 1px solid black;
+
+
+}
+
+.app-wrapper-content {
+    display: flex;
+    flex: 12;
+
+background-color:rgb(246, 248, 248)
+}
