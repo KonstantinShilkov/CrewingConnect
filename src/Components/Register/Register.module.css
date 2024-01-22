@@ -1,21 +1,33 @@
 .mainContainer {
     display: flex;
-    flex-direction: column;
-    padding: 10px 10px 10px;
+    /* flex-direction: column; */
+    /* padding: 10px 10px 10px; */
     /* justify-content: left; */
-    gap: 10px;
+    /* gap: 10px; */
     margin: auto ;
+    /* align-items: space-around; */
+
 }
 
 .textContainer{
     display: flex;
     margin-top: 200px;
 }
+ 
+.emailContainer {
+    margin-bottom: 8px;
+}
+
+.passwordContainer {
+    margin-bottom: 8px;
+}
 
 .registerContainer {
     display: flex;
-    margin-top: 25px;
+    margin-top: 20px;
 
 }
 
-
+.nameContainer{
+    display: none;
+}

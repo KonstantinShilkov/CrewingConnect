@@ -1,16 +1,51 @@
 .navContainer {
     display: flex;
-    padding: 10px 10px 5px;
-    justify-content: left;
-    gap: 10px;
+    padding-bottom: 3px;
+    gap: 15px;
+    width:100vw ;
 }
 
-.item a {
-    text-decoration: none ;
+.hiddenContainer {
+    display: none
 }
 
-.item a:hover {
+.item1 a {
+    text-decoration: none;
+}
+
+.item1 a:hover {
     text-decoration: underline;
 }
 
+.item2 a {
+    text-decoration: none;
+}
 
+.item2 a:hover {
+    text-decoration: underline;
+}
+
+.item3 a {
+    text-decoration: none;
+}
+
+.item3 a:hover {
+    text-decoration: underline;
+}
+
+.item1 {
+    display: flex; 
+    padding-left: 10px;
+}
+
+.item2 {
+    display: flex;
+    /* margin-right: 745px; */
+}
+
+.item3 {
+    display: flex;
+    padding-right: 10px;
+    margin-left: auto;
+
+}

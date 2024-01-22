@@ -2,68 +2,87 @@ import React from 'react';
 import Input from '@mui/joy/Input';
 import { Button } from '@mui/joy';
 import s from './Login.module.css'
-import { Navigate, useNavigate } from 'react-router-dom';
-
-const redirect= () => {
-    return (
-<Navigate to="/login" />
-    )
-   } 
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
     const navigate = useNavigate();
 
     const navigateToRegister = () => {
-      navigate('/register');
+        navigate('/register');
     };
-   
+
+    const { register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm()
+    console.log(errors)
 
     return (
         <div className={s.mainContainer}>
-            <div className={s.emailContainer}>
-                <Input 
-                placeholder='Type Your Email'
-                color="neutral"
-                size="sm"
-                variant="soft"
-                type='email'
-                />
-            </div>
-            <div className={s.passwordContainer}>
-                <Input 
-                placeholder='Type Your Password'
-                color="neutral"
-                size="sm"
-                variant="soft"
-                type='password'
-                />
-            </div>
-            <div className={s.loginContainer}>
-            <Button size="sm"
-                variant="solid"
-                color="neutral"
-                fullWidth="auto"
-                >
-               Login   
-                </Button>
-            </div>
-            <div>
-            <div className={s.textContainer}>
-                Dont't have an account?
-            </div>
-            <div className={s.registerContainer}>
-                <Button 
-                onClick={navigateToRegister}
-                size="sm"
-                variant="solid"
-                color="neutral"
-                fullWidth="auto" 
-                >
-                    Registration
-                </Button>
-            </div>
-            </div>
-            </div>
+            <form onSubmit={handleSubmit((data) => {
+                console.log(data)
+            })}>
+
+                <div className={s.emailContainer}>
+                    <Input
+                        {...register("email", {
+                            required: "This is Requered"
+                        })}
+                        placeholder='Type Your Email'
+                        color="neutral"
+                        size="sm"
+                        variant="soft"
+                        type='email'
+                    />
+                    <p>{errors.email?.message}</p>
+                </div>
+                <div className={s.passwordContainer}>
+                    <Input
+                        {...register("password", {
+                            required: "This is Requered",
+                            minLength: {
+                                value: 4,
+                                message: 'Min length 4'
+                            }
+                        })}
+                        placeholder='Type Your Password'
+                        color="neutral"
+                        size="sm"
+                        variant="soft"
+                        type='password'
+                    />
+                    <p>{errors.password?.message}</p>
+                </div>
+                <div className={s.loginContainer}>
+                    <Button size="sm"
+                        type='submit'
+                        variant="solid"
+                        color="neutral"
+                        fullWidth="auto"
+                    >
+                        Login
+                    </Button>
+                </div>
+                <div>
+                    <div className={s.textContainer}>
+                        Dont't have an account?
+                    </div>
+                    <div className={s.registerContainer}>
+                        <Button
+                            onClick={navigateToRegister}
+                            size="sm"
+                            variant="solid"
+                            color="neutral"
+                            fullWidth="auto"
+                        >
+                            Registration
+                        </Button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
     )
 }
 

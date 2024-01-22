@@ -1,25 +1,24 @@
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
+    max-width: 100vw;
     margin: 0 auto;
     flex: 1 1 auto;
-    height: 868px;
+    height: 100vh;
 }
 
 .app-wrapper {
     display: flex;
-    flex: 1;
-background-color: rgb(158, 198, 234);
-align-items: self-end;
-border-bottom: 1px solid black;
-
-
+    height: 50px;
+    background-color: rgb(227, 228, 238);
+    align-items: self-end;
+    border-bottom: 1px solid black;
+    width:100vw ;
 }
 
 .app-wrapper-content {
     display: flex;
     flex: 12;
-
-background-color:rgb(246, 248, 248)
+    background-color: rgb(223, 244, 244)
 }
+

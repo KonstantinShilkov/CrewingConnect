@@ -7,6 +7,26 @@
     margin: auto ;
 }
 
+.mainContainer p {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: rgb(157, 11, 40);
+}
+
+.emailContainer {
+margin-bottom: 4px;
+}
+
+.passwordContainer {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.loginContainer {
+    margin-top: 4px;
+}
+
 .textContainer{
     display: flex;
     margin-top: 200px;
