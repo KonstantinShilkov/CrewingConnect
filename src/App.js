@@ -3,8 +3,8 @@ import './App.css';
 import Header from './Components/Header/Header';
 import Contacts from './Components/Contacts';
 import Vacancies from './Components/Vacancies';
-import Login from './Components/Login';
-import Register from './Components/Register';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
 
 function App() {
   return ( 
@@ -19,7 +19,7 @@ function App() {
         <Route path="/vacancies" element={<Vacancies />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register/>} />
         <Route path="*" element={<div>404 NOT FOUND</div>} />
       </Routes>
       </div>

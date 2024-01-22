@@ -1,0 +1,21 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 10px;
+    /* justify-content: left; */
+    gap: 10px;
+    margin: auto ;
+}
+
+.textContainer{
+    display: flex;
+    margin-top: 200px;
+}
+
+.registerContainer {
+    display: flex;
+    margin-top: 25px;
+
+}
+
+
