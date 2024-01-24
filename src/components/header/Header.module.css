@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    flex: 1;
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3px;
+    gap: 15px;
+    flex: 1;
+    margin: 12px 24px;
+}
+
+.hiddenContainer {
+    display: none
+}
+
+.navItems {
+    display: flex;
+    gap: 16px;
+}
+
+.item {
+    text-decoration: none;
+}
+
+.item:hover {
+    text-decoration: underline;
+}
+
+.wrapper {
+    display: flex;
+    height: 50px;
+    background-color: rgb(227, 228, 238);
+    align-items: self-end;
+    border-bottom: 1px solid black;
+    width:100vw ;
+}

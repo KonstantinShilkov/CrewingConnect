@@ -1,11 +1,11 @@
 import React from 'react';
 import Input from '@mui/joy/Input';
-import { Button } from '@mui/joy';
+import {Button} from '@mui/joy';
 import s from './Login.module.css'
-import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { auth } from '../../config/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {useNavigate} from 'react-router-dom';
+import {useForm} from 'react-hook-form';
+import {auth} from '../../config/firebase';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,13 +14,11 @@ const Login = () => {
         navigate('/register');
     };
 
-    const { register, handleSubmit, formState: { errors }} = useForm()
+    const {register, handleSubmit, formState: {errors}} = useForm()
 
-const onSubmit = async (data) => {
-    await createUserWithEmailAndPassword(auth, data.email, data.password)
-}
- 
-
+    const onSubmit = async (data) => {
+        await createUserWithEmailAndPassword(auth, data.email, data.password)
+    }
 
     return (
         <div className={s.mainContainer}>
@@ -33,7 +31,7 @@ const onSubmit = async (data) => {
                         })}
                         placeholder='Type Your Email'
                         color="neutral"
-                        size="sm"
+                        size="lg"
                         variant="soft"
                         type='email'
                     />
@@ -50,18 +48,18 @@ const onSubmit = async (data) => {
                         })}
                         placeholder='Type Your Password'
                         color="neutral"
-                        size="sm"
+                        size="lg"
                         variant="soft"
                         type='password'
                     />
                     <p>{errors.password?.message}</p>
                 </div>
                 <div className={s.loginContainer}>
-                    <Button size="sm"
-                        type='submit'
-                        variant="solid"
-                        color="neutral"
-                        fullWidth="auto"
+                    <Button size="lg"
+                            type='submit'
+                            variant="solid"
+                            color="neutral"
+                            fullWidth="auto"
                     >
                         Login
                     </Button>
@@ -73,7 +71,7 @@ const onSubmit = async (data) => {
                     <div className={s.registerContainer}>
                         <Button
                             onClick={navigateToRegister}
-                            size="sm"
+                            size="lg"
                             variant="solid"
                             color="neutral"
                             fullWidth="auto"
