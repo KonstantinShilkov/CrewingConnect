@@ -1,19 +1,20 @@
 .mainContainer {
     display: flex;
-    /* flex-direction: column; */
-    /* padding: 10px 10px 10px; */
-    /* justify-content: left; */
-    /* gap: 10px; */
-    margin: auto ;
-    /* align-items: space-around; */
-
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    margin-bottom: 40%;
 }
 
 .textContainer{
     display: flex;
     margin-top: 200px;
 }
- 
+
+.nameContainer {
+    margin-bottom: 8px;
+}
+
 .emailContainer {
     margin-bottom: 8px;
 }
@@ -28,6 +29,3 @@
 
 }
 
-.nameContainer{
-    display: none;
-}

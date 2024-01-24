@@ -7,18 +7,9 @@
     height: 100vh;
 }
 
-.app-wrapper {
-    display: flex;
-    height: 50px;
-    background-color: rgb(227, 228, 238);
-    align-items: self-end;
-    border-bottom: 1px solid black;
-    width:100vw ;
-}
-
 .app-wrapper-content {
     display: flex;
-    flex: 12;
+    flex: 1;
     background-color: rgb(223, 244, 244)
 }
 

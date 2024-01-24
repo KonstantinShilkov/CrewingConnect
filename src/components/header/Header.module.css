@@ -1,50 +1,39 @@
+.container {
+    display: flex;
+    flex: 1;
+}
+
 .navContainer {
     display: flex;
+    justify-content: space-between;
     padding-bottom: 3px;
     gap: 15px;
-    width:100vw ;
+    flex: 1;
+    margin: 12px 24px;
 }
 
 .hiddenContainer {
     display: none
 }
 
-.item1 a {
-    text-decoration: none;
-}
-
-.item1 a:hover {
-    text-decoration: underline;
-}
-
-.item2 a {
-    text-decoration: none;
-}
-
-.item2 a:hover {
-    text-decoration: underline;
-}
-
-.item3 a {
-    text-decoration: none;
-}
-
-.item3 a:hover {
-    text-decoration: underline;
-}
-
-.item1 {
-    display: flex; 
-    padding-left: 20px;
-}
-
-.item2 {
-  
-}
-
-.item3 {
+.navItems {
     display: flex;
-    padding-right: 20px;
-    margin-left: auto;
+    gap: 16px;
+}
 
+.item {
+    text-decoration: none;
+}
+
+.item:hover {
+    text-decoration: underline;
+}
+
+.wrapper {
+    display: flex;
+    height: 50px;
+    background-color: rgb(227, 228, 238);
+    align-items: self-end;
+    border-bottom: 1px solid black;
+    width:100vw ;
 }

@@ -13,55 +13,55 @@ const {register, handleSubmit} = useForm()
     <form onSubmit={handleSubmit((data)=>{
         console.log(data)
     })}>
-            <div className={s.nameContainer}>
-                <Input 
+            <div className={s.emailContainer}>
+                <Input
                 {...register('firstName')}
                 placeholder='Type Your Name'
                 color="neutral"
-                size="sm"
+                size="lg"
                 variant="soft"
                 />
             </div>
-            <div className={s.emailContainer}>
-                <Input 
+            <div className={s.nameContainer}>
+                <Input
                 {...register('email')}
                 placeholder='Type Your Email'
                 color="neutral"
-                size="sm"
+                size="lg"
                 variant="soft"
                 />
             </div>
             <div className={s.passwordContainer}>
-                <Input 
+                <Input
                 {...register('password1')}
                 placeholder='Type Your Password'
                 color="neutral"
-                size="sm"
+                size="lg"
                 variant="soft"
                 type='password'
                 />
             </div>
             <div className={s.passwordContainer}>
-                <Input 
+                <Input
                 {...register('password2')}
                 placeholder='Repeat Your Password'
                 color="neutral"
-                size="sm"
+                size="lg"
                 variant="soft"
                 type='password'
                 />
             </div>
             <div className={s.registerContainer}>
-                <Button 
+                <Button
                 type='submit'
-                // size="sm"
+                 size="lg"
                 variant="solid"
                 color="neutral"
                 fullWidth="auto"
                 >
                     Registration
                 </Button>
-            </div> 
+            </div>
             </form>
             </div>
     )
