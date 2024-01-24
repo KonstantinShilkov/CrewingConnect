@@ -4,7 +4,7 @@ const Vacancies = () => {
     return (
         <div>
             Vacancies
-            </div>
+        </div>
     )
 }
 
