@@ -4,6 +4,8 @@ import { Button } from '@mui/joy';
 import s from './Login.module.css'
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { auth } from '../../config/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -12,17 +14,17 @@ const Login = () => {
         navigate('/register');
     };
 
-    const { register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm()
-    console.log(errors)
+    const { register, handleSubmit, formState: { errors }} = useForm()
+
+const onSubmit = async (data) => {
+    await createUserWithEmailAndPassword(auth, data.email, data.password)
+}
+ 
+
 
     return (
         <div className={s.mainContainer}>
-            <form onSubmit={handleSubmit((data) => {
-                console.log(data)
-            })}>
+            <form onSubmit={handleSubmit(onSubmit)}>
 
                 <div className={s.emailContainer}>
                     <Input
