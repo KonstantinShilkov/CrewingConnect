@@ -1,11 +1,11 @@
 import React from 'react';
 import Input from '@mui/joy/Input';
-import {Button} from '@mui/joy';
+import { Button } from '@mui/joy';
 import s from './Login.module.css'
-import {useNavigate} from 'react-router-dom';
-import {useForm} from 'react-hook-form';
-import {auth} from '../../config/firebase';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { auth } from '../../config/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Login = () => {
         navigate('/register');
     };
 
-    const {register, handleSubmit, formState: {errors}} = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(auth, data.email, data.password)
@@ -27,7 +27,7 @@ const Login = () => {
                 <div className={s.emailContainer}>
                     <Input
                         {...register("email", {
-                            required: "This is Requered"
+                            required: "Email is Requered"
                         })}
                         placeholder='Type Your Email'
                         color="neutral"
@@ -40,7 +40,7 @@ const Login = () => {
                 <div className={s.passwordContainer}>
                     <Input
                         {...register("password", {
-                            required: "This is Requered",
+                            required: "Password is Requered",
                             minLength: {
                                 value: 4,
                                 message: 'Min length 4'
@@ -56,10 +56,10 @@ const Login = () => {
                 </div>
                 <div className={s.loginContainer}>
                     <Button size="lg"
-                            type='submit'
-                            variant="solid"
-                            color="neutral"
-                            fullWidth="auto"
+                        type='submit'
+                        variant="solid"
+                        color="neutral"
+                        fullWidth="auto"
                     >
                         Login
                     </Button>
