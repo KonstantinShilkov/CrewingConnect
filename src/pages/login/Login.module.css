@@ -37,6 +37,18 @@
 
 .registerContainer {
     display: flex;
-    margin-top: 10px;
+    flex: 1;
+    margin-top: 40%;
+}
 
+.item {
+    text-decoration: none;
+    color: #4682b4;
+    display: flex;
+    flex: 1;
+    padding-left: 12px;
+}
+
+.item:hover {
+    text-decoration: underline;
 }
