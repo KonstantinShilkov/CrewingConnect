@@ -55,7 +55,7 @@ const HeaderNav = () => {
             {isAuth ?
                 <NavLink className={s.item} onClick={handleLogout}
                     style={({ isActive }) =>
-                        (isActive ? { color: 'inherit' } : { color: 'inherit' })}> LogOut </NavLink>
+                        (isActive ? { color: 'inherit' } : { color: 'inherit' })}> Logout </NavLink>
 
                 :
                 <NavLink className={s.item} to="login"
