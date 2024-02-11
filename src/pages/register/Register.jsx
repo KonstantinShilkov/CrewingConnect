@@ -5,31 +5,26 @@ import s from './Register.module.css'
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../../config/firebase'
-import { addDoc, collection } from 'firebase/firestore';
+import { auth } from '../../config/firebase'
 
 
 const Register = () => {
     const navigate = useNavigate();
-
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm()
 
     const onSignUp = async (data) => {
         await createUserWithEmailAndPassword(auth, data.email, data.password1)
             .then((userCredential) => {
-                // Signed in
                 const user = userCredential.user;
                 console.log(user);
-                navigate("/login")
-                // ...
+                navigate("/vacancies")
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 alert(error.message)
                 console.log(errorCode, errorMessage);
-                // ..
             });
         reset()
     }
@@ -38,18 +33,6 @@ const Register = () => {
     return (
         <div className={s.mainContainer}>
             <form onSubmit={handleSubmit(onSignUp)}>
-                {/* <div className={s.nameContainer}>
-                    <Input
-                        {...register('firstName', {
-                            required: "Name is Requered"
-                        })}
-                        placeholder='Type Your Name'
-                        color="neutral"
-                        size="lg"
-                        variant="soft"
-                    />
-                    <p1>{errors.firstName?.message}</p1>
-                </div> */}
                 <div className={s.emailContainer}>
                     <Input
                         {...register('email', {
@@ -81,16 +64,6 @@ const Register = () => {
                     <p1>{errors.password1?.message}</p1>
 
                 </div>
-                {/* <div className={s.passwordContainer}>
-                    <Input
-                        {...register('password2')}
-                        placeholder='Repeat Your Password'
-                        color="neutral"
-                        size="lg"
-                        variant="soft"
-                        type='password'
-                    />
-                </div> */}
                 <div className={s.registerContainer}>
                     <Button
                         type='submit'

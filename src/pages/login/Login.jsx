@@ -10,11 +10,11 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 const Login = () => {
     const navigate = useNavigate();
 
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     const onSignIn = async (data) => {
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
-                // Signed in
                 const user = userCredential.user;
                 navigate("/vacancies")
                 console.log(user);
@@ -26,9 +26,6 @@ const Login = () => {
                 console.log(errorCode, errorMessage)
             });
     }
-
-    const { register, handleSubmit, formState: { errors } } = useForm()
-
     return (
         <div className={s.mainContainer}>
             <form onSubmit={handleSubmit(onSignIn)}>
@@ -74,9 +71,6 @@ const Login = () => {
                     </Button>
                 </div>
                 <div>
-                    {/* <div className={s.textContainer}>
-                        Dont't have an account?
-                    </div> */}
                     <div className={s.registerContainer}>
                         <div className={s.questionText}>Dont't have an account?</div>
                         <div>
@@ -84,16 +78,6 @@ const Login = () => {
                                 <NavLink className={s.item} to="/register">Registration</NavLink>
                             </nav>
                         </div>
-
-                        {/* <Button
-                            onClick={navigateToRegister}
-                            size="lg"
-                            variant="solid"
-                            color="neutral"
-                            fullWidth="auto"
-                        >
-                            Registration
-                        </Button> */}
                     </div>
                 </div>
             </form>
