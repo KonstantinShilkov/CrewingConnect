@@ -2,27 +2,36 @@ import React from 'react';
 import Input from '@mui/joy/Input';
 import { Button } from '@mui/joy';
 import s from './Login.module.css'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { auth } from '../../config/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 const Login = () => {
     const navigate = useNavigate();
 
-    const navigateToRegister = () => {
-        navigate('/register');
-    };
+
+    const onSignIn = async (data) => {
+        signInWithEmailAndPassword(auth, data.email, data.password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                navigate("/vacancies")
+                console.log(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(error.message)
+                console.log(errorCode, errorMessage)
+            });
+    }
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const onSubmit = async (data) => {
-        await createUserWithEmailAndPassword(auth, data.email, data.password)
-    }
-
     return (
         <div className={s.mainContainer}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSignIn)}>
 
                 <div className={s.emailContainer}>
                     <Input
@@ -42,8 +51,8 @@ const Login = () => {
                         {...register("password", {
                             required: "Password is Requered",
                             minLength: {
-                                value: 4,
-                                message: 'Min length 4'
+                                value: 6,
+                                message: 'Min length 6'
                             }
                         })}
                         placeholder='Type Your Password'
@@ -65,11 +74,18 @@ const Login = () => {
                     </Button>
                 </div>
                 <div>
-                    <div className={s.textContainer}>
+                    {/* <div className={s.textContainer}>
                         Dont't have an account?
-                    </div>
+                    </div> */}
                     <div className={s.registerContainer}>
-                        <Button
+                        <div className={s.questionText}>Dont't have an account?</div>
+                        <div>
+                            <nav>
+                                <NavLink className={s.item} to="/register">Registration</NavLink>
+                            </nav>
+                        </div>
+
+                        {/* <Button
                             onClick={navigateToRegister}
                             size="lg"
                             variant="solid"
@@ -77,7 +93,7 @@ const Login = () => {
                             fullWidth="auto"
                         >
                             Registration
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </form>
