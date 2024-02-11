@@ -10,20 +10,10 @@ const HeaderNav = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
                 const uid = user.uid;
                 setIsAuth(true)
-                // ...
-                console.log("uid", uid)
-                console.log(isAuth)
             } else {
-                // User is signed out
-                // ...
                 setIsAuth(false)
-                console.log("user is logged out")
-                console.log(isAuth)
-
             }
         });
     })
@@ -32,12 +22,9 @@ const HeaderNav = () => {
 
     const handleLogout = () => {
         signOut(auth).then(() => {
-            // Sign-out successful.
             navigate("/login");
-            console.log("Signed out successfully")
         }).catch((error) => {
             console.log(error)
-            // An error happened.
         });
     }
 
