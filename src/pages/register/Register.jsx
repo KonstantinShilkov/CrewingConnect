@@ -1,34 +1,23 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Input from '@mui/joy/Input';
 import { Button } from '@mui/joy';
 import s from './Register.module.css'
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../config/firebase'
+import { UserContext } from '../../context/user-context';
 
 
 const Register = () => {
+
     const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { onSignUp, isAuth } = useContext(UserContext)
 
-    const { register, reset, handleSubmit, formState: { errors } } = useForm()
-
-    const onSignUp = async (data) => {
-        await createUserWithEmailAndPassword(auth, data.email, data.password1)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user);
-                navigate("/vacancies")
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(error.message)
-                console.log(errorCode, errorMessage);
-            });
-        reset()
-    }
-
+    useEffect(() => {
+        if (isAuth) {
+            navigate("/vacancies")
+        }
+    })
 
     return (
         <div className={s.mainContainer}>
@@ -42,6 +31,7 @@ const Register = () => {
                         color="neutral"
                         size="lg"
                         variant="soft"
+                        type='email'
                     />
                     <p1>{errors.email?.message}</p1>
 
@@ -70,16 +60,16 @@ const Register = () => {
                         size="lg"
                         variant="solid"
                         color="neutral"
-                        fullWidth="auto"
+                        fullWidth
                     >
                         Registration
                     </Button>
                 </div>
                 <div className={s.loginContainer}>
-                    <div> Have an accaount?</div>
-                    <div>
+                    <div className={s.questionText}> Have an accaount?</div>
+                    <div className={s.loginText}>
                         <nav>
-                            <NavLink className={s.item} to="/login">Login</NavLink>
+                            <NavLink className={s.login} to="/login">Login</NavLink>
                         </nav>
                     </div>
                 </div>
