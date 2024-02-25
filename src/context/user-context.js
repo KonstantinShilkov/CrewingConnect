@@ -40,7 +40,7 @@ function UserContextProvider({ children }) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 if (errorCode === 'auth/invalid-credential') {
-                    enqueueSnackbar('Incorrect e-mail or password')
+                    enqueueSnackbar('Incorrect email or password')
                 }
                 else if (errorCode === 'auth/too-many-requests') {
                     enqueueSnackbar('too many requests, try later')
@@ -65,7 +65,7 @@ function UserContextProvider({ children }) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 if (errorCode === 'auth/email-already-in-use') {
-                    enqueueSnackbar('email already in use')
+                    enqueueSnackbar('email already exists')
                 }
                 else if (errorCode === 'auth/invalid-email') {
                     enqueueSnackbar('invalid email format')

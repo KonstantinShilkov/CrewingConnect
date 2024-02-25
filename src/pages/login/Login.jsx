@@ -12,6 +12,7 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const { onSignIn, isAuth } = useContext(UserContext)
 
+
     useEffect(() => {
         if (isAuth) {
             navigate("/vacancies")
