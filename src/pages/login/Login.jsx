@@ -1,35 +1,26 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Input from '@mui/joy/Input';
 import { Button } from '@mui/joy';
 import s from './Login.module.css'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { auth } from '../../config/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { UserContext } from '../../context/user-context';
 
 const Login = () => {
+
     const navigate = useNavigate();
-
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const { onSignIn, isAuth } = useContext(UserContext)
 
-    const onSignIn = async (data) => {
-        signInWithEmailAndPassword(auth, data.email, data.password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                navigate("/vacancies")
-                console.log(user);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(error.message)
-                console.log(errorCode, errorMessage)
-            });
-    }
+    useEffect(() => {
+        if (isAuth) {
+            navigate("/vacancies")
+        }
+    })
+
     return (
         <div className={s.mainContainer}>
             <form onSubmit={handleSubmit(onSignIn)}>
-
                 <div className={s.emailContainer}>
                     <Input
                         {...register("email", {
@@ -65,7 +56,7 @@ const Login = () => {
                         type='submit'
                         variant="solid"
                         color="neutral"
-                        fullWidth="auto"
+                        fullWidth
                     >
                         Login
                     </Button>
@@ -73,16 +64,15 @@ const Login = () => {
                 <div>
                     <div className={s.registerContainer}>
                         <div className={s.questionText}>Dont't have an account?</div>
-                        <div>
+                        <div className={s.registerText}>
                             <nav>
-                                <NavLink className={s.item} to="/register">Registration</NavLink>
+                                <NavLink className={s.registration} to="/register">Registration</NavLink>
                             </nav>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-
     )
 }
 

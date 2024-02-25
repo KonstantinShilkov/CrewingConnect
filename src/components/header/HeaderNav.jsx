@@ -1,32 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import s from './Header.module.css'
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { UserContext } from '../../context/user-context';
 
 const HeaderNav = () => {
-    const [isAuth, setIsAuth] = useState([false])
+
+    const { logout, isAuth, onAuthState } = useContext(UserContext)
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const uid = user.uid;
-                setIsAuth(true)
-            } else {
-                setIsAuth(false)
-            }
-        });
+        onAuthState()
+        console.log(isAuth)
     })
-
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        signOut(auth).then(() => {
-            navigate("/login");
-        }).catch((error) => {
-            console.log(error)
-        });
-    }
 
     return (
         <nav className={s.navContainer}>
@@ -40,7 +24,7 @@ const HeaderNav = () => {
             </div>
 
             {isAuth ?
-                <NavLink className={s.item} onClick={handleLogout}
+                <NavLink className={s.item} onClick={logout}
                     style={({ isActive }) =>
                         (isActive ? { color: 'inherit' } : { color: 'inherit' })}> Logout </NavLink>
 
