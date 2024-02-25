@@ -9,7 +9,7 @@ const HeaderNav = () => {
 
     useEffect(() => {
         onAuthState()
-        console.log(isAuth)
+        // console.log(isAuth)
     })
 
     return (
