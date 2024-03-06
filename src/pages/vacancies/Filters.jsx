@@ -29,9 +29,11 @@ function getStyles(name, vesselType, theme) {
 const Filters = (props) => {
     const theme = useTheme();
     const [vesselType, setVesselType] = useState([]);
+    const nonDuplicateList = [... new Set(props.vesselType)]
 
     useEffect(() => {
         props.getSelectedTypes(vesselType)
+
     }, [vesselType])
 
     const handleChange = (event) => {
@@ -103,7 +105,7 @@ const Filters = (props) => {
                         input={<OutlinedInput label="VesselType" />}
                         MenuProps={MenuProps}
                     >
-                        {props.vesselType.map((name) => (
+                        {nonDuplicateList.map((name) => (
                             <MenuItem
                                 key={name}
                                 value={name}

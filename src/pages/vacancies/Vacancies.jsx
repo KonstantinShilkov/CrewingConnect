@@ -22,15 +22,14 @@ const Vacancies = () => {
 
     const filterByVesselType = (filteredData) => {
         // Avoid filter for empty string
-        if (!vesselTypeSelected) {
+        if (vesselTypeSelected === false) {
             return filteredData;
         }
 
         const filteredVacancies = filteredData.filter(
-            // (vacancy) => vacancy.vesselType === vesselType
             // (vacancy) => vacancy.vesselType.split(" ").indexOf(vesselTypeSelected) !== -1
-            (vacancy) => vacancy.vesselType.indexOf(vesselTypeSelected) !== -1
-            // (vacancy) => vacancy.vesselType.includes(vesselType)
+            // (vacancy) => vacancy.vesselType.indexOf(vesselTypeSelected) !== -1
+            (vacancy) => vesselTypeSelected.includes(vacancy.vesselType)
         );
         return filteredVacancies;
     };
@@ -49,6 +48,7 @@ const Vacancies = () => {
                 console.log(err)
             }
         }
+
         var filteredData = filterByVesselType(vacanciesList);
         setFilteredList(filteredData);
         getVacanciesList()
