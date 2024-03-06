@@ -2,22 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import Input from '@mui/joy/Input';
 import { Button } from '@mui/joy';
 import s from './Login.module.css'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../context/user-context';
 
 const Login = () => {
 
-    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const { onSignIn, isAuth } = useContext(UserContext)
+    const { onSignIn } = useContext(UserContext)
 
-
-    useEffect(() => {
-        if (isAuth) {
-            navigate("/vacancies")
-        }
-    })
 
     return (
         <div className={s.mainContainer}>

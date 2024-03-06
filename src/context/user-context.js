@@ -4,6 +4,8 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
+import { db } from "../config/firebase"
+import { collection } from "firebase/firestore";
 
 const initialData = {
     isAuth: false
@@ -17,6 +19,7 @@ function UserContextProvider({ children }) {
     const navigate = useNavigate();
     const { reset } = useForm();
     const { enqueueSnackbar } = useSnackbar();
+    const vacanciesCollectionRef = collection(db, "vacancies")
 
     const onAuthState = () => {
         onAuthStateChanged(auth, (user) => {
@@ -33,6 +36,7 @@ function UserContextProvider({ children }) {
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
                 const user = userCredential.user;
+                setIsAuth(true)
                 navigate("/vacancies")
                 console.log(user);
             })
@@ -59,6 +63,7 @@ function UserContextProvider({ children }) {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
+                setIsAuth(true)
                 navigate("/vacancies")
             })
             .catch((error) => {
@@ -79,18 +84,23 @@ function UserContextProvider({ children }) {
 
     const logout = () => {
         signOut(auth).then(() => {
+            setIsAuth(false)
             navigate("/login");
         }).catch((error) => {
             console.log(error)
         });
     }
 
+
+
+
     const value = {
         isAuth,
         onSignIn,
         onSignUp,
         logout,
-        onAuthState
+        onAuthState,
+        vacanciesCollectionRef
     }
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

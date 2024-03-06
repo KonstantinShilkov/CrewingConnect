@@ -1,23 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Input from '@mui/joy/Input';
 import { Button } from '@mui/joy';
 import s from './Register.module.css'
 import { useForm } from 'react-hook-form';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { UserContext } from '../../context/user-context';
 
 
 const Register = () => {
 
-    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const { onSignUp, isAuth } = useContext(UserContext)
-
-    useEffect(() => {
-        if (isAuth) {
-            navigate("/vacancies")
-        }
-    })
+    const { onSignUp } = useContext(UserContext)
 
     return (
         <div className={s.mainContainer}>
@@ -33,7 +26,7 @@ const Register = () => {
                         variant="soft"
                         type='email'
                     />
-                    <p1>{errors.email?.message}</p1>
+                    <p>{errors.email?.message}</p>
 
                 </div>
                 <div className={s.passwordContainer}>
@@ -51,7 +44,7 @@ const Register = () => {
                         variant="soft"
                         type='password'
                     />
-                    <p1>{errors.password1?.message}</p1>
+                    <p>{errors.password1?.message}</p>
 
                 </div>
                 <div className={s.registerContainer}>

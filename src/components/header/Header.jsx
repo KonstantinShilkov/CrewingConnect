@@ -1,9 +1,9 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import HeaderNav from './HeaderNav';
 import s from './Header.module.css'
 import { useLocation } from "react-router-dom";
 
-const noHeaderRoutes  = ['/login', '/register']
+const noHeaderRoutes = ['/login', '/register']
 
 const Header = () => {
     const location = useLocation()
@@ -21,8 +21,8 @@ const Header = () => {
     return (
         <div className={s.wrapper}>
             <div className={s.container}>
-                <HeaderNav/>
-             </div>
+                <HeaderNav />
+            </div>
         </div>
     )
 }
