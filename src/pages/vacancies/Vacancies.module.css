@@ -1,5 +1,29 @@
+.chevronIcon {
+  margin-left: 275px;
+  margin-top: 15px;
+}
+
+.filterHeader {
+  margin: 15px;
+  font-size: 20px;
+  color: rgb(74, 84, 92);
+}
+
 .vacancies {
-    display: flex;
-    flex: 1;
-    flex-direction: row;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  margin: auto;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 90%;
+}
+
+.sortIcon {
+  margin-left: 143px;
+}
+
+.headerText {
+  margin-left: 163px;
+  font-size: 20px;
 }
