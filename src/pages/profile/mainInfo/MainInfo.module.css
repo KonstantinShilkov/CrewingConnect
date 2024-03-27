@@ -1,0 +1,43 @@
+.preloader {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-self: center;
+}
+.mainInfoContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-left: 20px;
+  margin-top: 40px;
+}
+.disabledForms {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.enabledForms {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  /* margin-top: 10px; */
+  gap: 10px;
+}
+
+.mainInfoContainer p {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: rgb(157, 11, 40);
+}
+
+.profileNavbar {
+  margin-left: 20px;
+  margin-top: 10px;
+}

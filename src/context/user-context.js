@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import { db } from '../config/firebase';
-import { collection } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 const initialData = {
   isAuth: false,
@@ -24,12 +24,18 @@ function UserContextProvider({ children }) {
   const { reset } = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const vacanciesCollectionRef = collection(db, 'vacancies');
+  const [currentUserEmail, setCurrentUserEmail] = useState(null);
+  const [currentUserUid, setCurrentUserUid] = useState(null);
+  const [currentUserData, setCurrentUserData] = useState([]);
+  const [isFetching, setIsFetching] = useState(true);
 
   const onAuthState = () => {
     onAuthStateChanged(auth, user => {
       if (user) {
-        const uid = user.uid;
+        setCurrentUserEmail(user.email);
+        setCurrentUserUid(user.uid);
         setIsAuth(true);
+        // getCurrentUserData(user.uid);
       } else {
         setIsAuth(false);
       }
@@ -37,48 +43,51 @@ function UserContextProvider({ children }) {
   };
 
   const onSignIn = async data => {
-    signInWithEmailAndPassword(auth, data.email, data.password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        setIsAuth(true);
-        navigate('/vacancies');
-        console.log(user);
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        if (errorCode === 'auth/invalid-credential') {
-          enqueueSnackbar('Incorrect email or password');
-        } else if (errorCode === 'auth/too-many-requests') {
-          enqueueSnackbar('too many requests, try later');
-        } else if (errorCode === 'auth/invalid-email') {
-          enqueueSnackbar('invalid email format');
-        } else {
-          enqueueSnackbar(errorCode, errorMessage);
-        }
-      });
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+      const user = userCredential.user;
+      setIsAuth(true);
+      getCurrentUserData(currentUserUid);
+      navigate('/vacancies');
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if (errorCode === 'auth/invalid-credential') {
+        enqueueSnackbar('Incorrect email or password');
+      } else if (errorCode === 'auth/too-many-requests') {
+        enqueueSnackbar('too many requests, try later');
+      } else if (errorCode === 'auth/invalid-email') {
+        enqueueSnackbar('invalid email format');
+      } else {
+        enqueueSnackbar(errorCode, errorMessage);
+      }
+    }
   };
 
   const onSignUp = async data => {
-    await createUserWithEmailAndPassword(auth, data.email, data.password1)
-      .then(userCredential => {
-        const user = userCredential.user;
-        console.log(user);
-        setIsAuth(true);
-        navigate('/vacancies');
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        if (errorCode === 'auth/email-already-in-use') {
-          enqueueSnackbar('email already exists');
-        } else if (errorCode === 'auth/invalid-email') {
-          enqueueSnackbar('invalid email format');
-        } else {
-          enqueueSnackbar(errorCode, errorMessage);
-        }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const user = userCredential.user;
+      console.log(user);
+      setIsAuth(true);
+      setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
       });
-    reset();
+      getCurrentUserData(currentUserUid);
+      // navigate('/vacancies');
+      navigate('profile/maininfo');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if (errorCode === 'auth/email-already-in-use') {
+        enqueueSnackbar('email already exists');
+      } else if (errorCode === 'auth/invalid-email') {
+        enqueueSnackbar('invalid email format');
+      } else {
+        enqueueSnackbar(errorCode, errorMessage);
+      }
+    }
   };
 
   const logout = () => {
@@ -92,6 +101,37 @@ function UserContextProvider({ children }) {
       });
   };
 
+  const updateMainInfoData = async data => {
+    try {
+      const userDoc = doc(db, 'users', currentUserUid);
+      await updateDoc(userDoc, { name: data.name, surname: data.surname, middleName: data.middleName });
+      getCurrentUserData(currentUserUid);
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const getCurrentUserData = async userId => {
+    try {
+      const docRef = doc(db, 'users', userId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setCurrentUserData(docSnap.data());
+        setIsFetching(false);
+        console.log(docSnap.data());
+      } else {
+        console.log('No such document!');
+      }
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
   const value = {
     isAuth,
     onSignIn,
@@ -99,6 +139,12 @@ function UserContextProvider({ children }) {
     logout,
     onAuthState,
     vacanciesCollectionRef,
+    currentUserEmail,
+    updateMainInfoData,
+    currentUserData,
+    getCurrentUserData,
+    currentUserUid,
+    isFetching,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

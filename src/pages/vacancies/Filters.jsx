@@ -36,7 +36,10 @@ const Filters = props => {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 325 }} role="presentation">
+    <Box
+      // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 325 }}
+      sx={{ width: 325 }}
+      role="presentation">
       <div className={s.filterHeader}>Filters</div>
       <Divider />
       <List>
@@ -88,13 +91,16 @@ const Filters = props => {
     </Box>
   );
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)} className={s.sortIcon}>
+    <div className={s.sortIcon}>
+      <Button onClick={toggleDrawer(true)}>
+        {/* <Button onClick={toggleDrawer('right', true)}> */}
         <SortIcon />
       </Button>
       <Drawer open={open}>{DrawerList}</Drawer>
+      {/* <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}> */}
+      {/* {DrawerList} */}
+      {/* </Drawer> */}
     </div>
   );
 };
-
 export default Filters;

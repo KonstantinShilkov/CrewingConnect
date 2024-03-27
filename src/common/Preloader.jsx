@@ -1,12 +1,14 @@
 import React from 'react';
-import preloader from '..//assets/images/loading-thumb-gif-72.gif';
 import s from './Preloader.module.css';
+import { CircularProgress } from '@mui/joy';
+import { Box } from '@mui/system';
 
 let Preloader = () => {
   return (
-    <div style={{ backgroundColor: '' }}>
-      <img src={preloader} className={s.preloader} />
-    </div>
+    <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
   );
 };
+
 export default Preloader;

@@ -4,7 +4,7 @@ import s from './Header.module.css';
 import { UserContext } from '../../context/user-context';
 
 const HeaderNav = () => {
-  const { logout, isAuth, onAuthState } = useContext(UserContext);
+  const { logout, isAuth, onAuthState, currentUserEmail } = useContext(UserContext);
 
   useEffect(() => {
     onAuthState();
@@ -17,33 +17,38 @@ const HeaderNav = () => {
           className={s.item}
           to="vacancies"
           style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
-          {' '}
-          Vacancies{' '}
+          Vacancies
         </NavLink>
         <NavLink
           className={s.item}
           to="contacts"
           style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
-          {' '}
-          Contacts{' '}
+          Contacts
         </NavLink>
       </div>
 
       {isAuth ? (
-        <NavLink
-          className={s.item}
-          onClick={logout}
-          style={({ isActive }) => (isActive ? { color: 'inherit' } : { color: 'inherit' })}>
-          {' '}
-          Logout{' '}
-        </NavLink>
+        <div className={s.emailLogout}>
+          <NavLink
+            className={s.item}
+            to="profile"
+            style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
+            {currentUserEmail}
+          </NavLink>
+
+          <NavLink
+            className={s.item}
+            onClick={logout}
+            style={({ isActive }) => (isActive ? { color: 'inherit' } : { color: 'inherit' })}>
+            Logout
+          </NavLink>
+        </div>
       ) : (
         <NavLink
           className={s.item}
           to="login"
           style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
-          {' '}
-          Login{' '}
+          Login
         </NavLink>
       )}
     </nav>

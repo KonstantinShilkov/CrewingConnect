@@ -8,10 +8,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const Vacancy = props => {
+const Vacancy = ({ vacancy }) => {
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState('paper');
-
   const handleClickOpen = scrollType => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -38,14 +37,13 @@ const Vacancy = props => {
           <CardContent>
             <div className={s.shortVacancy}>
               <div>
-                {' '}
                 <h3>
-                  {props.rank} on {props.vesselType}
+                  {vacancy.rank} on {vacancy.vesselType}
                 </h3>
               </div>
-              <div>Salary: {props.salary} </div>
-              <div>Join Date:{props.joinDate} </div>
-              <div>Duration:{props.duration} </div>
+              <div>Salary: {vacancy.salary} </div>
+              <div>Join Date:{vacancy.joinDate} </div>
+              <div>Duration:{vacancy.duration} </div>
             </div>
           </CardContent>
           <CardActions>
@@ -62,37 +60,36 @@ const Vacancy = props => {
             aria-describedby="scroll-dialog-description">
             <DialogTitle id="scroll-dialog-title">
               <h3>
-                {props.rank} on {props.vesselType}
+                {vacancy.rank} on {vacancy.vesselType}
               </h3>
             </DialogTitle>
             <DialogContent dividers={scroll === 'paper'}>
               <DialogContentText id="scroll-dialog-description" ref={descriptionElementRef} tabIndex={-1}>
                 <div className={s.expandedVacancy}>
-                  <div>Salary: {props.salary} </div>
-                  <div>Join Date:{props.joinDate} </div>
-                  <div>Duration:{props.duration} </div> <h4>Requrements</h4>
+                  <div>Salary: {vacancy.salary} </div>
+                  <div>Join Date:{vacancy.joinDate} </div>
+                  <div>Duration:{vacancy.duration} </div> <h4>Requrements</h4>
                 </div>
-                <div>Visa:{props.visa} </div>
-                <div>English Level:{props.englishLevel} </div>
-                <div>Prefferred citizenship:{props.prefferedCitizenship} </div>
+                <div>Visa:{vacancy.visa} </div>
+                <div>English Level:{vacancy.englishLevel} </div>
+                <div>Prefferred citizenship:{vacancy.prefferedCitizenship} </div>
                 <div>
                   {' '}
                   <h4>Vessel info </h4>
                 </div>
-                <div>Vessel type:{props.vesselType} </div>
-                <div>Build year:{props.vesselBuildYear} </div>
-                <div>Vessel flag:{props.vesselFlag} </div>
-                <div>DWT:{props.vesselDwt} </div>
-                <div>Main Engine:{props.vesselMainEngine} </div>
-                <div>Crew onboard:{props.crewOnboard} </div>
-                <div>Sailing area:{props.sailingArea}</div>
+                <div>Vessel type:{vacancy.vesselType} </div>
+                <div>Build year:{vacancy.vesselBuildYear} </div>
+                <div>Vessel flag:{vacancy.vesselFlag} </div>
+                <div>DWT:{vacancy.vesselDwt} </div>
+                <div>Main Engine:{vacancy.vesselMainEngine} </div>
+                <div>Crew onboard:{vacancy.crewOnboard} </div>
+                <div>Sailing area:{vacancy.sailingArea}</div>
                 <div>
-                  {' '}
                   <h4>Additional Info</h4>
                 </div>
                 <div>
-                  {props.additionalInfo}(add info can be opened after registration and Apply button disabled
-                  or not exist ?)
+                  {vacancy.additionalInfo}(add info can be opened after registration and Apply button
+                  disabled or not exist ?)
                 </div>
               </DialogContentText>
             </DialogContent>

@@ -17,13 +17,18 @@
   flex-wrap: wrap;
   gap: 10px;
   width: 90%;
+  margin-bottom: 40px;
 }
 
-.sortIcon {
-  margin-left: 143px;
-}
+/* .sortIcon {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+} */
 
-.headerText {
-  margin-left: 163px;
-  font-size: 20px;
+.preloader {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-self: center;
 }
