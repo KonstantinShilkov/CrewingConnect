@@ -6,11 +6,10 @@ import { SnackbarProvider } from 'notistack';
 import Main from './pages/Main';
 
 function App() {
-
   return (
     <BrowserRouter>
       <SnackbarProvider maxSnack={3}>
-        <UserContextProvider >
+        <UserContextProvider>
           <Main />
         </UserContextProvider>
       </SnackbarProvider>

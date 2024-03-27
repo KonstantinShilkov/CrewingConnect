@@ -1,0 +1,41 @@
+.profileFullName {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.nameText {
+  margin-right: 10px;
+}
+
+.button {
+  display: flex;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.presentRank {
+  gap: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.appliedRank {
+  gap: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.vesselType {
+  gap: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.availibaleDate {
+  gap: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
