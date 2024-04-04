@@ -73,10 +73,13 @@ function UserContextProvider({ children }) {
       setDoc(doc(db, 'users', user.uid), {
         email: user.email,
       });
-      getCurrentUserData(currentUserUid);
+
+      // getCurrentUserData(currentUserUid);
       // navigate('/vacancies');
-      navigate('profile/maininfo');
+      // console.log(currentUserData);
       reset();
+
+      navigate('profile/edit/maininfo');
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -90,22 +93,67 @@ function UserContextProvider({ children }) {
     }
   };
 
-  const logout = () => {
-    signOut(auth)
-      .then(() => {
-        setIsAuth(false);
-        navigate('/login');
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      setIsAuth(false);
+      navigate('/login');
+      setCurrentUserData([]);
+      console.log(currentUserData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const calculateAge = dateOfBirth => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
   };
 
   const updateMainInfoData = async data => {
     try {
       const userDoc = doc(db, 'users', currentUserUid);
-      await updateDoc(userDoc, { name: data.name, surname: data.surname, middleName: data.middleName });
+      await updateDoc(userDoc, {
+        name: data.name ? data.name : '',
+        surname: data.surname ? data.surname : '',
+        middleName: data.middleName ? data.middleName : '',
+        dateOfBirth: data.dateOfBirth ? data.dateOfBirth : '',
+        age: calculateAge(data.dateOfBirth) ? calculateAge(data.dateOfBirth) : '',
+        placeOfBirth: data.placeOfBirth ? data.placeOfBirth : '',
+        nationality: data.nationality ? data.nationality : '',
+        presentRank: data.presentRank ? data.presentRank : '',
+        rankApplied: data.rankApplied ? data.rankApplied : '',
+        availableDate: data.availableDate ? data.availableDate : '',
+        vesselType: data.vesselType ? data.vesselType : '',
+      });
       getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateContactsData = async data => {
+    try {
+      const userDoc = doc(db, 'users', currentUserUid);
+      await updateDoc(userDoc, {
+        mobPhone: data.mobPhone ? data.mobPhone : '',
+        homeAddress: data.homeAddress ? data.homeAddress : '',
+        nearestAirport: data.nearestAirport ? data.nearestAirport : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
       reset();
     } catch (error) {
       const errorCode = error.code;
@@ -141,6 +189,7 @@ function UserContextProvider({ children }) {
     vacanciesCollectionRef,
     currentUserEmail,
     updateMainInfoData,
+    updateContactsData,
     currentUserData,
     getCurrentUserData,
     currentUserUid,

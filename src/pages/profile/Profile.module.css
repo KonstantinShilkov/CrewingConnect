@@ -1,41 +1,61 @@
-.profileFullName {
+.profileNavbar {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.preloader {
   display: flex;
   flex: 1;
-  flex-direction: row;
-  margin-top: 20px;
-  margin-left: 20px;
+  justify-content: center;
+  align-self: center;
+}
+.profileContainer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  /* margin-bottom: 120px; */
 }
 
-.nameText {
-  margin-right: 10px;
+.profileTextfields {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  margin-right: 60px;
+  align-items: start;
+}
+
+.name {
+  display: flex;
+  flex: 1;
+  justify-content: start;
 }
 
 .button {
+  flex: 1;
+  margin-left: 290px;
+}
+.avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 18px;
+  margin-left: 42px;
+}
+
+.avatarContainer {
   display: flex;
-  margin-left: 20px;
-  margin-top: 20px;
+  flex: 1;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+  margin-left: -50px;
 }
 
-.presentRank {
-  gap: 10px;
-  margin-left: 20px;
-  margin-top: 20px;
-}
-
-.appliedRank {
-  gap: 10px;
-  margin-left: 20px;
-  margin-top: 20px;
-}
-
-.vesselType {
-  gap: 10px;
-  margin-left: 20px;
-  margin-top: 20px;
-}
-
-.availibaleDate {
-  gap: 10px;
-  margin-left: 20px;
-  margin-top: 20px;
+/* .table {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+} */
+.card {
+  width: 520px;
 }

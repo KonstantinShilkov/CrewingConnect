@@ -7,18 +7,15 @@ import Register from './register/Register';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/user-context';
 import Profile from './profile/Profile';
-import MainInfo from './profile/mainInfo/MainInfo';
-import VisasPasports from './profile/viasasPasports/VisasPasports';
-import ProfileContacts from './profile/contacts/ProfileContacts';
+import EditProfile from './profile/EditProfile';
 
 function Main() {
-  const { isAuth, getCurrentUserData, currentUserUid } = useContext(UserContext);
+  const { isAuth, currentUserUid, onAuthState, getCurrentUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentUserUid) {
-      getCurrentUserData(currentUserUid);
-    }
+    onAuthState();
+    getCurrentUserData(currentUserUid);
   }, [currentUserUid]);
 
   // useEffect(() => {
@@ -38,9 +35,7 @@ function Main() {
           <Route path="/vacancies" element={<Vacancies />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/maininfo" element={<MainInfo />} />
-          <Route path="/profile/visaspasports" element={<VisasPasports />} />
-          <Route path="/profile/contacts" element={<ProfileContacts />} />
+          <Route path="/profile/edit/*" element={<EditProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<div>404 NOT FOUND</div>} />

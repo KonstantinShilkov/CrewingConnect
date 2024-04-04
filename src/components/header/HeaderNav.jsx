@@ -1,14 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Header.module.css';
 import { UserContext } from '../../context/user-context';
 
 const HeaderNav = () => {
-  const { logout, isAuth, onAuthState, currentUserEmail } = useContext(UserContext);
-
-  useEffect(() => {
-    onAuthState();
-  });
+  const { logout, isAuth, currentUserEmail } = useContext(UserContext);
 
   return (
     <nav className={s.navContainer}>

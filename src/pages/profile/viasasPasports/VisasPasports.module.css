@@ -1,4 +1,13 @@
-.profileNavbar {
-  margin-left: 20px;
-  margin-top: 10px;
+.preloader {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-self: center;
+}
+
+.visasPasrotsContainer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 }

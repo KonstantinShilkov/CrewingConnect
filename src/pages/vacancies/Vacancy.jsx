@@ -22,11 +22,8 @@ const Vacancy = ({ vacancy }) => {
 
   const descriptionElementRef = useRef(null);
   useEffect(() => {
-    if (open) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
+    if (open && descriptionElementRef.current !== null) {
+      descriptionElementRef.current.focus();
     }
   }, [open]);
 

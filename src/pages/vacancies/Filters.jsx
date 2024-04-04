@@ -56,7 +56,7 @@ const Filters = props => {
               getOptionLabel={option => option}
               renderOption={(props, option) => <li {...props}>{option}</li>}
               style={{ width: 300 }}
-              renderInput={params => <TextField {...params} label="Rank" placeholder="Enter your rank" />}
+              renderInput={params => <TextField {...params} label="Ranks" placeholder="Enter your rank" />}
             />
           </FormControl>
         </div>
@@ -76,7 +76,7 @@ const Filters = props => {
               renderOption={(props, option) => <li {...props}>{option}</li>}
               style={{ width: 300 }}
               renderInput={params => (
-                <TextField {...params} label="Vessel Type" placeholder="Enter Vessel Type" />
+                <TextField {...params} label="Vessel Types" placeholder="Vessel Type" />
               )}
             />
           </FormControl>
@@ -93,13 +93,9 @@ const Filters = props => {
   return (
     <div className={s.sortIcon}>
       <Button onClick={toggleDrawer(true)}>
-        {/* <Button onClick={toggleDrawer('right', true)}> */}
         <SortIcon />
       </Button>
       <Drawer open={open}>{DrawerList}</Drawer>
-      {/* <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}> */}
-      {/* {DrawerList} */}
-      {/* </Drawer> */}
     </div>
   );
 };

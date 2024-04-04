@@ -1,34 +1,17 @@
 import { TextField } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import s from './MainInfo.module.css';
 import { UserContext } from '../../../context/user-context';
 import { Button } from '@mui/joy';
 import { useForm } from 'react-hook-form';
 import Preloader from '../../../common/Preloader';
-import ProfileNavbar from '../profileNavbar/ProfileNavbar';
-import { useEffect } from 'react';
 
 const MainInfo = () => {
   const { updateMainInfoData, currentUserData, isFetching } = useContext(UserContext);
-  const [editMode, setEditMode] = useState(false);
 
-  const editButtonClick = () => {
-    setEditMode(true);
-  };
   const saveButtonClick = data => {
     updateMainInfoData(data);
-    setEditMode(false);
   };
-
-  useEffect(() => {
-    // if (!currentUserData.hasOwnProperty('name')) {
-    if (currentUserData && (currentUserData.name === undefined || currentUserData.name === '')) {
-      setEditMode(true);
-    }
-    //     // if (!currentUserData.surname.length) {
-    //     //   setEditMode(true);
-    //     // }
-  }, [currentUserData]);
 
   const {
     handleSubmit,
@@ -38,12 +21,18 @@ const MainInfo = () => {
   } = useForm();
 
   useEffect(() => {
-    if (editMode) {
-      setValue('name', currentUserData.name);
-      setValue('surname', currentUserData.surname);
-      setValue('middleName', currentUserData.middleName);
-    }
-  }, [editMode, currentUserData.name, setValue]);
+    setValue('name', currentUserData.name);
+    setValue('surname', currentUserData.surname);
+    setValue('middleName', currentUserData.middleName);
+    setValue('dateOfBirth', currentUserData.dateOfBirth);
+    setValue('age', currentUserData.age);
+    setValue('placeOfBirth', currentUserData.placeOfBirth);
+    setValue('nationality', currentUserData.nationality);
+    setValue('presentRank', currentUserData.presentRank);
+    setValue('rankApplied', currentUserData.rankApplied);
+    setValue('availableDate', currentUserData.availableDate);
+    setValue('vesselType', currentUserData.vesselType);
+  }, [currentUserData]);
 
   if (isFetching) {
     return (
@@ -53,86 +42,88 @@ const MainInfo = () => {
     );
   }
   return (
-    <div>
-      <div className={s.profileNavbar}>
-        <ProfileNavbar />
-      </div>
-      <div className={s.mainInfoContainer}>
-        <div>Full Name:</div>
-        <form onSubmit={handleSubmit(saveButtonClick)}>
-          {!editMode && (
-            <div className={s.disabledForms}>
-              <div>
-                <TextField
-                  size="small"
-                  disabled
-                  value={currentUserData.name ? currentUserData.name : ''}
-                  label="Name"
-                />
-              </div>
-              <div>
-                <TextField
-                  size="small"
-                  label="Surname"
-                  disabled
-                  value={currentUserData.surname ? currentUserData.surname : ''}
-                />
-              </div>
-              <div>
-                <TextField
-                  size="small"
-                  label="Middle Name"
-                  disabled
-                  value={currentUserData.middleName ? currentUserData.middleName : ''}
-                />
-              </div>
-            </div>
-          )}
-          {editMode && (
-            <div className={s.enabledForms}>
-              <div>
-                <TextField
-                  {...register('name', {
-                    required: 'Name is Required',
-                    minLength: {
-                      value: 1,
-                    },
-                  })}
-                  size="small"
-                  label="Name"
-                  autoFocus
-                />
-                <p>{errors.name?.message}</p>
-              </div>
-              <div>
-                <TextField
-                  {...register('surname', {
-                    required: 'Surname is Required',
-                    minLength: {
-                      value: 1,
-                    },
-                  })}
-                  size="small"
-                  label="Surname"
-                />
-                <p>{errors.surname?.message}</p>
-              </div>
-              <div>
-                <TextField {...register('middleName')} size="small" label="Middle Name" />
-              </div>
-            </div>
-          )}
-          <div></div>
-          <div className={s.buttons}>
-            <Button size="sm" variant="solid" color="neutral" onClick={editButtonClick}>
-              Edit CV
-            </Button>
-            <Button size="sm" type="submit" variant="solid" color="neutral">
-              Save CV
-            </Button>
+    <div className={s.mainInfoContainer}>
+      <form onSubmit={handleSubmit(saveButtonClick)}>
+        <div className={s.textFieldName}>
+          <div>
+            <TextField {...register('name')} required size="small" label="Name" />
           </div>
-        </form>
-      </div>
+          <div>
+            <TextField {...register('surname')} required size="small" label="Surname" />
+          </div>
+          <div>
+            <TextField {...register('middleName')} size="small" label="Middle Name" />
+          </div>
+        </div>
+        <div className={s.textFieldPlaceOfBirth}>
+          <div>
+            <TextField
+              {...register('placeOfBirth')}
+              style={{ width: '410px' }}
+              size="small"
+              label="Place of Birth"
+            />
+          </div>
+          <div>
+            <div>
+              <TextField {...register('nationality')} size="small" label="Nationality" />
+            </div>
+          </div>
+        </div>
+        <div className={s.textFieldAge}>
+          <div>
+            <TextField
+              {...register('dateOfBirth')}
+              size="small"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              label="Date of Birth"
+              style={{ width: '195px' }}
+            />
+          </div>
+          <div>
+            <TextField
+              {...register('age')}
+              size="small"
+              label="Age"
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                readOnly: true,
+              }}
+              placeholder="Age"
+            />
+          </div>
+        </div>
+
+        <div className={s.textFieldRank}>
+          <div>
+            <TextField {...register('presentRank')} size="small" label="Present Rank" />
+          </div>
+          <div>
+            <TextField {...register('rankApplied')} size="small" label="Rank Applied For" />
+          </div>
+        </div>
+        <div className={s.textFieldAvailableDate}>
+          <div>
+            <TextField {...register('vesselType')} size="small" label="Vessel Type" />
+          </div>
+          <div>
+            <TextField
+              {...register('availableDate')}
+              size="small"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              style={{ width: '195px' }}
+              label="Available Date"
+            />
+          </div>
+        </div>
+        <div className={s.button}>
+          <Button size="sm" type="submit" variant="solid" color="neutral">
+            Save CV
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };
