@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import s from './Vacancies.module.css';
 import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import SortIcon from '@mui/icons-material/Sort';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { FormControl, IconButton, InputLabel } from '@mui/material';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -36,10 +35,7 @@ const Filters = props => {
   };
 
   const DrawerList = (
-    <Box
-      // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 325 }}
-      sx={{ width: 325 }}
-      role="presentation">
+    <div>
       <div className={s.filterHeader}>Filters</div>
       <Divider />
       <List>
@@ -85,17 +81,19 @@ const Filters = props => {
       <Divider />
       <div className={s.chevronIcon}>
         <IconButton onClick={toggleDrawer(false)}>
-          <ChevronLeftIcon />
+          <ChevronRightIcon />
         </IconButton>
       </div>
-    </Box>
+    </div>
   );
   return (
     <div className={s.sortIcon}>
       <Button onClick={toggleDrawer(true)}>
-        <SortIcon />
+        <FilterListIcon />
       </Button>
-      <Drawer open={open}>{DrawerList}</Drawer>
+      <Drawer anchor="right" open={open}>
+        {DrawerList}
+      </Drawer>
     </div>
   );
 };

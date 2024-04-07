@@ -33,6 +33,7 @@ const Profile = () => {
                   label="Age"
                   style={{ width: '150px' }}
                   value={currentUserData.age ? currentUserData.age : ''}
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -45,6 +46,7 @@ const Profile = () => {
                   label="Present Rank"
                   style={{ width: '150px', color: 'primary' }}
                   value={currentUserData.presentRank ? currentUserData.presentRank : ''}
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -57,6 +59,7 @@ const Profile = () => {
                   label="Applied for Rank"
                   style={{ width: '150px' }}
                   value={currentUserData.rankApplied ? currentUserData.rankApplied : ''}
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -69,6 +72,7 @@ const Profile = () => {
                   label="Type of Vessel"
                   style={{ width: '150px' }}
                   value={currentUserData.vesselType ? currentUserData.vesselType : ''}
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -81,6 +85,7 @@ const Profile = () => {
                   label="Availibale Date"
                   style={{ width: '150px' }}
                   value={currentUserData.availableDate ? currentUserData.availableDate : ''}
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -99,6 +104,7 @@ const Profile = () => {
                   value={`${currentUserData.name ? currentUserData.name : ''} ${
                     currentUserData.surname ? currentUserData.surname : ''
                   } ${currentUserData.middleName ? currentUserData.middleName : ''}`}
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -118,51 +124,6 @@ const Profile = () => {
           </Grid>
           <Grid item xs={12}>
             <ProfileTable />
-            {/* <Paper sx={{ width: '100%', overflow: 'hidden' }}> */}
-            {/* <div className={s.table}>
-              <TableContainer sx={{ maxHeight: 440 }}>
-                <Table stickyHeader aria-label="sticky table">
-                  <TableHead>
-                    <TableRow>
-                      {columns.map(column => (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          style={{ minWidth: column.minWidth }}>
-                          {column.label}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                      return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                          {columns.map(column => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === 'number' ? column.format(value) : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[3, 10, 15]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-              {/* </Paper> */}
-            {/* </div> */}
           </Grid>
         </Grid>
       </Card>

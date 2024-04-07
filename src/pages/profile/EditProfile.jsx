@@ -8,11 +8,11 @@ import ProfileContacts from './contacts/ProfileContacts';
 
 const EditProfile = () => {
   return (
-    <div>
+    <div className={s.editProfileContainer}>
       <div className={s.profileNavbar}>
         <ProfileNavbar />
       </div>
-      <div>
+      <div className={s.dataContainer}>
         <Routes>
           <Route path="/maininfo" element={<MainInfo />} />
           <Route path="/visaspasports" element={<VisasPasports />} />

@@ -1,6 +1,6 @@
 .chevronIcon {
-  margin-left: 275px;
-  margin-top: 15px;
+  /* margin-left: 275px;
+  margin-top: 15px; */
 }
 
 .filterHeader {
@@ -20,11 +20,11 @@
   margin-bottom: 40px;
 }
 
-/* .sortIcon {
+.sortIcon {
   display: flex;
   flex: 1;
   justify-content: end;
-} */
+}
 
 .preloader {
   display: flex;

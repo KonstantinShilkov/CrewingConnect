@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import { db } from '../config/firebase';
 import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { calculateAge } from '../utils';
 
 const initialData = {
   isAuth: false,
@@ -105,18 +106,18 @@ function UserContextProvider({ children }) {
     }
   };
 
-  const calculateAge = dateOfBirth => {
-    const today = new Date();
-    const birthDate = new Date(dateOfBirth);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
+  // const calculateAge = dateOfBirth => {
+  //   const today = new Date();
+  //   const birthDate = new Date(dateOfBirth);
+  //   let age = today.getFullYear() - birthDate.getFullYear();
+  //   const monthDiff = today.getMonth() - birthDate.getMonth();
 
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
+  //   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+  //     age--;
+  //   }
 
-    return age;
-  };
+  //   return age;
+  // };
 
   const updateMainInfoData = async data => {
     try {

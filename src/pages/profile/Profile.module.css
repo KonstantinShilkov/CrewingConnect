@@ -2,6 +2,18 @@
   margin-left: 20px;
   margin-top: 10px;
 }
+.editProfileContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.dataContainer {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
 .preloader {
   display: flex;
   flex: 1;
@@ -51,11 +63,6 @@
   margin-left: -50px;
 }
 
-/* .table {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-} */
 .card {
-  width: 520px;
+  width: 522px;
 }
