@@ -1,89 +1,104 @@
 import { Card, CardActions, CardContent } from '@mui/joy';
-import React, { useState } from 'react';
-import s from './Vacancies.module.css'
-import { Collapse } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { Button } from '@mui/joy';
+import React, { useEffect, useRef, useState } from 'react';
+import s from './Vacancies.module.css';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
+const Vacancy = ({ vacancy }) => {
+  const [open, setOpen] = useState(false);
+  const [scroll, setScroll] = useState('paper');
+  const handleClickOpen = scrollType => () => {
+    setOpen(true);
+    setScroll(scrollType);
+  };
 
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-const Vacancy = (props) => {
-    const [expanded, setExpanded] = useState({});
+  const descriptionElementRef = useRef(null);
+  useEffect(() => {
+    if (open && descriptionElementRef.current !== null) {
+      descriptionElementRef.current.focus();
+    }
+  }, [open]);
 
-    const handleExpandClick = (id) => {
-        setExpanded(expanded => ({
-            ...expanded,
-            [id]: !expanded[id],
-        }));
-    };
-
-    return (
-        <Card
-            variant="outlined"
-            sx={{ width: 400, maxWidth: '100%', gap: 1.5 }}
-        >
-            <div className={s.vacancyDescreption}>
-                <CardContent>
-                    <div className={s.shortVacancy} >
-                        <div> <h3>{props.rank} on {props.vesselType}</h3></div>
-                        <div>Salary: {props.salary} </div>
-                        <div>Join Date:{props.joinDate} </div>
-                        <div>Duration:{props.duration} </div>
-                    </div>
-                </CardContent>
-                <CardActions >
-                    <ExpandMore
-                        expand={expanded[props.id]}
-                        onClick={() => handleExpandClick(props.id)}
-                        aria-expanded={expanded[props.id]}
-                        aria-label="show more"
-                    >
-                        <ExpandMoreIcon />
-                    </ExpandMore>
-                </CardActions>
-                <Collapse in={expanded[props.id]}
-                    timeout="auto"
-                    unmountOnExit>
-                    <div className={s.expandedVacancy}>
-                        <div> <h4>Requrements</h4></div>
-                        <div>Visa:{props.visa} </div>
-                        <div>English Level:{props.englishLevel} </div>
-                        <div>Prefferred citizenship:{props.prefferedCitizenship} </div>
-                        <div> <h4>Vessel info </h4></div>
-                        <div>Vessel type:{props.vesselType} </div>
-                        <div>Build year:{props.vesselBuildYear} </div>
-                        <div>Vessel flag:{props.vesselFlag} </div>
-                        <div>DWT:{props.vesselDwt} </div>
-                        <div>Main Engine:{props.vesselMainEngine} </div>
-                        <div>Crew onboard:{props.crewOnboard} </div>
-                        <div>Sailing area:{props.sailingArea}</div>
-                        <div> <h4>Additional Info</h4></div>
-                        <div>{props.additionalInfo}(add info can be opened after registration
-                            and Apply button disabled or not exist ?)</div>
-                        <Button size="sm"
-                            type='submit'
-                            variant="solid"
-                            color="neutral"
-                        >
-                            Apply
-                        </Button>
-                    </div>
-                </Collapse>
+  return (
+    <React.Fragment>
+      <Card variant="outlined" sx={{ width: 400, maxWidth: '100%', gap: 1.5 }}>
+        <div className={s.vacancyCard}>
+          <CardContent>
+            <div className={s.shortVacancy}>
+              <div>
+                <h3>
+                  {vacancy.rank} on {vacancy.vesselType}
+                </h3>
+              </div>
+              <div>Salary: {vacancy.salary} </div>
+              <div>Join Date:{vacancy.joinDate} </div>
+              <div>Duration:{vacancy.duration} </div>
             </div>
-        </Card>
-    )
-}
+          </CardContent>
+          <CardActions>
+            <Button className={s.buttonApply} onClick={handleClickOpen('paper')}>
+              details / apply
+            </Button>
+          </CardActions>
 
-export default Vacancy
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            scroll={scroll}
+            aria-labelledby="scroll-dialog-title"
+            aria-describedby="scroll-dialog-description">
+            <DialogTitle id="scroll-dialog-title">
+              <h3>
+                {vacancy.rank} on {vacancy.vesselType}
+              </h3>
+            </DialogTitle>
+            <DialogContent dividers={scroll === 'paper'}>
+              <DialogContentText id="scroll-dialog-description" ref={descriptionElementRef} tabIndex={-1}>
+                <div className={s.expandedVacancy}>
+                  <div>Salary: {vacancy.salary} </div>
+                  <div>Join Date:{vacancy.joinDate} </div>
+                  <div>Duration:{vacancy.duration} </div> <h4>Requrements</h4>
+                </div>
+                <div>Visa:{vacancy.visa} </div>
+                <div>English Level:{vacancy.englishLevel} </div>
+                <div>Prefferred citizenship:{vacancy.prefferedCitizenship} </div>
+                <div>
+                  {' '}
+                  <h4>Vessel info </h4>
+                </div>
+                <div>Vessel type:{vacancy.vesselType} </div>
+                <div>Build year:{vacancy.vesselBuildYear} </div>
+                <div>Vessel flag:{vacancy.vesselFlag} </div>
+                <div>DWT:{vacancy.vesselDwt} </div>
+                <div>Main Engine:{vacancy.vesselMainEngine} </div>
+                <div>Crew onboard:{vacancy.crewOnboard} </div>
+                <div>Sailing area:{vacancy.sailingArea}</div>
+                <div>
+                  <h4>Additional Info</h4>
+                </div>
+                <div>
+                  {vacancy.additionalInfo}(add info can be opened after registration and Apply button
+                  disabled or not exist ?)
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Close</Button>
+              <Button onClick={handleClose}>Apply</Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      </Card>
+    </React.Fragment>
+  );
+};
+
+export default Vacancy;

@@ -1,0 +1,9 @@
+.tabs {
+  margin-bottom: 10px;
+}
+
+.navBar {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
