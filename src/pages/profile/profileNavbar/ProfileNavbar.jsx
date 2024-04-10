@@ -31,7 +31,7 @@ const ProfileNavbar = () => {
             aria-label="profile tabs">
             <Tab value="maininfo" label="Main Info" />
             <Tab value="contacts" label="Contacts" />
-            <Tab value="visaspasports" label="Visas/Pasports" />
+            <Tab value="visaspassports" label="Visas/Passports" />
           </Tabs>
         </Box>
       </div>

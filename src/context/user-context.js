@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import { db } from '../config/firebase';
-import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { calculateAge } from '../utils';
 
 const initialData = {
@@ -36,7 +36,6 @@ function UserContextProvider({ children }) {
         setCurrentUserEmail(user.email);
         setCurrentUserUid(user.uid);
         setIsAuth(true);
-        // getCurrentUserData(user.uid);
       } else {
         setIsAuth(false);
       }
@@ -69,15 +68,11 @@ function UserContextProvider({ children }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
       const user = userCredential.user;
-      console.log(user);
+      // console.log(user);
       setIsAuth(true);
       setDoc(doc(db, 'users', user.uid), {
         email: user.email,
       });
-
-      // getCurrentUserData(currentUserUid);
-      // navigate('/vacancies');
-      // console.log(currentUserData);
       reset();
 
       navigate('profile/edit/maininfo');
@@ -106,22 +101,9 @@ function UserContextProvider({ children }) {
     }
   };
 
-  // const calculateAge = dateOfBirth => {
-  //   const today = new Date();
-  //   const birthDate = new Date(dateOfBirth);
-  //   let age = today.getFullYear() - birthDate.getFullYear();
-  //   const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  //   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-  //     age--;
-  //   }
-
-  //   return age;
-  // };
-
   const updateMainInfoData = async data => {
+    const userDoc = doc(db, 'users', currentUserUid);
     try {
-      const userDoc = doc(db, 'users', currentUserUid);
       await updateDoc(userDoc, {
         name: data.name ? data.name : '',
         surname: data.surname ? data.surname : '',
@@ -163,14 +145,98 @@ function UserContextProvider({ children }) {
     }
   };
 
+  const updateVisasData = async data => {
+    const userVisas = collection(db, 'users', currentUserUid, 'visas');
+    const newVisaId = doc(userVisas);
+    try {
+      await setDoc(newVisaId, {
+        id: newVisaId.id,
+        visaType: data.visaType ? data.visaType : '',
+        visaCountry: data.visaCountry ? data.visaCountry : '',
+        visaValidDate: data.visaValidDate ? data.visaValidDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteVisaData = async visaId => {
+    try {
+      const userVisas = collection(db, 'users', currentUserUid, 'visas');
+      const visaDoc = doc(userVisas, visaId);
+      await deleteDoc(visaDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updatePassportsData = async data => {
+    const userPassports = collection(db, 'users', currentUserUid, 'passports');
+    const newPassportId = doc(userPassports);
+    try {
+      await setDoc(newPassportId, {
+        id: newPassportId.id,
+        nationality: data.nationality ? data.nationality : '',
+        number: data.number ? data.number : '',
+        placeIssues: data.placeIssues ? data.placeIssues : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deletePassportData = async passportId => {
+    try {
+      const userPassports = collection(db, 'users', currentUserUid, 'passports');
+      const passportDoc = doc(userPassports, passportId);
+      await deleteDoc(passportDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
   const getCurrentUserData = async userId => {
     try {
-      const docRef = doc(db, 'users', userId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setCurrentUserData(docSnap.data());
+      const userDoc = doc(db, 'users', userId);
+      const userVisas = collection(userDoc, 'visas');
+      const userPassports = collection(userDoc, 'passports');
+
+      const userDocSnap = await getDoc(userDoc);
+      const userVisasSnap = await getDocs(userVisas);
+      const userPassportsSnap = await getDocs(userPassports);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        const visas = userVisasSnap.docs.map(doc => ({ ...doc.data() }));
+        const passports = userPassportsSnap.docs.map(doc => ({ ...doc.data() }));
+
+        const updatedUserData = { ...userData, visas, passports };
+        console.log(updatedUserData);
+        setCurrentUserData(updatedUserData);
         setIsFetching(false);
-        console.log(docSnap.data());
+        console.log(currentUserData);
       } else {
         console.log('No such document!');
       }
@@ -195,6 +261,10 @@ function UserContextProvider({ children }) {
     getCurrentUserData,
     currentUserUid,
     isFetching,
+    updateVisasData,
+    deleteVisaData,
+    updatePassportsData,
+    deletePassportData,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

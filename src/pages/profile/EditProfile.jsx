@@ -3,7 +3,7 @@ import ProfileNavbar from './profileNavbar/ProfileNavbar';
 import s from './Profile.module.css';
 import { Route, Routes } from 'react-router-dom';
 import MainInfo from './mainInfo/MainInfo';
-import VisasPasports from './viasasPasports/VisasPasports';
+import VisasPassports from './viasasPassports/VisasPassports';
 import ProfileContacts from './contacts/ProfileContacts';
 
 const EditProfile = () => {
@@ -15,7 +15,7 @@ const EditProfile = () => {
       <div className={s.dataContainer}>
         <Routes>
           <Route path="/maininfo" element={<MainInfo />} />
-          <Route path="/visaspasports" element={<VisasPasports />} />
+          <Route path="/visaspassports" element={<VisasPassports />} />
           <Route path="/contacts" element={<ProfileContacts />} />
         </Routes>
       </div>

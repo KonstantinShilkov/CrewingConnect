@@ -1,0 +1,53 @@
+.preloader {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-self: center;
+}
+.visas {
+  margin-left: 30px;
+}
+.visasPasrotsContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 538px;
+  height: 400px;
+}
+
+.addVisaButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+}
+.addPassportButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+}
+
+.newVisaContainer {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.newPassportContainer {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.toggleButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+}
