@@ -25,8 +25,8 @@ const columns = [
   { id: 'nationality', label: 'Nationality' },
   { id: 'number', label: 'Number' },
   { id: 'placeIssues', label: 'Place Issues' },
-  { id: 'dateIssues', label: 'Date Issues', minWidth: 60 },
-  { id: 'expireDate', label: 'Expire Date', minWidth: 60 },
+  { id: 'dateIssues', label: 'Date Issues' },
+  { id: 'expireDate', label: 'Expire Date' },
   { id: 'delete', label: '' },
 ];
 const createData = (nationality, number, placeIssues, dateIssues, expireDate, id) => {

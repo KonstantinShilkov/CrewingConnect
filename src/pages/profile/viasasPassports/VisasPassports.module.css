@@ -16,7 +16,8 @@
 }
 
 .card {
-  width: 538px;
+  /* width: 538px; */
+  width: 690px;
   height: 400px;
 }
 
@@ -35,7 +36,7 @@
   display: flex;
   flex: 1;
   gap: 10px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .newPassportContainer {
@@ -43,7 +44,7 @@
   flex: 1;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .toggleButton {
