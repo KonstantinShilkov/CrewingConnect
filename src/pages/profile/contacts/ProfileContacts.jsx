@@ -19,6 +19,13 @@ const ProfileContacts = () => {
   } = useForm();
 
   useEffect(() => {
+    setValue('mobPhone', currentUserData.mobPhone);
+    setValue('email', currentUserData.email);
+    setValue('homeAddress', currentUserData.homeAddress);
+    setValue('nearestAirport', currentUserData.nearestAirport);
+  }, [setValue]);
+
+  useEffect(() => {
     if (
       watch().mobPhone !== currentUserData.mobPhone ||
       watch().email !== currentUserData.email ||
@@ -30,13 +37,6 @@ const ProfileContacts = () => {
       setButtonSaveIsActive(false);
     }
   }, [watch()]);
-
-  useEffect(() => {
-    setValue('mobPhone', currentUserData.mobPhone);
-    setValue('email', currentUserData.email);
-    setValue('homeAddress', currentUserData.homeAddress);
-    setValue('nearestAirport', currentUserData.nearestAirport);
-  }, [setValue, currentUserData]);
 
   const saveButtonClick = data => {
     updateContactsData(data);
@@ -61,6 +61,7 @@ const ProfileContacts = () => {
                     size="small"
                     style={{ width: '247px' }}
                     label="Mobile Pnone"
+                    InputLabelProps={{ shrink: true }}
                     placeholder=" + (Country code) number "
                   />
                 </div>
@@ -71,6 +72,7 @@ const ProfileContacts = () => {
                     style={{ width: '247px' }}
                     label="Email"
                     type="email"
+                    InputLabelProps={{ shrink: true }}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -82,6 +84,7 @@ const ProfileContacts = () => {
                   {...register('homeAddress')}
                   size="small"
                   label="Home Address"
+                  InputLabelProps={{ shrink: true }}
                   style={{ width: '510px' }}
                   placeholder="Country, City, Steet , Apartment "
                 />
@@ -91,6 +94,7 @@ const ProfileContacts = () => {
                   {...register('nearestAirport')}
                   size="small"
                   label="Nearest Airport"
+                  InputLabelProps={{ shrink: true }}
                   style={{ width: '247px' }}
                   placeholder="Country, City, Airport Name or Code Name"
                 />

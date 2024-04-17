@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import s from './VisasPassports.module.css';
+import s from './Experince.module.css';
 import {
   Button,
   Dialog,
@@ -22,34 +22,50 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
 
 const columns = [
-  { id: 'nationality', label: 'Nationality' },
-  { id: 'number', label: 'Number' },
-  { id: 'placeIssues', label: 'Place Issues' },
-  { id: 'dateIssues', label: 'Date Issues' },
-  { id: 'expireDate', label: 'Expire Date' },
+  { id: 'vesselName', label: 'Vessel Name' },
+  { id: 'typeTrade', label: 'Type / kW; Trading/DW' },
+  { id: 'engineType', label: 'S/M' },
+  { id: 'vesselType', label: 'Vessel Type' },
+  { id: 'companyName', label: 'Company Name' },
+  { id: 'rank', label: 'Rank' },
+  { id: 'fromDate', label: 'From' },
+  { id: 'tillDate', label: 'Till' },
   { id: 'delete', label: '' },
 ];
-const createData = (nationality, number, placeIssues, dateIssues, expireDate, id) => {
-  return { nationality, number, placeIssues, dateIssues, expireDate, id };
+const createData = (
+  vesselName,
+  typeTrade,
+  engineType,
+  vesselType,
+  companyName,
+  rank,
+  fromDate,
+  tillDate,
+  id
+) => {
+  return { vesselName, typeTrade, engineType, vesselType, companyName, rank, fromDate, tillDate, id };
 };
 
-const PassportsTable = () => {
-  const { currentUserData, updatePassportsData, deletePassportData } = useContext(UserContext);
+const ExperienceTable = () => {
+  const { currentUserData, updateExperienceData, deleteExperienceData } = useContext(UserContext);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (currentUserData && currentUserData.passports) {
-      const rows = currentUserData.passports.map((passport, index) =>
+    if (currentUserData && currentUserData.experience) {
+      const rows = currentUserData.experience.map((exp, index) =>
         createData(
-          passport.nationality,
-          passport.number,
-          passport.placeIssues,
-          passport.dateIssues,
-          passport.expireDate,
-          passport.id,
+          exp.vesselName,
+          exp.typeTrade,
+          exp.engineType,
+          exp.vesselType,
+          exp.companyName,
+          exp.rank,
+          exp.fromDate,
+          exp.tillDate,
+          exp.id,
           index
         )
       );
@@ -74,13 +90,13 @@ const PassportsTable = () => {
   };
 
   const saveButtonClick = data => {
-    updatePassportsData(data);
+    updateExperienceData(data);
     setOpen(false);
     reset();
   };
 
-  const handleDelete = passportId => {
-    deletePassportData(passportId);
+  const handleDelete = experienceId => {
+    deleteExperienceData(experienceId);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -112,7 +128,7 @@ const PassportsTable = () => {
                   return (
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'delete' ? (
-                        <div className={s.deletePassportButton}>
+                        <div className={s.deleteExperineceButton}>
                           <Button onClick={() => handleDelete(row.id)}>
                             <DeleteIcon sx={{ color: pink[500] }} />
                           </Button>
@@ -139,65 +155,95 @@ const PassportsTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addPassportButton}>
+      <div className={s.addExperienceButton}>
         <Button onClick={handleClickOpen}>
           <AddCircleIcon />
         </Button>
       </div>
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Add Passport</DialogTitle>
+          <DialogTitle>Add Experience</DialogTitle>
           <DialogContent>
-            <div className={s.newPassportContainer}>
+            <div className={s.newExperienceContainer}>
               <div>
                 <TextField
-                  {...register('nationality')}
+                  {...register('vesselName')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
-                  label="Nationality"
+                  label="Vessel Name"
                   style={{ width: '160px' }}
                 />
               </div>
               <div>
                 <TextField
-                  {...register('number')}
+                  {...register('typeTrade')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
-                  label="Number"
+                  label="Type/kW or Area/DW"
                   style={{ width: '160px' }}
                 />
               </div>
               <div>
                 <TextField
-                  {...register('placeIssues')}
+                  {...register('engineType')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
-                  label="Place Issues"
+                  label="Steam or Motor"
                   style={{ width: '160px' }}
                 />
               </div>
               <div>
                 <TextField
-                  {...register('dateIssues')}
+                  {...register('vesselType')}
+                  required
+                  size="small"
+                  InputLabelProps={{ shrink: true }}
+                  label="Vessel Type"
+                  style={{ width: '160px' }}
+                />
+              </div>
+              <div>
+                <TextField
+                  {...register('companyName')}
+                  required
+                  size="small"
+                  InputLabelProps={{ shrink: true }}
+                  label="Company Name"
+                  style={{ width: '160px' }}
+                />
+              </div>
+              <div>
+                <TextField
+                  {...register('rank')}
+                  required
+                  size="small"
+                  InputLabelProps={{ shrink: true }}
+                  label="Rank"
+                  style={{ width: '160px' }}
+                />
+              </div>
+              <div>
+                <TextField
+                  {...register('fromDate')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
                   type="date"
-                  label="Date Issues"
+                  label="From"
                   style={{ width: '160px' }}
                 />
               </div>
               <div>
                 <TextField
-                  {...register('expireDate')}
+                  {...register('tillDate')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
                   type="date"
-                  label="Expire Date"
+                  label="Till"
                   style={{ width: '160px' }}
                 />
               </div>
@@ -205,7 +251,7 @@ const PassportsTable = () => {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Passport</Button>
+            <Button type="submit">Add Experience</Button>
           </DialogActions>
         </form>
       </Dialog>
@@ -213,4 +259,4 @@ const PassportsTable = () => {
   );
 };
 
-export default PassportsTable;
+export default ExperienceTable;

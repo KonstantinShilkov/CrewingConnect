@@ -35,6 +35,8 @@
 }
 
 .card {
-  width: 538px;
-  height: 400px;
+  /* width: 538px; */
+  height: 390px;
+  /* width: 690px; */
+  width: 720px;
 }

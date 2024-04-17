@@ -10,3 +10,5 @@ export const calculateAge = dateOfBirth => {
 
   return age;
 };
+
+export const calculateMonthsDays = (fromDate, tillDate) => {};

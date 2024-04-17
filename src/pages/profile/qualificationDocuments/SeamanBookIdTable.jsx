@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import s from './VisasPassports.module.css';
+import s from './QualificationDocuments.module.css';
 import {
   Button,
   Dialog,
@@ -22,34 +22,34 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
 
 const columns = [
-  { id: 'nationality', label: 'Nationality' },
+  { id: 'national', label: 'National' },
   { id: 'number', label: 'Number' },
   { id: 'placeIssues', label: 'Place Issues' },
   { id: 'dateIssues', label: 'Date Issues' },
   { id: 'expireDate', label: 'Expire Date' },
   { id: 'delete', label: '' },
 ];
-const createData = (nationality, number, placeIssues, dateIssues, expireDate, id) => {
-  return { nationality, number, placeIssues, dateIssues, expireDate, id };
+const createData = (national, number, placeIssues, dateIssues, expireDate, id) => {
+  return { national, number, placeIssues, dateIssues, expireDate, id };
 };
 
-const PassportsTable = () => {
-  const { currentUserData, updatePassportsData, deletePassportData } = useContext(UserContext);
+const SeamanBookIdTable = () => {
+  const { currentUserData, updateSeamanBooksData, deleteSeamanBookData } = useContext(UserContext);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (currentUserData && currentUserData.passports) {
-      const rows = currentUserData.passports.map((passport, index) =>
+    if (currentUserData && currentUserData.seamanBooks) {
+      const rows = currentUserData.seamanBooks.map((seamanBook, index) =>
         createData(
-          passport.nationality,
-          passport.number,
-          passport.placeIssues,
-          passport.dateIssues,
-          passport.expireDate,
-          passport.id,
+          seamanBook.national,
+          seamanBook.number,
+          seamanBook.placeIssues,
+          seamanBook.dateIssues,
+          seamanBook.expireDate,
+          seamanBook.id,
           index
         )
       );
@@ -74,13 +74,13 @@ const PassportsTable = () => {
   };
 
   const saveButtonClick = data => {
-    updatePassportsData(data);
+    updateSeamanBooksData(data);
     setOpen(false);
     reset();
   };
 
-  const handleDelete = passportId => {
-    deletePassportData(passportId);
+  const handleDelete = seamanBookId => {
+    deleteSeamanBookData(seamanBookId);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -112,7 +112,7 @@ const PassportsTable = () => {
                   return (
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'delete' ? (
-                        <div className={s.deletePassportButton}>
+                        <div className={s.deleteSeamanBookButton}>
                           <Button onClick={() => handleDelete(row.id)}>
                             <DeleteIcon sx={{ color: pink[500] }} />
                           </Button>
@@ -139,23 +139,23 @@ const PassportsTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addPassportButton}>
+      <div className={s.addSeamanBookButton}>
         <Button onClick={handleClickOpen}>
           <AddCircleIcon />
         </Button>
       </div>
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Add Passport</DialogTitle>
+          <DialogTitle>Seaman's Book / Identification Documents</DialogTitle>
           <DialogContent>
-            <div className={s.newPassportContainer}>
+            <div className={s.newSeamanBookContainer}>
               <div>
                 <TextField
-                  {...register('nationality')}
+                  {...register('national')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
-                  label="Nationality"
+                  label="National"
                   style={{ width: '160px' }}
                 />
               </div>
@@ -205,7 +205,7 @@ const PassportsTable = () => {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Passport</Button>
+            <Button type="submit">Add Seaman's book or id</Button>
           </DialogActions>
         </form>
       </Dialog>
@@ -213,4 +213,4 @@ const PassportsTable = () => {
   );
 };
 
-export default PassportsTable;
+export default SeamanBookIdTable;

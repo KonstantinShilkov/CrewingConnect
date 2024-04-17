@@ -27,14 +27,14 @@ const VisasPassports = () => {
   }
   return (
     <div className={s.visasPasrotsContainer}>
-      <div>
-        <ToggleButtonGroup value={value} exclusive onChange={handleChange}>
-          <Button value="visas">Visas</Button>
-          <Button value="passports">Passports</Button>
-        </ToggleButtonGroup>
-      </div>
       <Card className={s.card}>
-        <div className={s.visas}>
+        <div className={s.toggleButton}>
+          <ToggleButtonGroup value={value} exclusive onChange={handleChange}>
+            <Button value="visas">Visas </Button>
+            <Button value="passports">Passports</Button>
+          </ToggleButtonGroup>
+        </div>
+        <div className={s.visaspassports}>
           {value === 'visas' ? <VisasTable /> : null}
           {value === 'passports' ? <PassportsTable /> : null}
         </div>

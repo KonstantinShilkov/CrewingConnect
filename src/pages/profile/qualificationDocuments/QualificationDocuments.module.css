@@ -5,30 +5,46 @@
   align-self: center;
 }
 
-.addVisaButton {
-  display: flex;
-  flex: 1;
-  justify-content: end;
-}
-.addPassportButton {
+.addLicenceButton {
   display: flex;
   flex: 1;
   justify-content: end;
 }
 
-.newVisaContainer {
+.addSeamanBookButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+}
+
+.addQualificationCertificateButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+}
+
+.newLicenceContainer {
   display: flex;
   flex: 1;
   gap: 10px;
   margin-top: 10px;
-}
-
-.newPassportContainer {
-  display: flex;
-  flex: 1;
-  gap: 10px;
   flex-wrap: wrap;
+}
+
+.newSeamanBookContainer {
+  display: flex;
+  flex: 1;
+  gap: 10px;
   margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.newQualificationCertificateContainer {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .toggleButton {

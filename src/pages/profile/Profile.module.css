@@ -1,15 +1,16 @@
 .profileNavbar {
-  margin-left: 20px;
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
 }
 .editProfileContainer {
   display: flex;
   flex: 1;
-  flex-direction: column;
+  /* flex-direction: column; */
 }
 .dataContainer {
   display: flex;
   flex: 1;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

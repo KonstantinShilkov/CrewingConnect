@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import s from './VisasPassports.module.css';
+import s from './MarineCourses.module.css';
 import {
   Button,
   Dialog,
@@ -22,26 +22,34 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
 
 const columns = [
-  { id: 'country', label: 'Country', minWidth: 100 },
-  { id: 'type', label: 'Type', minWidth: 100 },
-  { id: 'valid', label: 'Valid Until', minWidth: 100 },
-  { id: 'delete', label: '', minWidth: 50 },
+  { id: 'courseAttended', label: 'Marine Course Attended' },
+  { id: 'dateIssues', label: 'Date Attended' },
+  { id: 'expireDate', label: 'Expired(if any) ' },
+  { id: 'remarks', label: 'Remarks' },
+  { id: 'delete', label: '' },
 ];
-const createData = (country, type, valid, id) => {
-  return { country, type, valid, id };
+const createData = (courseAttended, dateIssues, expireDate, remarks, id) => {
+  return { courseAttended, dateIssues, expireDate, remarks, id };
 };
 
-const VisasTable = () => {
-  const { currentUserData, updateVisasData, deleteVisaData } = useContext(UserContext);
+const MarineCoursesTable = () => {
+  const { currentUserData, updateCourseData, deleteCourseData } = useContext(UserContext);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (currentUserData && currentUserData.visas) {
-      const rows = currentUserData.visas.map((visa, index) =>
-        createData(visa.visaCountry, visa.visaType, visa.visaValidDate, visa.id, index)
+    if (currentUserData && currentUserData.courses) {
+      const rows = currentUserData.courses.map((course, index) =>
+        createData(
+          course.courseAttended,
+          course.dateIssues,
+          course.expireDate,
+          course.remarks,
+          course.id,
+          index
+        )
       );
       setRows(rows);
     }
@@ -64,13 +72,13 @@ const VisasTable = () => {
   };
 
   const saveButtonClick = data => {
-    updateVisasData(data);
+    updateCourseData(data);
     setOpen(false);
     reset();
   };
 
-  const handleDelete = visaId => {
-    deleteVisaData(visaId);
+  const handleDelete = courseId => {
+    deleteCourseData(courseId);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -95,30 +103,28 @@ const VisasTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  {columns.map(column => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.id === 'delete' ? (
-                          <div className={s.deleteVisaButton}>
-                            <Button onClick={() => handleDelete(row.id)}>
-                              <DeleteIcon sx={{ color: pink[500] }} />
-                            </Button>
-                          </div>
-                        ) : column.format && typeof value === 'number' ? (
-                          column.format(value)
-                        ) : (
-                          value
-                        )}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+              <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                {columns.map(column => {
+                  const value = row[column.id];
+                  return (
+                    <TableCell key={column.id} align={column.align}>
+                      {column.id === 'delete' ? (
+                        <div className={s.deleteCourseButton}>
+                          <Button onClick={() => handleDelete(row.id)}>
+                            <DeleteIcon sx={{ color: pink[500] }} />
+                          </Button>
+                        </div>
+                      ) : column.format && typeof value === 'number' ? (
+                        column.format(value)
+                      ) : (
+                        value
+                      )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -131,52 +137,61 @@ const VisasTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addVisaButton}>
+      <div className={s.addCourseButton}>
         <Button onClick={handleClickOpen}>
           <AddCircleIcon />
         </Button>
       </div>
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Add Visa</DialogTitle>
+          <DialogTitle>Add Passport</DialogTitle>
           <DialogContent>
-            <div className={s.newVisaContainer}>
+            <div className={s.newCourseContainer}>
               <div>
                 <TextField
-                  {...register('visaCountry')}
+                  {...register('courseAttended')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
-                  label="Country"
-                  style={{ width: '150px' }}
+                  label="Course Attended"
+                  style={{ width: '500px' }}
                 />
               </div>
               <div>
                 <TextField
-                  {...register('visaType')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Type"
-                  style={{ width: '150px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('visaValidDate')}
+                  {...register('dateIssues')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
                   type="date"
-                  label="Valid Until"
-                  style={{ width: '150px' }}
+                  label="Date Attended"
+                  style={{ width: '160px' }}
+                />
+              </div>
+              <div>
+                <TextField
+                  {...register('expireDate')}
+                  size="small"
+                  InputLabelProps={{ shrink: true }}
+                  type="date"
+                  label="Expired (if any)"
+                  style={{ width: '160px' }}
+                />
+              </div>
+              <div>
+                <TextField
+                  {...register('remarks')}
+                  size="small"
+                  InputLabelProps={{ shrink: true }}
+                  label="Remarks"
+                  style={{ width: '160px' }}
                 />
               </div>
             </div>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Visa</Button>
+            <Button type="submit">Add Course</Button>
           </DialogActions>
         </form>
       </Dialog>
@@ -184,4 +199,4 @@ const VisasTable = () => {
   );
 };
 
-export default VisasTable;
+export default MarineCoursesTable;

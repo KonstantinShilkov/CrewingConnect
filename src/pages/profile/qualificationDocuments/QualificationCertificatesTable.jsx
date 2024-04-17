@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import s from './VisasPassports.module.css';
+import s from './QualificationDocuments.module.css';
 import {
   Button,
   Dialog,
@@ -22,34 +22,33 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
 
 const columns = [
-  { id: 'nationality', label: 'Nationality' },
-  { id: 'number', label: 'Number' },
+  { id: 'qualificationCertificate', label: 'Qualification/Certificate' },
   { id: 'placeIssues', label: 'Place Issues' },
   { id: 'dateIssues', label: 'Date Issues' },
   { id: 'expireDate', label: 'Expire Date' },
   { id: 'delete', label: '' },
 ];
-const createData = (nationality, number, placeIssues, dateIssues, expireDate, id) => {
-  return { nationality, number, placeIssues, dateIssues, expireDate, id };
+const createData = (qualificationCertificate, placeIssues, dateIssues, expireDate, id) => {
+  return { qualificationCertificate, placeIssues, dateIssues, expireDate, id };
 };
 
-const PassportsTable = () => {
-  const { currentUserData, updatePassportsData, deletePassportData } = useContext(UserContext);
+const QualificationCertificates = () => {
+  const { currentUserData, updateQualificationCertificatesData, deleteQualificationCertificateData } =
+    useContext(UserContext);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (currentUserData && currentUserData.passports) {
-      const rows = currentUserData.passports.map((passport, index) =>
+    if (currentUserData && currentUserData.qualifications) {
+      const rows = currentUserData.qualifications.map((qualificationCertificate, index) =>
         createData(
-          passport.nationality,
-          passport.number,
-          passport.placeIssues,
-          passport.dateIssues,
-          passport.expireDate,
-          passport.id,
+          qualificationCertificate.qualificationCertificate,
+          qualificationCertificate.placeIssues,
+          qualificationCertificate.dateIssues,
+          qualificationCertificate.expireDate,
+          qualificationCertificate.id,
           index
         )
       );
@@ -74,13 +73,13 @@ const PassportsTable = () => {
   };
 
   const saveButtonClick = data => {
-    updatePassportsData(data);
+    updateQualificationCertificatesData(data);
     setOpen(false);
     reset();
   };
 
-  const handleDelete = passportId => {
-    deletePassportData(passportId);
+  const handleDelete = qualificationId => {
+    deleteQualificationCertificateData(qualificationId);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -112,7 +111,7 @@ const PassportsTable = () => {
                   return (
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'delete' ? (
-                        <div className={s.deletePassportButton}>
+                        <div className={s.deleteQualificationCertificateButton}>
                           <Button onClick={() => handleDelete(row.id)}>
                             <DeleteIcon sx={{ color: pink[500] }} />
                           </Button>
@@ -139,33 +138,23 @@ const PassportsTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addPassportButton}>
+      <div className={s.addQualificationCertificateButton}>
         <Button onClick={handleClickOpen}>
           <AddCircleIcon />
         </Button>
       </div>
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Add Passport</DialogTitle>
+          <DialogTitle>Qualifications / Certificates</DialogTitle>
           <DialogContent>
-            <div className={s.newPassportContainer}>
+            <div className={s.newQualificationCertificateContainer}>
               <div>
                 <TextField
-                  {...register('nationality')}
+                  {...register('qualificationCertificate')}
                   required
                   size="small"
                   InputLabelProps={{ shrink: true }}
-                  label="Nationality"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('number')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Number"
+                  label="Qualification /Certificate"
                   style={{ width: '160px' }}
                 />
               </div>
@@ -205,7 +194,7 @@ const PassportsTable = () => {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Passport</Button>
+            <Button type="submit">Add Qualification / Certificate</Button>
           </DialogActions>
         </form>
       </Dialog>
@@ -213,4 +202,4 @@ const PassportsTable = () => {
   );
 };
 
-export default PassportsTable;
+export default QualificationCertificates;

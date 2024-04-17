@@ -23,6 +23,20 @@ const MainInfo = () => {
   } = useForm();
 
   useEffect(() => {
+    setValue('name', currentUserData.name);
+    setValue('surname', currentUserData.surname);
+    setValue('middleName', currentUserData.middleName);
+    setValue('dateOfBirth', currentUserData.dateOfBirth);
+    setValue('age', currentUserData.age);
+    setValue('placeOfBirth', currentUserData.placeOfBirth);
+    setValue('nationality', currentUserData.nationality);
+    setValue('presentRank', currentUserData.presentRank);
+    setValue('rankApplied', currentUserData.rankApplied);
+    setValue('availableDate', currentUserData.availableDate);
+    setValue('vesselType', currentUserData.vesselType);
+  }, [currentUserData]);
+
+  useEffect(() => {
     if (
       watch().name !== currentUserData.name ||
       watch().surname !== currentUserData.surname ||
@@ -40,20 +54,6 @@ const MainInfo = () => {
       setButtonSaveIsActive(false);
     }
   }, [watch()]);
-
-  useEffect(() => {
-    setValue('name', currentUserData.name);
-    setValue('surname', currentUserData.surname);
-    setValue('middleName', currentUserData.middleName);
-    setValue('dateOfBirth', currentUserData.dateOfBirth);
-    setValue('age', currentUserData.age);
-    setValue('placeOfBirth', currentUserData.placeOfBirth);
-    setValue('nationality', currentUserData.nationality);
-    setValue('presentRank', currentUserData.presentRank);
-    setValue('rankApplied', currentUserData.rankApplied);
-    setValue('availableDate', currentUserData.availableDate);
-    setValue('vesselType', currentUserData.vesselType);
-  }, [currentUserData]);
 
   if (isFetching) {
     return (
@@ -75,6 +75,7 @@ const MainInfo = () => {
                     required
                     size="small"
                     label="Name"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '160px' }}
                   />
                 </div>
@@ -84,6 +85,7 @@ const MainInfo = () => {
                     required
                     size="small"
                     label="Surname"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '160px' }}
                   />
                 </div>
@@ -92,6 +94,7 @@ const MainInfo = () => {
                     {...register('middleName')}
                     size="small"
                     label="Middle Name"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '160px' }}
                   />
                 </div>
@@ -112,6 +115,7 @@ const MainInfo = () => {
                     {...register('nationality')}
                     size="small"
                     label="Nationality"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '160px' }}
                   />
                 </div>
@@ -122,6 +126,7 @@ const MainInfo = () => {
                     {...register('placeOfBirth')}
                     style={{ width: '335px' }}
                     size="small"
+                    InputLabelProps={{ shrink: true }}
                     label="Place of Birth"
                   />
                 </div>
@@ -133,6 +138,7 @@ const MainInfo = () => {
                     {...register('presentRank')}
                     size="small"
                     label="Present Rank"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '160px' }}
                   />
                 </div>
@@ -141,6 +147,7 @@ const MainInfo = () => {
                     {...register('rankApplied')}
                     size="small"
                     label="Rank Applied For"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '160px' }}
                   />
                 </div>
@@ -151,6 +158,7 @@ const MainInfo = () => {
                     {...register('vesselType')}
                     size="small"
                     label="Vessel Type"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '160px' }}
                   />
                 </div>

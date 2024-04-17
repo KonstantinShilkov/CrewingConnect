@@ -217,22 +217,236 @@ function UserContextProvider({ children }) {
     }
   };
 
+  const updateLicencesData = async data => {
+    const userLicences = collection(db, 'users', currentUserUid, 'licences');
+    const newLicenceId = doc(userLicences);
+    try {
+      await setDoc(newLicenceId, {
+        id: newLicenceId.id,
+        national: data.national ? data.national : '',
+        gradeOfLicence: data.gradeOfLicence ? data.gradeOfLicence : '',
+        licenceType: data.licenceType ? data.licenceType : '',
+        number: data.number ? data.number : '',
+        placeIssues: data.placeIssues ? data.placeIssues : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteLicenceData = async licenceId => {
+    try {
+      const userLicences = collection(db, 'users', currentUserUid, 'licences');
+      const licenceIdDoc = doc(userLicences, licenceId);
+      await deleteDoc(licenceIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateQualificationCertificatesData = async data => {
+    const userQualifications = collection(db, 'users', currentUserUid, 'qualifications');
+    const newQualificationId = doc(userQualifications);
+    console.log(data);
+    try {
+      await setDoc(newQualificationId, {
+        id: newQualificationId.id,
+        qualificationCertificate: data.qualificationCertificate ? data.qualificationCertificate : '',
+        placeIssues: data.placeIssues ? data.placeIssues : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteQualificationCertificateData = async qualificationId => {
+    try {
+      const userQualifications = collection(db, 'users', currentUserUid, 'qualifications');
+      const qualificationIdDoc = doc(userQualifications, qualificationId);
+      await deleteDoc(qualificationIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateSeamanBooksData = async data => {
+    const userSeamanBooks = collection(db, 'users', currentUserUid, 'seamanBooks');
+    const newSeamanBookId = doc(userSeamanBooks);
+    console.log(data);
+    try {
+      await setDoc(newSeamanBookId, {
+        id: newSeamanBookId.id,
+        national: data.national ? data.national : '',
+        number: data.number ? data.number : '',
+        placeIssues: data.placeIssues ? data.placeIssues : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteSeamanBookData = async seamanBookId => {
+    try {
+      const userSeamanBooks = collection(db, 'users', currentUserUid, 'seamanBooks');
+      const seamanBookIdDoc = doc(userSeamanBooks, seamanBookId);
+      await deleteDoc(seamanBookIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateExperienceData = async data => {
+    const userExperience = collection(db, 'users', currentUserUid, 'experience');
+    const newExperienceId = doc(userExperience);
+    console.log(data);
+    try {
+      await setDoc(newExperienceId, {
+        id: newExperienceId.id,
+        vesselName: data.vesselName ? data.vesselName : '',
+        typeTrade: data.typeTrade ? data.typeTrade : '',
+        engineType: data.engineType ? data.engineType : '',
+        vesselType: data.vesselType ? data.vesselType : '',
+        companyName: data.companyName ? data.companyName : '',
+        rank: data.rank ? data.rank : '',
+        fromDate: data.fromDate ? data.fromDate : '',
+        tillDate: data.tillDate ? data.tillDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteExperienceData = async experienceId => {
+    try {
+      const userExperience = collection(db, 'users', currentUserUid, 'experience');
+      const experienceIdDoc = doc(userExperience, experienceId);
+      await deleteDoc(experienceIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateCourseData = async data => {
+    const userCourses = collection(db, 'users', currentUserUid, 'courses');
+    const newCourseId = doc(userCourses);
+    try {
+      await setDoc(newCourseId, {
+        id: newCourseId.id,
+        courseAttended: data.courseAttended ? data.courseAttended : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+        remarks: data.remarks ? data.remarks : 'No remarks',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+  const deleteCourseData = async courseId => {
+    try {
+      const userCourses = collection(db, 'users', currentUserUid, 'courses');
+      const courseIdDoc = doc(userCourses, courseId);
+      await deleteDoc(courseIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
   const getCurrentUserData = async userId => {
     try {
       const userDoc = doc(db, 'users', userId);
       const userVisas = collection(userDoc, 'visas');
       const userPassports = collection(userDoc, 'passports');
+      const userLicences = collection(userDoc, 'licences');
+      const userQualifications = collection(userDoc, 'qualifications');
+      const userSeamanBooks = collection(userDoc, 'seamanBooks');
+      const userExperience = collection(userDoc, 'experience');
+      const userCourses = collection(userDoc, 'courses');
 
       const userDocSnap = await getDoc(userDoc);
       const userVisasSnap = await getDocs(userVisas);
       const userPassportsSnap = await getDocs(userPassports);
+      const userLicencesSnap = await getDocs(userLicences);
+      const userQualificationsSnap = await getDocs(userQualifications);
+      const userSeamanBooksSnap = await getDocs(userSeamanBooks);
+      const userExperienceSnap = await getDocs(userExperience);
+      const userCoursesSnap = await getDocs(userCourses);
 
       if (userDocSnap.exists()) {
         const userData = userDocSnap.data();
         const visas = userVisasSnap.docs.map(doc => ({ ...doc.data() }));
         const passports = userPassportsSnap.docs.map(doc => ({ ...doc.data() }));
+        const licences = userLicencesSnap.docs.map(doc => ({ ...doc.data() }));
+        const qualifications = userQualificationsSnap.docs.map(doc => ({ ...doc.data() }));
+        const seamanBooks = userSeamanBooksSnap.docs.map(doc => ({ ...doc.data() }));
+        const experience = userExperienceSnap.docs.map(doc => ({ ...doc.data() }));
+        const courses = userCoursesSnap.docs.map(doc => ({ ...doc.data() }));
 
-        const updatedUserData = { ...userData, visas, passports };
+        const updatedUserData = {
+          ...userData,
+          visas,
+          passports,
+          licences,
+          qualifications,
+          seamanBooks,
+          experience,
+          courses,
+        };
         console.log(updatedUserData);
         setCurrentUserData(updatedUserData);
         setIsFetching(false);
@@ -265,6 +479,16 @@ function UserContextProvider({ children }) {
     deleteVisaData,
     updatePassportsData,
     deletePassportData,
+    updateLicencesData,
+    deleteLicenceData,
+    updateQualificationCertificatesData,
+    deleteQualificationCertificateData,
+    updateSeamanBooksData,
+    deleteSeamanBookData,
+    updateExperienceData,
+    deleteExperienceData,
+    updateCourseData,
+    deleteCourseData,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

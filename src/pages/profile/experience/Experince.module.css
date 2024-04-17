@@ -5,40 +5,22 @@
   align-self: center;
 }
 
-.addVisaButton {
-  display: flex;
-  flex: 1;
-  justify-content: end;
-}
-.addPassportButton {
+.addExperienceButton {
   display: flex;
   flex: 1;
   justify-content: end;
 }
 
-.newVisaContainer {
+.newExperienceContainer {
   display: flex;
   flex: 1;
   gap: 10px;
   margin-top: 10px;
-}
-
-.newPassportContainer {
-  display: flex;
-  flex: 1;
-  gap: 10px;
   flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.toggleButton {
-  display: flex;
-  justify-content: center;
 }
 
 .card {
   /* width: 538px; */
-  /* width: 690px; */
   width: 720px;
   height: 390px;
 }
