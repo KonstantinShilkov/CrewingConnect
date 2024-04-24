@@ -16,7 +16,6 @@ const Vacancies = () => {
       </div>
     );
   }
-  console.log(vacanciesList);
   return (
     <div className={s.main}>
       <div className={s.filter}>

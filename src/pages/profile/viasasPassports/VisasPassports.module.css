@@ -4,39 +4,41 @@
   justify-content: center;
   align-self: center;
 }
-.contactsContainer {
-  display: flex;
-}
 
-.phoneEmail {
-  display: flex;
-  flex: 1;
-  gap: 16px;
-  margin: 15px;
-}
-
-.homeAddress {
-  display: flex;
-  flex: 1;
-  margin: 15px;
-}
-.nearestAirport {
-  display: flex;
-  flex: 1;
-  margin: 15px;
-}
-
-.button {
+.addVisaButton {
   display: flex;
   flex: 1;
   justify-content: end;
-  margin-right: 15px;
-  margin-top: 190px;
+}
+.addPassportButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+}
+
+.newVisaContainer {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.newPassportContainer {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.toggleButton {
+  display: flex;
+  justify-content: center;
 }
 
 .card {
   /* width: 538px; */
-  height: 390px;
   /* width: 690px; */
   /* width: 720px; */
+  height: 390px;
 }

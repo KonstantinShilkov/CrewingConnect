@@ -10,15 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import { db } from '../config/firebase';
-import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { calculateAge } from '../utils';
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { calculateAge, calculateTotalExperienceInDays } from '../utils';
 
 const initialData = {
   isAuth: false,
 };
 
 export const UserContext = createContext(initialData);
-
 function UserContextProvider({ children }) {
   const [isAuth, setIsAuth] = useState([false]);
   const navigate = useNavigate();
@@ -36,7 +35,6 @@ function UserContextProvider({ children }) {
         setCurrentUserEmail(user.email);
         setCurrentUserUid(user.uid);
         setIsAuth(true);
-        // getCurrentUserData(user.uid);
       } else {
         setIsAuth(false);
       }
@@ -69,15 +67,11 @@ function UserContextProvider({ children }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
       const user = userCredential.user;
-      console.log(user);
+      // console.log(user);
       setIsAuth(true);
       setDoc(doc(db, 'users', user.uid), {
         email: user.email,
       });
-
-      // getCurrentUserData(currentUserUid);
-      // navigate('/vacancies');
-      // console.log(currentUserData);
       reset();
 
       navigate('profile/edit/maininfo');
@@ -106,22 +100,9 @@ function UserContextProvider({ children }) {
     }
   };
 
-  // const calculateAge = dateOfBirth => {
-  //   const today = new Date();
-  //   const birthDate = new Date(dateOfBirth);
-  //   let age = today.getFullYear() - birthDate.getFullYear();
-  //   const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  //   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-  //     age--;
-  //   }
-
-  //   return age;
-  // };
-
   const updateMainInfoData = async data => {
+    const userDoc = doc(db, 'users', currentUserUid);
     try {
-      const userDoc = doc(db, 'users', currentUserUid);
       await updateDoc(userDoc, {
         name: data.name ? data.name : '',
         surname: data.surname ? data.surname : '',
@@ -163,14 +144,312 @@ function UserContextProvider({ children }) {
     }
   };
 
+  const updateVisasData = async data => {
+    const userVisas = collection(db, 'users', currentUserUid, 'visas');
+    const newVisaId = doc(userVisas);
+    try {
+      await setDoc(newVisaId, {
+        id: newVisaId.id,
+        visaType: data.visaType ? data.visaType : '',
+        visaCountry: data.visaCountry ? data.visaCountry : '',
+        visaValidDate: data.visaValidDate ? data.visaValidDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteVisaData = async visaId => {
+    try {
+      const userVisas = collection(db, 'users', currentUserUid, 'visas');
+      const visaDoc = doc(userVisas, visaId);
+      await deleteDoc(visaDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updatePassportsData = async data => {
+    const userPassports = collection(db, 'users', currentUserUid, 'passports');
+    const newPassportId = doc(userPassports);
+    try {
+      await setDoc(newPassportId, {
+        id: newPassportId.id,
+        nationality: data.nationality ? data.nationality : '',
+        number: data.number ? data.number : '',
+        placeIssues: data.placeIssues ? data.placeIssues : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deletePassportData = async passportId => {
+    try {
+      const userPassports = collection(db, 'users', currentUserUid, 'passports');
+      const passportDoc = doc(userPassports, passportId);
+      await deleteDoc(passportDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateLicensesData = async data => {
+    const userLicenses = collection(db, 'users', currentUserUid, 'licenses');
+    const newLicensesId = doc(userLicenses);
+    try {
+      await setDoc(newLicensesId, {
+        id: newLicensesId.id,
+        national: data.national ? data.national : '',
+        gradeOfLicenses: data.gradeOfLicenses ? data.gradeOfLicenses : '',
+        licenseType: data.licenseType ? data.licenseType : '',
+        number: data.number ? data.number : '',
+        placeIssues: data.placeIssues ? data.placeIssues : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteLicensesData = async licenseId => {
+    try {
+      const userLicenses = collection(db, 'users', currentUserUid, 'licenses');
+      const licenseIdDoc = doc(userLicenses, licenseId);
+      await deleteDoc(licenseIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateQualificationCertificatesData = async data => {
+    const userQualifications = collection(db, 'users', currentUserUid, 'qualifications');
+    const newQualificationId = doc(userQualifications);
+    console.log(data);
+    try {
+      await setDoc(newQualificationId, {
+        id: newQualificationId.id,
+        qualificationCertificate: data.qualificationCertificate ? data.qualificationCertificate : '',
+        placeIssues: data.placeIssues ? data.placeIssues : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteQualificationCertificateData = async qualificationId => {
+    try {
+      const userQualifications = collection(db, 'users', currentUserUid, 'qualifications');
+      const qualificationIdDoc = doc(userQualifications, qualificationId);
+      await deleteDoc(qualificationIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateSeamanBooksData = async data => {
+    const userSeamanBooks = collection(db, 'users', currentUserUid, 'seamanBooks');
+    const newSeamanBookId = doc(userSeamanBooks);
+    console.log(data);
+    try {
+      await setDoc(newSeamanBookId, {
+        id: newSeamanBookId.id,
+        national: data.national ? data.national : '',
+        number: data.number ? data.number : '',
+        placeIssues: data.placeIssues ? data.placeIssues : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteSeamanBookData = async seamanBookId => {
+    try {
+      const userSeamanBooks = collection(db, 'users', currentUserUid, 'seamanBooks');
+      const seamanBookIdDoc = doc(userSeamanBooks, seamanBookId);
+      await deleteDoc(seamanBookIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateExperienceData = async data => {
+    const userExperience = collection(db, 'users', currentUserUid, 'experience');
+    const newExperienceId = doc(userExperience);
+    const experienceInDays = calculateTotalExperienceInDays(data.fromDate, data.tillDate);
+
+    try {
+      await setDoc(newExperienceId, {
+        id: newExperienceId.id,
+        vesselName: data.vesselName ? data.vesselName : '',
+        typeTrade: data.typeTrade ? data.typeTrade : '',
+        engineType: data.engineType ? data.engineType : '',
+        vesselType: data.vesselType ? data.vesselType : '',
+        companyName: data.companyName ? data.companyName : '',
+        rank: data.rank ? data.rank : '',
+        fromDate: data.fromDate ? data.fromDate : '',
+        tillDate: data.tillDate ? data.tillDate : '',
+        experienceInDays: experienceInDays ? experienceInDays : '',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const deleteExperienceData = async experienceId => {
+    try {
+      const userExperience = collection(db, 'users', currentUserUid, 'experience');
+      const experienceIdDoc = doc(userExperience, experienceId);
+      await deleteDoc(experienceIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
+  const updateCourseData = async data => {
+    const userCourses = collection(db, 'users', currentUserUid, 'courses');
+    const newCourseId = doc(userCourses);
+    try {
+      await setDoc(newCourseId, {
+        id: newCourseId.id,
+        courseAttended: data.courseAttended ? data.courseAttended : '',
+        dateIssues: data.dateIssues ? data.dateIssues : '',
+        expireDate: data.expireDate ? data.expireDate : '',
+        remarks: data.remarks ? data.remarks : 'No remarks',
+      });
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Saved');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+  const deleteCourseData = async courseId => {
+    try {
+      const userCourses = collection(db, 'users', currentUserUid, 'courses');
+      const courseIdDoc = doc(userCourses, courseId);
+      await deleteDoc(courseIdDoc);
+      getCurrentUserData(currentUserUid);
+      enqueueSnackbar('Deleted');
+      reset();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
+
   const getCurrentUserData = async userId => {
     try {
-      const docRef = doc(db, 'users', userId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setCurrentUserData(docSnap.data());
+      const userDoc = doc(db, 'users', userId);
+      const userVisas = collection(userDoc, 'visas');
+      const userPassports = collection(userDoc, 'passports');
+      const userLicenses = collection(userDoc, 'licenses');
+      const userQualifications = collection(userDoc, 'qualifications');
+      const userSeamanBooks = collection(userDoc, 'seamanBooks');
+      const userExperience = collection(userDoc, 'experience');
+      const userCourses = collection(userDoc, 'courses');
+
+      const userDocSnap = await getDoc(userDoc);
+      const userVisasSnap = await getDocs(userVisas);
+      const userPassportsSnap = await getDocs(userPassports);
+      const userLicensesSnap = await getDocs(userLicenses);
+      const userQualificationsSnap = await getDocs(userQualifications);
+      const userSeamanBooksSnap = await getDocs(userSeamanBooks);
+      const userExperienceSnap = await getDocs(userExperience);
+      const userCoursesSnap = await getDocs(userCourses);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        const visas = userVisasSnap.docs.map(doc => ({ ...doc.data() }));
+        const passports = userPassportsSnap.docs.map(doc => ({ ...doc.data() }));
+        const licenses = userLicensesSnap.docs.map(doc => ({ ...doc.data() }));
+        const qualifications = userQualificationsSnap.docs.map(doc => ({ ...doc.data() }));
+        const seamanBooks = userSeamanBooksSnap.docs.map(doc => ({ ...doc.data() }));
+        const experience = userExperienceSnap.docs.map(doc => ({ ...doc.data() }));
+        const courses = userCoursesSnap.docs.map(doc => ({ ...doc.data() }));
+
+        const updatedUserData = {
+          ...userData,
+          visas,
+          passports,
+          licenses,
+          qualifications,
+          seamanBooks,
+          experience,
+          courses,
+        };
+        setCurrentUserData(updatedUserData);
         setIsFetching(false);
-        console.log(docSnap.data());
       } else {
         console.log('No such document!');
       }
@@ -195,6 +474,20 @@ function UserContextProvider({ children }) {
     getCurrentUserData,
     currentUserUid,
     isFetching,
+    updateVisasData,
+    deleteVisaData,
+    updatePassportsData,
+    deletePassportData,
+    updateLicensesData,
+    deleteLicensesData,
+    updateQualificationCertificatesData,
+    deleteQualificationCertificateData,
+    updateSeamanBooksData,
+    deleteSeamanBookData,
+    updateExperienceData,
+    deleteExperienceData,
+    updateCourseData,
+    deleteCourseData,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
