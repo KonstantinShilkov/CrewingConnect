@@ -11,14 +11,13 @@ import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import { db } from '../config/firebase';
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { calculateAge } from '../utils';
+import { calculateAge, calculateTotalExperienceInDays } from '../utils';
 
 const initialData = {
   isAuth: false,
 };
 
 export const UserContext = createContext(initialData);
-
 function UserContextProvider({ children }) {
   const [isAuth, setIsAuth] = useState([false]);
   const navigate = useNavigate();
@@ -217,15 +216,15 @@ function UserContextProvider({ children }) {
     }
   };
 
-  const updateLicencesData = async data => {
-    const userLicences = collection(db, 'users', currentUserUid, 'licences');
-    const newLicenceId = doc(userLicences);
+  const updateLicensesData = async data => {
+    const userLicenses = collection(db, 'users', currentUserUid, 'licenses');
+    const newLicensesId = doc(userLicenses);
     try {
-      await setDoc(newLicenceId, {
-        id: newLicenceId.id,
+      await setDoc(newLicensesId, {
+        id: newLicensesId.id,
         national: data.national ? data.national : '',
-        gradeOfLicence: data.gradeOfLicence ? data.gradeOfLicence : '',
-        licenceType: data.licenceType ? data.licenceType : '',
+        gradeOfLicenses: data.gradeOfLicenses ? data.gradeOfLicenses : '',
+        licenseType: data.licenseType ? data.licenseType : '',
         number: data.number ? data.number : '',
         placeIssues: data.placeIssues ? data.placeIssues : '',
         dateIssues: data.dateIssues ? data.dateIssues : '',
@@ -241,11 +240,11 @@ function UserContextProvider({ children }) {
     }
   };
 
-  const deleteLicenceData = async licenceId => {
+  const deleteLicensesData = async licenseId => {
     try {
-      const userLicences = collection(db, 'users', currentUserUid, 'licences');
-      const licenceIdDoc = doc(userLicences, licenceId);
-      await deleteDoc(licenceIdDoc);
+      const userLicenses = collection(db, 'users', currentUserUid, 'licenses');
+      const licenseIdDoc = doc(userLicenses, licenseId);
+      await deleteDoc(licenseIdDoc);
       getCurrentUserData(currentUserUid);
       enqueueSnackbar('Deleted');
       reset();
@@ -334,7 +333,8 @@ function UserContextProvider({ children }) {
   const updateExperienceData = async data => {
     const userExperience = collection(db, 'users', currentUserUid, 'experience');
     const newExperienceId = doc(userExperience);
-    console.log(data);
+    const experienceInDays = calculateTotalExperienceInDays(data.fromDate, data.tillDate);
+
     try {
       await setDoc(newExperienceId, {
         id: newExperienceId.id,
@@ -346,6 +346,7 @@ function UserContextProvider({ children }) {
         rank: data.rank ? data.rank : '',
         fromDate: data.fromDate ? data.fromDate : '',
         tillDate: data.tillDate ? data.tillDate : '',
+        experienceInDays: experienceInDays ? experienceInDays : '',
       });
       getCurrentUserData(currentUserUid);
       enqueueSnackbar('Saved');
@@ -412,7 +413,7 @@ function UserContextProvider({ children }) {
       const userDoc = doc(db, 'users', userId);
       const userVisas = collection(userDoc, 'visas');
       const userPassports = collection(userDoc, 'passports');
-      const userLicences = collection(userDoc, 'licences');
+      const userLicenses = collection(userDoc, 'licenses');
       const userQualifications = collection(userDoc, 'qualifications');
       const userSeamanBooks = collection(userDoc, 'seamanBooks');
       const userExperience = collection(userDoc, 'experience');
@@ -421,7 +422,7 @@ function UserContextProvider({ children }) {
       const userDocSnap = await getDoc(userDoc);
       const userVisasSnap = await getDocs(userVisas);
       const userPassportsSnap = await getDocs(userPassports);
-      const userLicencesSnap = await getDocs(userLicences);
+      const userLicensesSnap = await getDocs(userLicenses);
       const userQualificationsSnap = await getDocs(userQualifications);
       const userSeamanBooksSnap = await getDocs(userSeamanBooks);
       const userExperienceSnap = await getDocs(userExperience);
@@ -431,7 +432,7 @@ function UserContextProvider({ children }) {
         const userData = userDocSnap.data();
         const visas = userVisasSnap.docs.map(doc => ({ ...doc.data() }));
         const passports = userPassportsSnap.docs.map(doc => ({ ...doc.data() }));
-        const licences = userLicencesSnap.docs.map(doc => ({ ...doc.data() }));
+        const licenses = userLicensesSnap.docs.map(doc => ({ ...doc.data() }));
         const qualifications = userQualificationsSnap.docs.map(doc => ({ ...doc.data() }));
         const seamanBooks = userSeamanBooksSnap.docs.map(doc => ({ ...doc.data() }));
         const experience = userExperienceSnap.docs.map(doc => ({ ...doc.data() }));
@@ -441,16 +442,14 @@ function UserContextProvider({ children }) {
           ...userData,
           visas,
           passports,
-          licences,
+          licenses,
           qualifications,
           seamanBooks,
           experience,
           courses,
         };
-        console.log(updatedUserData);
         setCurrentUserData(updatedUserData);
         setIsFetching(false);
-        console.log(currentUserData);
       } else {
         console.log('No such document!');
       }
@@ -479,8 +478,8 @@ function UserContextProvider({ children }) {
     deleteVisaData,
     updatePassportsData,
     deletePassportData,
-    updateLicencesData,
-    deleteLicenceData,
+    updateLicensesData,
+    deleteLicensesData,
     updateQualificationCertificatesData,
     deleteQualificationCertificateData,
     updateSeamanBooksData,

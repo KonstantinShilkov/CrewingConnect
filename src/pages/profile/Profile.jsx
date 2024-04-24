@@ -11,6 +11,7 @@ import ProfileTable from './ProfileTable';
 
 const Profile = () => {
   const { currentUserData, isFetching } = useContext(UserContext);
+  const dayjs = require('dayjs');
 
   if (isFetching) {
     return (
@@ -84,7 +85,11 @@ const Profile = () => {
                   fullWidth
                   label="Availibale Date"
                   style={{ width: '150px' }}
-                  value={currentUserData.availableDate ? currentUserData.availableDate : ''}
+                  value={
+                    currentUserData.availableDate
+                      ? dayjs(currentUserData.availableDate).format('DD.MM.YYYY')
+                      : ''
+                  }
                   InputLabelProps={{ shrink: true }}
                   InputProps={{
                     readOnly: true,

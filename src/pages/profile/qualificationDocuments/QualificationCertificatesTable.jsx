@@ -2,10 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import s from './QualificationDocuments.module.css';
 import {
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Table,
   TableBody,
   TableCell,
@@ -13,13 +9,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
+import AlertDialogSlide from '../../../common/DeleteNotification';
+import QualificationCertificatesTableDialog from './QualificationCertificatesTableDialog';
 
 const columns = [
   { id: 'qualificationCertificate', label: 'Qualification/Certificate' },
@@ -39,6 +36,8 @@ const QualificationCertificates = () => {
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const dayjs = require('dayjs');
 
   useEffect(() => {
     if (currentUserData && currentUserData.qualifications) {
@@ -46,8 +45,8 @@ const QualificationCertificates = () => {
         createData(
           qualificationCertificate.qualificationCertificate,
           qualificationCertificate.placeIssues,
-          qualificationCertificate.dateIssues,
-          qualificationCertificate.expireDate,
+          dayjs(qualificationCertificate.dateIssues).format('DD-MM-YYYY'),
+          dayjs(qualificationCertificate.expireDate).format('DD-MM-YYYY'),
           qualificationCertificate.id,
           index
         )
@@ -80,6 +79,7 @@ const QualificationCertificates = () => {
 
   const handleDelete = qualificationId => {
     deleteQualificationCertificateData(qualificationId);
+    setOpenDeleteDialog(false);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -88,6 +88,14 @@ const QualificationCertificates = () => {
   const handleClose = () => {
     setOpen(false);
     reset();
+  };
+
+  const handleClickOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
   };
 
   return (
@@ -112,9 +120,17 @@ const QualificationCertificates = () => {
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'delete' ? (
                         <div className={s.deleteQualificationCertificateButton}>
-                          <Button onClick={() => handleDelete(row.id)}>
+                          <Button onClick={handleClickOpenDeleteDialog}>
                             <DeleteIcon sx={{ color: pink[500] }} />
                           </Button>
+                          <div>
+                            <AlertDialogSlide
+                              openDeleteDialog={openDeleteDialog}
+                              handleCloseDeleteDialog={handleCloseDeleteDialog}
+                              handleDelete={handleDelete}
+                              rowId={row.id}
+                            />
+                          </div>
                         </div>
                       ) : column.format && typeof value === 'number' ? (
                         column.format(value)
@@ -143,61 +159,13 @@ const QualificationCertificates = () => {
           <AddCircleIcon />
         </Button>
       </div>
-      <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Qualifications / Certificates</DialogTitle>
-          <DialogContent>
-            <div className={s.newQualificationCertificateContainer}>
-              <div>
-                <TextField
-                  {...register('qualificationCertificate')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Qualification /Certificate"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('placeIssues')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Place Issues"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('dateIssues')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="Date Issues"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('expireDate')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="Expire Date"
-                  style={{ width: '160px' }}
-                />
-              </div>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Qualification / Certificate</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+      <QualificationCertificatesTableDialog
+        open={open}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        saveButtonClick={saveButtonClick}
+        register={register}
+      />
     </div>
   );
 };

@@ -5,7 +5,7 @@
   align-self: center;
 }
 
-.addLicenceButton {
+.addLicensesButton {
   display: flex;
   flex: 1;
   justify-content: end;
@@ -23,7 +23,7 @@
   justify-content: end;
 }
 
-.newLicenceContainer {
+.newLicensesContainer {
   display: flex;
   flex: 1;
   gap: 10px;
@@ -55,6 +55,6 @@
 .card {
   /* width: 538px; */
   /* width: 690px; */
-  width: 720px;
+  /* width: 720px; */
   height: 390px;
 }

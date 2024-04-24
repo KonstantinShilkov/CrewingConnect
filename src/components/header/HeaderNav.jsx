@@ -21,6 +21,12 @@ const HeaderNav = () => {
           style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
           Contacts
         </NavLink>
+        <NavLink
+          className={s.item}
+          to="askai"
+          style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
+          Ask AI
+        </NavLink>
       </div>
 
       {isAuth ? (

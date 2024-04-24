@@ -12,6 +12,7 @@
 .textFieldName {
   display: flex;
   flex: 1;
+  justify-content: center;
   gap: 15px;
   margin: 15px;
 }
@@ -19,6 +20,7 @@
 .textFieldDateOfBirthNationality {
   display: flex;
   flex: 1;
+  justify-content: center;
   gap: 15px;
   margin: 15px;
 }
@@ -53,8 +55,10 @@
 }
 
 .card {
+  display: flex;
+  /* flex: 1; */
   /* width: 538px; */
   height: 390px;
   /* width: 690px; */
-  width: 720px;
+  /* width: 720px; */
 }

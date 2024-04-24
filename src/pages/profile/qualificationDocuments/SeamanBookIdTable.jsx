@@ -2,10 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import s from './QualificationDocuments.module.css';
 import {
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Table,
   TableBody,
   TableCell,
@@ -13,13 +9,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
+import AlertDialogSlide from '../../../common/DeleteNotification';
+import SeamanBookIdTableDialog from './SeamanBookIdTableDialog';
 
 const columns = [
   { id: 'national', label: 'National' },
@@ -39,6 +36,8 @@ const SeamanBookIdTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const dayjs = require('dayjs');
 
   useEffect(() => {
     if (currentUserData && currentUserData.seamanBooks) {
@@ -47,8 +46,8 @@ const SeamanBookIdTable = () => {
           seamanBook.national,
           seamanBook.number,
           seamanBook.placeIssues,
-          seamanBook.dateIssues,
-          seamanBook.expireDate,
+          dayjs(seamanBook.dateIssues).format('DD-MM-YYYY'),
+          dayjs(seamanBook.expireDate).format('DD-MM-YYYY'),
           seamanBook.id,
           index
         )
@@ -81,6 +80,7 @@ const SeamanBookIdTable = () => {
 
   const handleDelete = seamanBookId => {
     deleteSeamanBookData(seamanBookId);
+    setOpenDeleteDialog(false);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -89,6 +89,14 @@ const SeamanBookIdTable = () => {
   const handleClose = () => {
     setOpen(false);
     reset();
+  };
+
+  const handleClickOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
   };
 
   return (
@@ -113,9 +121,17 @@ const SeamanBookIdTable = () => {
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'delete' ? (
                         <div className={s.deleteSeamanBookButton}>
-                          <Button onClick={() => handleDelete(row.id)}>
+                          <Button onClick={handleClickOpenDeleteDialog}>
                             <DeleteIcon sx={{ color: pink[500] }} />
                           </Button>
+                          <div>
+                            <AlertDialogSlide
+                              openDeleteDialog={openDeleteDialog}
+                              handleCloseDeleteDialog={handleCloseDeleteDialog}
+                              handleDelete={handleDelete}
+                              rowId={row.id}
+                            />
+                          </div>
                         </div>
                       ) : column.format && typeof value === 'number' ? (
                         column.format(value)
@@ -144,71 +160,13 @@ const SeamanBookIdTable = () => {
           <AddCircleIcon />
         </Button>
       </div>
-      <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Seaman's Book / Identification Documents</DialogTitle>
-          <DialogContent>
-            <div className={s.newSeamanBookContainer}>
-              <div>
-                <TextField
-                  {...register('national')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="National"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('number')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Number"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('placeIssues')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Place Issues"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('dateIssues')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="Date Issues"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('expireDate')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="Expire Date"
-                  style={{ width: '160px' }}
-                />
-              </div>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Seaman's book or id</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+      <SeamanBookIdTableDialog
+        open={open}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        saveButtonClick={saveButtonClick}
+        register={register}
+      />
     </div>
   );
 };

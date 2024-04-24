@@ -29,7 +29,7 @@ const VisasPassports = () => {
     <div className={s.visasPasrotsContainer}>
       <Card className={s.card}>
         <div className={s.toggleButton}>
-          <ToggleButtonGroup value={value} exclusive onChange={handleChange}>
+          <ToggleButtonGroup value={value} onChange={handleChange}>
             <Button value="visas">Visas </Button>
             <Button value="passports">Passports</Button>
           </ToggleButtonGroup>

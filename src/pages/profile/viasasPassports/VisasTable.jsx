@@ -2,10 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import s from './VisasPassports.module.css';
 import {
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Table,
   TableBody,
   TableCell,
@@ -13,13 +9,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
+import AlertDialogSlide from '../../../common/DeleteNotification';
+import VisasTableDialog from './VisasTableDialog';
 
 const columns = [
   { id: 'country', label: 'Country', minWidth: 100 },
@@ -37,11 +34,19 @@ const VisasTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const dayjs = require('dayjs');
 
   useEffect(() => {
     if (currentUserData && currentUserData.visas) {
       const rows = currentUserData.visas.map((visa, index) =>
-        createData(visa.visaCountry, visa.visaType, visa.visaValidDate, visa.id, index)
+        createData(
+          visa.visaCountry,
+          visa.visaType,
+          dayjs(visa.visaValidDate).format('DD-MM-YYYY'),
+          visa.id,
+          index
+        )
       );
       setRows(rows);
     }
@@ -71,6 +76,7 @@ const VisasTable = () => {
 
   const handleDelete = visaId => {
     deleteVisaData(visaId);
+    setOpenDeleteDialog(false);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -79,6 +85,14 @@ const VisasTable = () => {
   const handleClose = () => {
     setOpen(false);
     reset();
+  };
+
+  const handleClickOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
   };
 
   return (
@@ -104,9 +118,17 @@ const VisasTable = () => {
                       <TableCell key={column.id} align={column.align}>
                         {column.id === 'delete' ? (
                           <div className={s.deleteVisaButton}>
-                            <Button onClick={() => handleDelete(row.id)}>
+                            <Button onClick={handleClickOpenDeleteDialog}>
                               <DeleteIcon sx={{ color: pink[500] }} />
                             </Button>
+                            <div>
+                              <AlertDialogSlide
+                                openDeleteDialog={openDeleteDialog}
+                                handleCloseDeleteDialog={handleCloseDeleteDialog}
+                                handleDelete={handleDelete}
+                                rowId={row.id}
+                              />
+                            </div>
                           </div>
                         ) : column.format && typeof value === 'number' ? (
                           column.format(value)
@@ -136,50 +158,13 @@ const VisasTable = () => {
           <AddCircleIcon />
         </Button>
       </div>
-      <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Add Visa</DialogTitle>
-          <DialogContent>
-            <div className={s.newVisaContainer}>
-              <div>
-                <TextField
-                  {...register('visaCountry')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Country"
-                  style={{ width: '150px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('visaType')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Type"
-                  style={{ width: '150px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('visaValidDate')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="Valid Until"
-                  style={{ width: '150px' }}
-                />
-              </div>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Visa</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+      <VisasTableDialog
+        open={open}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        saveButtonClick={saveButtonClick}
+        register={register}
+      />
     </div>
   );
 };

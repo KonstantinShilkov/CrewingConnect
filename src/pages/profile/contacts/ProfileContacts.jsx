@@ -55,29 +55,25 @@ const ProfileContacts = () => {
           <Grid item xs={12}>
             <form onSubmit={handleSubmit(saveButtonClick)}>
               <div className={s.phoneEmail}>
-                <div>
-                  <TextField
-                    {...register('mobPhone')}
-                    size="small"
-                    style={{ width: '247px' }}
-                    label="Mobile Pnone"
-                    InputLabelProps={{ shrink: true }}
-                    placeholder=" + (Country code) number "
-                  />
-                </div>
-                <div>
-                  <TextField
-                    {...register('email')}
-                    size="small"
-                    style={{ width: '247px' }}
-                    label="Email"
-                    type="email"
-                    InputLabelProps={{ shrink: true }}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </div>
+                <TextField
+                  {...register('mobPhone')}
+                  size="small"
+                  style={{ width: '247px' }}
+                  label="Mobile Pnone"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder=" + (Country code) number "
+                />
+                <TextField
+                  {...register('email')}
+                  size="small"
+                  style={{ width: '247px' }}
+                  label="Email"
+                  type="email"
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
               </div>
               <div className={s.homeAddress}>
                 <TextField

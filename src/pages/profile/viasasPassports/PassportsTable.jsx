@@ -2,10 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import s from './VisasPassports.module.css';
 import {
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Table,
   TableBody,
   TableCell,
@@ -13,13 +9,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
+import AlertDialogSlide from '../../../common/DeleteNotification';
+import PassportsTableDialog from './PassportsTableDialog';
 
 const columns = [
   { id: 'nationality', label: 'Nationality' },
@@ -39,6 +36,8 @@ const PassportsTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const dayjs = require('dayjs');
 
   useEffect(() => {
     if (currentUserData && currentUserData.passports) {
@@ -47,8 +46,8 @@ const PassportsTable = () => {
           passport.nationality,
           passport.number,
           passport.placeIssues,
-          passport.dateIssues,
-          passport.expireDate,
+          dayjs(passport.dateIssues).format('DD-MM-YYYY'),
+          dayjs(passport.expireDates).format('DD-MM-YYYY'),
           passport.id,
           index
         )
@@ -81,6 +80,7 @@ const PassportsTable = () => {
 
   const handleDelete = passportId => {
     deletePassportData(passportId);
+    setOpenDeleteDialog(false);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -89,6 +89,14 @@ const PassportsTable = () => {
   const handleClose = () => {
     setOpen(false);
     reset();
+  };
+
+  const handleClickOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
   };
 
   return (
@@ -113,9 +121,17 @@ const PassportsTable = () => {
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'delete' ? (
                         <div className={s.deletePassportButton}>
-                          <Button onClick={() => handleDelete(row.id)}>
+                          <Button onClick={handleClickOpenDeleteDialog}>
                             <DeleteIcon sx={{ color: pink[500] }} />
                           </Button>
+                          <div>
+                            <AlertDialogSlide
+                              openDeleteDialog={openDeleteDialog}
+                              handleCloseDeleteDialog={handleCloseDeleteDialog}
+                              handleDelete={handleDelete}
+                              rowId={row.id}
+                            />
+                          </div>
                         </div>
                       ) : column.format && typeof value === 'number' ? (
                         column.format(value)
@@ -144,71 +160,13 @@ const PassportsTable = () => {
           <AddCircleIcon />
         </Button>
       </div>
-      <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Add Passport</DialogTitle>
-          <DialogContent>
-            <div className={s.newPassportContainer}>
-              <div>
-                <TextField
-                  {...register('nationality')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Nationality"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('number')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Number"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('placeIssues')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Place Issues"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('dateIssues')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="Date Issues"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('expireDate')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="Expire Date"
-                  style={{ width: '160px' }}
-                />
-              </div>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Passport</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+      <PassportsTableDialog
+        open={open}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        saveButtonClick={saveButtonClick}
+        register={register}
+      />
     </div>
   );
 };

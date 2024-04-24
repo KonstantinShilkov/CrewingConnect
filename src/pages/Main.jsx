@@ -8,6 +8,7 @@ import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/user-context';
 import Profile from './profile/Profile';
 import EditProfile from './profile/EditProfile';
+import AskAI from './askAI/AskAI';
 
 function Main() {
   const { isAuth, currentUserUid, onAuthState, getCurrentUserData } = useContext(UserContext);
@@ -34,6 +35,7 @@ function Main() {
           <Route path="/" element={<Navigate to="/vacancies" replace />} />
           <Route path="/vacancies" element={<Vacancies />} />
           <Route path="/contacts" element={<Contacts />} />
+          <Route path="/askai" element={<AskAI />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit/*" element={<EditProfile />} />
           <Route path="/login" element={<Login />} />

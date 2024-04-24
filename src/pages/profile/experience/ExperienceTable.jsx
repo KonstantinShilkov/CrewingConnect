@@ -2,10 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import s from './Experince.module.css';
 import {
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Table,
   TableBody,
   TableCell,
@@ -13,13 +9,15 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
+import AlertDialogSlide from '../../../common/DeleteNotification';
+import ExperienceTableDialog from './ExperienceTableDialog';
+import _ from 'lodash';
 
 const columns = [
   { id: 'vesselName', label: 'Vessel Name' },
@@ -52,10 +50,13 @@ const ExperienceTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const dayjs = require('dayjs');
 
   useEffect(() => {
     if (currentUserData && currentUserData.experience) {
-      const rows = currentUserData.experience.map((exp, index) =>
+      const sortedRowsByDate = _.sortBy(currentUserData.experience, 'fromDate').reverse();
+      const rows = sortedRowsByDate.map((exp, index) =>
         createData(
           exp.vesselName,
           exp.typeTrade,
@@ -63,8 +64,8 @@ const ExperienceTable = () => {
           exp.vesselType,
           exp.companyName,
           exp.rank,
-          exp.fromDate,
-          exp.tillDate,
+          dayjs(exp.fromDate).format('DD-MM-YYYY'),
+          dayjs(exp.tillDate).format('DD-MM-YYYY'),
           exp.id,
           index
         )
@@ -97,6 +98,7 @@ const ExperienceTable = () => {
 
   const handleDelete = experienceId => {
     deleteExperienceData(experienceId);
+    setOpenDeleteDialog(false);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -105,6 +107,14 @@ const ExperienceTable = () => {
   const handleClose = () => {
     setOpen(false);
     reset();
+  };
+
+  const handleClickOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
   };
 
   return (
@@ -121,6 +131,7 @@ const ExperienceTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* {sortedRows.map((row, index) => ( */}
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
               <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                 {columns.map(column => {
@@ -129,9 +140,17 @@ const ExperienceTable = () => {
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'delete' ? (
                         <div className={s.deleteExperineceButton}>
-                          <Button onClick={() => handleDelete(row.id)}>
+                          <Button onClick={handleClickOpenDeleteDialog}>
                             <DeleteIcon sx={{ color: pink[500] }} />
                           </Button>
+                          <div>
+                            <AlertDialogSlide
+                              openDeleteDialog={openDeleteDialog}
+                              handleCloseDeleteDialog={handleCloseDeleteDialog}
+                              handleDelete={handleDelete}
+                              rowId={row.id}
+                            />
+                          </div>
                         </div>
                       ) : column.format && typeof value === 'number' ? (
                         column.format(value)
@@ -147,7 +166,7 @@ const ExperienceTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[3, 10, 15]}
+        rowsPerPageOptions={[3, 5]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
@@ -160,101 +179,14 @@ const ExperienceTable = () => {
           <AddCircleIcon />
         </Button>
       </div>
-      <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={handleSubmit(saveButtonClick)}>
-          <DialogTitle>Add Experience</DialogTitle>
-          <DialogContent>
-            <div className={s.newExperienceContainer}>
-              <div>
-                <TextField
-                  {...register('vesselName')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Vessel Name"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('typeTrade')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Type/kW or Area/DW"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('engineType')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Steam or Motor"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('vesselType')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Vessel Type"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('companyName')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Company Name"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('rank')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  label="Rank"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('fromDate')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="From"
-                  style={{ width: '160px' }}
-                />
-              </div>
-              <div>
-                <TextField
-                  {...register('tillDate')}
-                  required
-                  size="small"
-                  InputLabelProps={{ shrink: true }}
-                  type="date"
-                  label="Till"
-                  style={{ width: '160px' }}
-                />
-              </div>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add Experience</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+
+      <ExperienceTableDialog
+        open={open}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        saveButtonClick={saveButtonClick}
+        register={register}
+      />
     </div>
   );
 };
