@@ -18,7 +18,6 @@ const AskAI = () => {
   const askButtonClick = async data => {
     console.log(data.question);
     const inputValue = data.question.trim();
-    const apiKey = 'Bearer sk-proj-CsN58QAsPBJMrmWqDvuRT3BlbkFJIZCCh8RCHBOhS2txdDiC';
 
     if (!inputValue) {
       setResponse('Please enter a symbol');
