@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './QualificationDocuments.module.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Controller } from 'react-hook-form';
+import CountrySelectDialogs from '../../../common/CountrySelectDialogs';
 
 const SeamanBookIdTableDialog = props => {
   return (
@@ -9,58 +11,53 @@ const SeamanBookIdTableDialog = props => {
         <DialogTitle>Seaman's Book / Identification Documents</DialogTitle>
         <DialogContent>
           <div className={s.newSeamanBookContainer}>
-            <div>
-              <TextField
+            <Controller
+              control={props.control}
+              name="national"
+              render={({ field }) => <CountrySelectDialogs field={field} />}
+            />
+            {/* <TextField
                 {...props.register('national')}
                 required
                 size="small"
                 InputLabelProps={{ shrink: true }}
                 label="National"
                 style={{ width: '160px' }}
-              />
-            </div>
-            <div>
-              <TextField
-                {...props.register('number')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Number"
-                style={{ width: '160px' }}
-              />
-            </div>
-            <div>
-              <TextField
-                {...props.register('placeIssues')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Place Issues"
-                style={{ width: '160px' }}
-              />
-            </div>
-            <div>
-              <TextField
-                {...props.register('dateIssues')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                type="date"
-                label="Date Issues"
-                style={{ width: '160px' }}
-              />
-            </div>
-            <div>
-              <TextField
-                {...props.register('expireDate')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                type="date"
-                label="Expire Date"
-                style={{ width: '160px' }}
-              />
-            </div>
+              /> */}
+            <TextField
+              {...props.register('number')}
+              required
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              label="Number"
+              style={{ width: '160px' }}
+            />
+            <TextField
+              {...props.register('placeIssues')}
+              required
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              label="Place Issues"
+              style={{ width: '160px' }}
+            />
+            <TextField
+              {...props.register('dateIssues')}
+              required
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              type="date"
+              label="Date Issues"
+              style={{ width: '160px' }}
+            />
+            <TextField
+              {...props.register('expireDate')}
+              required
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              type="date"
+              label="Expire Date"
+              style={{ width: '160px' }}
+            />
           </div>
         </DialogContent>
         <DialogActions>

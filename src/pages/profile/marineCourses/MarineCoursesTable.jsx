@@ -99,6 +99,11 @@ const MarineCoursesTable = () => {
 
   return (
     <div>
+      <div className={s.addCourseButton}>
+        <Button onClick={handleClickOpen}>
+          <AddCircleIcon />
+        </Button>
+      </div>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -153,11 +158,7 @@ const MarineCoursesTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addCourseButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
+
       <MarineCoursesTableDialog
         open={open}
         handleClose={handleClose}

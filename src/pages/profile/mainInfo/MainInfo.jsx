@@ -1,10 +1,11 @@
-import { Grid, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import s from './MainInfo.module.css';
 import { UserContext } from '../../../context/user-context';
 import { Button, Card } from '@mui/joy';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Preloader from '../../../common/Preloader';
+import CountrySelect from '../../../common/CountrySelectMainInfo';
 
 const MainInfo = () => {
   const { updateMainInfoData, currentUserData, isFetching } = useContext(UserContext);
@@ -17,12 +18,14 @@ const MainInfo = () => {
   const {
     handleSubmit,
     register,
+    control,
     setValue,
     watch,
     formState: { errors },
   } = useForm();
 
   useEffect(() => {
+    console.log(currentUserData.nationality);
     setValue('name', currentUserData.name);
     setValue('surname', currentUserData.surname);
     setValue('middleName', currentUserData.middleName);
@@ -65,8 +68,6 @@ const MainInfo = () => {
   return (
     <div className={s.mainInfoContainer}>
       <Card className={s.card}>
-        {/* <Grid container spacing={2}> */}
-        {/* <Grid item xs={12}> */}
         <form onSubmit={handleSubmit(saveButtonClick)}>
           <div className={s.textFieldName}>
             <TextField
@@ -75,7 +76,6 @@ const MainInfo = () => {
               size="small"
               label="Name"
               InputLabelProps={{ shrink: true }}
-              // style={{ width: '160px' }}
             />
             <TextField
               {...register('surname')}
@@ -83,14 +83,12 @@ const MainInfo = () => {
               size="small"
               label="Surname"
               InputLabelProps={{ shrink: true }}
-              // style={{ width: '160px' }}
             />
             <TextField
               {...register('middleName')}
               size="small"
               label="Middle Name"
               InputLabelProps={{ shrink: true }}
-              // style={{ width: '160px' }}
             />
           </div>
           <div className={s.textFieldDateOfBirthNationality}>
@@ -100,33 +98,20 @@ const MainInfo = () => {
               type="date"
               InputLabelProps={{ shrink: true }}
               label="Date of Birth"
-              // style={{ width: '160px' }}
             />
-            {/* <CountrySelect register={register} setValue={setValue} currentUserData={currentUserData} />
-                </div> */}
-            <TextField
-              {...register('nationality')}
-              size="small"
-              label="Nationality"
-              InputLabelProps={{ shrink: true }}
-              // style={{ width: '160px' }}
+            <Controller
+              control={control}
+              name="nationality"
+              render={({ field }) => (
+                <CountrySelect field={field} initialNationality={currentUserData.nationality} />
+              )}
             />
             <TextField
               {...register('placeOfBirth')}
-              // style={{ width: '335px' }}
               size="small"
               InputLabelProps={{ shrink: true }}
               label="Place of Birth"
             />
-          </div>
-          <div className={s.textFieldPlaceOfBirth}>
-            {/* <TextField
-              {...register('placeOfBirth')}
-              style={{ width: '335px' }}
-              size="small"
-              InputLabelProps={{ shrink: true }}
-              label="Place of Birth"
-            /> */}
           </div>
 
           <div className={s.textFieldRank}>
@@ -135,14 +120,12 @@ const MainInfo = () => {
               size="small"
               label="Present Rank"
               InputLabelProps={{ shrink: true }}
-              style={{ width: '160px' }}
             />
             <TextField
               {...register('rankApplied')}
               size="small"
               label="Rank Applied For"
               InputLabelProps={{ shrink: true }}
-              style={{ width: '160px' }}
             />
           </div>
           <div className={s.textFieldAvailableDate}>
@@ -151,14 +134,12 @@ const MainInfo = () => {
               size="small"
               label="Vessel Type"
               InputLabelProps={{ shrink: true }}
-              style={{ width: '160px' }}
             />
             <TextField
               {...register('availableDate')}
               size="small"
               type="date"
               InputLabelProps={{ shrink: true }}
-              style={{ width: '160px' }}
               label="Available Date"
             />
           </div>
@@ -170,8 +151,6 @@ const MainInfo = () => {
             </div>
           )}
         </form>
-        {/* </Grid> */}
-        {/* </Grid> */}
       </Card>
     </div>
   );

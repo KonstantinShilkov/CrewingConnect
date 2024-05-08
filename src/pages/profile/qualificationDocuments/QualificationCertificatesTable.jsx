@@ -100,6 +100,11 @@ const QualificationCertificates = () => {
 
   return (
     <div>
+      <div className={s.addQualificationCertificateButton}>
+        <Button onClick={handleClickOpen}>
+          <AddCircleIcon />
+        </Button>
+      </div>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -154,11 +159,7 @@ const QualificationCertificates = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addQualificationCertificateButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
+
       <QualificationCertificatesTableDialog
         open={open}
         handleClose={handleClose}

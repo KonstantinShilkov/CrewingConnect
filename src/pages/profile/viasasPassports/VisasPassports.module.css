@@ -5,22 +5,31 @@
   align-self: center;
 }
 
+
 .addVisaButton {
   display: flex;
   flex: 1;
   justify-content: end;
+  margin-right: 86px;
 }
 .addPassportButton {
   display: flex;
   flex: 1;
   justify-content: end;
+  margin-right: 47px;
 }
 
 .newVisaContainer {
   display: flex;
   flex: 1;
-  gap: 10px;
+  gap: 10px; 
+  width: 100%;
   margin-top: 10px;
+}
+
+.newVisaContainer > div {
+  width: 100%;
+  flex-grow: 1;
 }
 
 .newPassportContainer {
@@ -37,8 +46,6 @@
 }
 
 .card {
-  /* width: 538px; */
-  /* width: 690px; */
-  /* width: 720px; */
-  height: 390px;
+  height: 400px;
+  width: 875px;
 }

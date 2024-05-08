@@ -60,6 +60,7 @@ const SeamanBookIdTable = () => {
     handleSubmit,
     register,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -101,6 +102,11 @@ const SeamanBookIdTable = () => {
 
   return (
     <div>
+      <div className={s.addSeamanBookButton}>
+        <Button onClick={handleClickOpen}>
+          <AddCircleIcon />
+        </Button>
+      </div>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -155,17 +161,14 @@ const SeamanBookIdTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addSeamanBookButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
+
       <SeamanBookIdTableDialog
         open={open}
         handleClose={handleClose}
         handleSubmit={handleSubmit}
         saveButtonClick={saveButtonClick}
         register={register}
+        control={control}
       />
     </div>
   );

@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './VisasPassports.module.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Controller } from 'react-hook-form';
+import CountrySelectDialogs from '../../../common/CountrySelectDialogs';
 
 const VisasTableDialog = props => {
   return (
@@ -9,37 +11,26 @@ const VisasTableDialog = props => {
         <DialogTitle>Add Visa</DialogTitle>
         <DialogContent>
           <div className={s.newVisaContainer}>
-            <div>
-              <TextField
-                {...props.register('visaCountry')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Country"
-                style={{ width: '150px' }}
-              />
-            </div>
-            <div>
-              <TextField
-                {...props.register('visaType')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Type"
-                style={{ width: '150px' }}
-              />
-            </div>
-            <div>
-              <TextField
-                {...props.register('visaValidDate')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                type="date"
-                label="Valid Until"
-                style={{ width: '150px' }}
-              />
-            </div>
+            <Controller
+              control={props.control}
+              name="visaCountry"
+              render={({ field }) => <CountrySelectDialogs field={field} />}
+            />
+            <TextField
+              {...props.register('visaType')}
+              required
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              label="Type"
+            />
+            <TextField
+              {...props.register('visaValidDate')}
+              required
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              type="date"
+              label="Valid Until"
+            />
           </div>
         </DialogContent>
         <DialogActions>

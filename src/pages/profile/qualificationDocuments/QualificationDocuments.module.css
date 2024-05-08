@@ -9,18 +9,21 @@
   display: flex;
   flex: 1;
   justify-content: end;
+  margin-right: 17px;
 }
 
 .addSeamanBookButton {
   display: flex;
   flex: 1;
   justify-content: end;
+  margin-right: 49px;
 }
 
 .addQualificationCertificateButton {
   display: flex;
   flex: 1;
   justify-content: end;
+  margin-right: 53px;
 }
 
 .newLicensesContainer {
@@ -53,8 +56,6 @@
 }
 
 .card {
-  /* width: 538px; */
-  /* width: 690px; */
-  /* width: 720px; */
-  height: 390px;
+  height: 440px;
+  width: 875px;
 }

@@ -73,6 +73,7 @@ const LicensesTable = () => {
     handleSubmit,
     register,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -114,6 +115,11 @@ const LicensesTable = () => {
 
   return (
     <div>
+      <div className={s.addLicensesButton}>
+        <Button onClick={handleClickOpen}>
+          <AddCircleIcon />
+        </Button>
+      </div>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -168,17 +174,14 @@ const LicensesTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addLicensesButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
+
       <LicensesTableDialog
         open={open}
         handleClose={handleClose}
         handleSubmit={handleSubmit}
         saveButtonClick={saveButtonClick}
         register={register}
+        control={control}
       />
     </div>
   );

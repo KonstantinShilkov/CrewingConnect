@@ -60,6 +60,7 @@ const PassportsTable = () => {
     handleSubmit,
     register,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -101,6 +102,11 @@ const PassportsTable = () => {
 
   return (
     <div>
+      <div className={s.addPassportButton}>
+        <Button onClick={handleClickOpen}>
+          <AddCircleIcon />
+        </Button>
+      </div>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -155,17 +161,14 @@ const PassportsTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addPassportButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
+
       <PassportsTableDialog
         open={open}
         handleClose={handleClose}
         handleSubmit={handleSubmit}
         saveButtonClick={saveButtonClick}
         register={register}
+        control={control}
       />
     </div>
   );

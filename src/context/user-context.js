@@ -28,6 +28,7 @@ function UserContextProvider({ children }) {
   const [currentUserUid, setCurrentUserUid] = useState(null);
   const [currentUserData, setCurrentUserData] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
+  const countriesCollectionRef = doc(db, 'commondata', 'countries');
 
   const onAuthState = () => {
     onAuthStateChanged(auth, user => {
@@ -147,6 +148,7 @@ function UserContextProvider({ children }) {
   const updateVisasData = async data => {
     const userVisas = collection(db, 'users', currentUserUid, 'visas');
     const newVisaId = doc(userVisas);
+    console.log(data);
     try {
       await setDoc(newVisaId, {
         id: newVisaId.id,
@@ -488,6 +490,7 @@ function UserContextProvider({ children }) {
     deleteExperienceData,
     updateCourseData,
     deleteCourseData,
+    countriesCollectionRef,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

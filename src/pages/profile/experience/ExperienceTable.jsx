@@ -119,6 +119,11 @@ const ExperienceTable = () => {
 
   return (
     <div>
+      <div className={s.addExperienceButton}>
+        <Button onClick={handleClickOpen}>
+          <AddCircleIcon />
+        </Button>
+      </div>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -174,12 +179,6 @@ const ExperienceTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addExperienceButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
-
       <ExperienceTableDialog
         open={open}
         handleClose={handleClose}

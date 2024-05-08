@@ -3,49 +3,39 @@ import s from './AskAI.module.css';
 import { useForm } from 'react-hook-form';
 import { IconButton, TextField } from '@mui/material';
 import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
-import axios from 'axios';
-import { useState } from 'react';
+import { useAskAI } from './hooks/useAskAI';
+import { useContext } from 'react';
+import { UserContext } from '../../context/user-context';
+import Preloader from '../../common/Preloader';
 
 const AskAI = () => {
-  const [response, setResponse] = useState('');
+  const { getAnswer, response, error, isFetchingAnswer } = useAskAI();
+  const { isFetching } = useContext(UserContext);
 
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm();
-
-  const askButtonClick = async data => {
-    console.log(data.question);
-    const inputValue = data.question.trim();
-
-    if (!inputValue) {
-      setResponse('Please enter a symbol');
-      return;
+  const buttonOnClickAsk = data => {
+    if (data.question !== '') {
+      getAnswer(data);
     }
-    try {
-      const res = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
-        {
-          prompt: inputValue,
-          max_tokens: 50,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: apiKey,
-          },
-        }
-      );
-      setResponse(res.data.choices[0].text.trim());
-    } catch (error) {
-      setResponse('Error fetching data');
-    }
+
+    reset();
   };
+
+  if (isFetching) {
+    return (
+      <div className={s.preloader}>
+        <Preloader />
+      </div>
+    );
+  }
   return (
     <div className={s.mainContainer}>
-      <div className={s.answerBox}>{response}</div>
-      <form onSubmit={handleSubmit(askButtonClick)}>
+      <form onSubmit={handleSubmit(buttonOnClickAsk)}>
         <div className={s.inputTextField}>
           <TextField
             {...register('question')}
@@ -59,6 +49,15 @@ const AskAI = () => {
           </IconButton>
         </div>
       </form>
+      {isFetchingAnswer ? (
+        <div className={s.preloaderWithMarginTop}>
+          <Preloader />
+        </div>
+      ) : (
+        <div className={s.answerBox}>
+          <div className={s.answerText}>{response}</div>
+        </div>
+      )}
     </div>
   );
 };

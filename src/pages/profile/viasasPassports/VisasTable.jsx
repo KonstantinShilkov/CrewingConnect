@@ -56,6 +56,7 @@ const VisasTable = () => {
     handleSubmit,
     register,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -97,6 +98,11 @@ const VisasTable = () => {
 
   return (
     <div>
+      <div className={s.addVisaButton}>
+        <Button onClick={handleClickOpen}>
+          <AddCircleIcon />
+        </Button>
+      </div>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -153,17 +159,14 @@ const VisasTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <div className={s.addVisaButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
+
       <VisasTableDialog
         open={open}
         handleClose={handleClose}
         handleSubmit={handleSubmit}
         saveButtonClick={saveButtonClick}
         register={register}
+        control={control}
       />
     </div>
   );
