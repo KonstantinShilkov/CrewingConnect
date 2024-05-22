@@ -11,13 +11,15 @@ import EditProfile from './profile/EditProfile';
 import AskAI from './askAI/AskAI';
 
 function Main() {
-  const { isAuth, currentUserUid, onAuthState, getCurrentUserData } = useContext(UserContext);
+  const { isAuth, currentUserUid, onAuthState, getCurrentUserData, getAvatar, avatar } =
+    useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     onAuthState();
+    getAvatar();
     getCurrentUserData(currentUserUid);
-  }, [currentUserUid]);
+  }, [currentUserUid, avatar]);
 
   // useEffect(() => {
   //   //     if (isAuth) {

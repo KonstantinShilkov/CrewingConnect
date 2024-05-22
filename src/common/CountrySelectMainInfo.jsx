@@ -57,7 +57,7 @@ const CountrySelectMainInfo = ({ field, initialNationality }) => {
         <TextField
           {...params}
           InputLabelProps={{ shrink: true }}
-          label="Choose a country"
+          label="Nationality"
           InputProps={{
             ...params.InputProps,
             endAdornment: (

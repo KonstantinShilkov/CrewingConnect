@@ -16,7 +16,6 @@ const ProfileNavbar = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
     navigate(`/profile/edit/${newValue}`);
   };
   return (

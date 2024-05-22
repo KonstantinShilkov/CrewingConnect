@@ -20,14 +20,14 @@ import ExperienceTableDialog from './ExperienceTableDialog';
 import _ from 'lodash';
 
 const columns = [
-  { id: 'vesselName', label: 'Vessel Name' },
-  { id: 'typeTrade', label: 'Type / kW; Trading/DW' },
-  { id: 'engineType', label: 'S/M' },
+  { id: 'vesselName', label: 'Vessel Name', minWidth: 100 },
+  { id: 'typeTrade', label: 'Type / kW; Trading/DW', minWidth: 85 },
+  { id: 'engineType', label: 'Type (S/M)', minWidth: 75 },
   { id: 'vesselType', label: 'Vessel Type' },
   { id: 'companyName', label: 'Company Name' },
   { id: 'rank', label: 'Rank' },
-  { id: 'fromDate', label: 'From' },
-  { id: 'tillDate', label: 'Till' },
+  { id: 'fromDate', label: 'From', minWidth: 85 },
+  { id: 'tillDate', label: 'Till', minWidth: 85 },
   { id: 'delete', label: '' },
 ];
 const createData = (
@@ -171,7 +171,7 @@ const ExperienceTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[3, 5]}
+        rowsPerPageOptions={[3]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

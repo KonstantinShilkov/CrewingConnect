@@ -28,34 +28,106 @@
 
 .newLicensesContainer {
   display: flex;
-  flex: 1;
+  flex-direction: column;
   gap: 10px;
   margin-top: 10px;
-  flex-wrap: wrap;
+}
+.countryGrade {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+
+.countryGrade > div {
+  width: 100%;
+  flex-grow: 1;
+}
+.numberPlace {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+
+.numberPlace > div {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.typeDate {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+
+.typeDate > div {
+  width: 100%;
+  flex-grow: 1;
 }
 
 .newSeamanBookContainer {
   display: flex;
-  flex: 1;
+  flex-direction: column;
   gap: 10px;
   margin-top: 10px;
-  flex-wrap: wrap;
+}
+
+.nationalityNumber {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+.nationalityNumber > div {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.datePlace {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+.datePlace > div {
+  width: 100%;
+  flex-grow: 1;
 }
 
 .newQualificationCertificateContainer {
   display: flex;
-  flex: 1;
+  flex-direction: column;
   gap: 10px;
   margin-top: 10px;
-  flex-wrap: wrap;
 }
-
+.qualificationPlace {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+.qualificationPlace > div {
+  width: 100%;
+  flex-grow: 1;
+}
+.date {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+.date > div {
+  width: 100%;
+  flex-grow: 1;
+}
 .toggleButton {
   display: flex;
   justify-content: center;
 }
 
 .card {
-  height: 440px;
+  height: 400px;
   width: 875px;
 }

@@ -5,7 +5,6 @@
   align-self: center;
 }
 
-
 .addVisaButton {
   display: flex;
   flex: 1;
@@ -21,23 +20,57 @@
 
 .newVisaContainer {
   display: flex;
-  flex: 1;
-  gap: 10px; 
-  width: 100%;
+  flex-direction: column;
+  gap: 10px;
   margin-top: 10px;
 }
-
-.newVisaContainer > div {
+.country {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+.country > div {
+  width: 100%;
+  flex-grow: 1;
+}
+.typeDate {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+.typeDate > div {
   width: 100%;
   flex-grow: 1;
 }
 
 .newPassportContainer {
   display: flex;
-  flex: 1;
+  flex-direction: column;
   gap: 10px;
-  flex-wrap: wrap;
   margin-top: 10px;
+}
+.countryNumber {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+.countryNumber > div {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.datePlace {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 10px;
+}
+.datePlace > div {
+  width: 100%;
+  flex-grow: 1;
 }
 
 .toggleButton {

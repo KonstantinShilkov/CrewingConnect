@@ -37,7 +37,7 @@ const CountrySelectDialogs = ({ field, initialNationality }) => {
         <TextField
           {...params}
           InputLabelProps={{ shrink: true }}
-          label="Choose a country"
+          label="National"
           InputProps={{
             ...params.InputProps,
             endAdornment: (

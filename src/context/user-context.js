@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { auth } from '../config/firebase';
+import { auth, db, storage } from '../config/firebase';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -9,9 +9,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
-import { db } from '../config/firebase';
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { calculateAge, calculateTotalExperienceInDays } from '../utils';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const initialData = {
   isAuth: false,
@@ -29,6 +29,7 @@ function UserContextProvider({ children }) {
   const [currentUserData, setCurrentUserData] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const countriesCollectionRef = doc(db, 'commondata', 'countries');
+  const [avatar, setAvatar] = useState();
 
   const onAuthState = () => {
     onAuthStateChanged(auth, user => {
@@ -95,6 +96,8 @@ function UserContextProvider({ children }) {
       setIsAuth(false);
       navigate('/login');
       setCurrentUserData([]);
+      setCurrentUserUid(null);
+      setAvatar();
       console.log(currentUserData);
     } catch (error) {
       console.log(error);
@@ -410,6 +413,29 @@ function UserContextProvider({ children }) {
     }
   };
 
+  const uploadAvatar = async avatarUpload => {
+    if (!avatarUpload || !currentUserUid) return;
+    const avatarsFolderRef = ref(storage, `avatarsFolder/${currentUserUid}`);
+    try {
+      await uploadBytes(avatarsFolderRef, avatarUpload);
+      getAvatar();
+      enqueueSnackbar('Avatar uploaded successfully');
+    } catch (err) {
+      console.error(err);
+      enqueueSnackbar('Failed to upload avatar');
+    }
+  };
+
+  const getAvatar = async () => {
+    const avatarRef = ref(storage, `avatarsFolder/${currentUserUid}`);
+    try {
+      const avatarUrl = await getDownloadURL(avatarRef);
+      setAvatar(avatarUrl);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const getCurrentUserData = async userId => {
     try {
       const userDoc = doc(db, 'users', userId);
@@ -491,6 +517,9 @@ function UserContextProvider({ children }) {
     updateCourseData,
     deleteCourseData,
     countriesCollectionRef,
+    uploadAvatar,
+    getAvatar,
+    avatar,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

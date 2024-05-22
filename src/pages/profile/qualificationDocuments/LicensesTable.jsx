@@ -19,13 +19,13 @@ import AlertDialogSlide from '../../../common/DeleteNotification';
 import LicensesTableDialog from './LicensesTableDialog';
 
 const columns = [
-  { id: 'national', label: 'National' },
-  { id: 'gradeOfLicenses', label: 'Grade of Licenses' },
-  { id: 'licenseType', label: 'Type (S/M)' },
-  { id: 'number', label: 'Number' },
-  { id: 'placeIssues', label: 'Place Issues' },
-  { id: 'dateIssues', label: 'Date Issues' },
-  { id: 'expireDate', label: 'Expire Date' },
+  { id: 'national', label: 'National', minWidth: 130 },
+  { id: 'gradeOfLicenses', label: 'Grade of Licenses', minWidth: 120 },
+  { id: 'licenseType', label: 'Type (S/M)', minWidth: 75 },
+  { id: 'number', label: 'Number', minWidth: 100 },
+  { id: 'placeIssues', label: 'Place Issues', minWidth: 100 },
+  { id: 'dateIssues', label: 'Date Issues', minWidth: 85 },
+  { id: 'expireDate', label: 'Expire Date', minWidth: 85 },
   { id: 'delete', label: '' },
 ];
 const createData = (
@@ -166,7 +166,7 @@ const LicensesTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[3, 10, 15]}
+        rowsPerPageOptions={[3]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

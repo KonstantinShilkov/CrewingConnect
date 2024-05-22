@@ -25,7 +25,6 @@ const MainInfo = () => {
   } = useForm();
 
   useEffect(() => {
-    console.log(currentUserData.nationality);
     setValue('name', currentUserData.name);
     setValue('surname', currentUserData.surname);
     setValue('middleName', currentUserData.middleName);

@@ -11,26 +11,30 @@ const VisasTableDialog = props => {
         <DialogTitle>Add Visa</DialogTitle>
         <DialogContent>
           <div className={s.newVisaContainer}>
-            <Controller
-              control={props.control}
-              name="visaCountry"
-              render={({ field }) => <CountrySelectDialogs field={field} />}
-            />
-            <TextField
-              {...props.register('visaType')}
-              required
-              size="small"
-              InputLabelProps={{ shrink: true }}
-              label="Type"
-            />
-            <TextField
-              {...props.register('visaValidDate')}
-              required
-              size="small"
-              InputLabelProps={{ shrink: true }}
-              type="date"
-              label="Valid Until"
-            />
+            <div className={s.country}>
+              <Controller
+                control={props.control}
+                name="visaCountry"
+                render={({ field }) => <CountrySelectDialogs field={field} />}
+              />
+            </div>
+            <div className={s.typeDate}>
+              <TextField
+                {...props.register('visaType')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Type"
+              />
+              <TextField
+                {...props.register('visaValidDate')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                type="date"
+                label="Valid Until"
+              />
+            </div>
           </div>
         </DialogContent>
         <DialogActions>

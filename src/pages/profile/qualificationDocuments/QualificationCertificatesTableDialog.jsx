@@ -9,27 +9,23 @@ const QualificationCertificatesTableDialog = props => {
         <DialogTitle>Qualifications / Certificates</DialogTitle>
         <DialogContent>
           <div className={s.newQualificationCertificateContainer}>
-            <div>
+            <div className={s.qualificationPlace}>
               <TextField
                 {...props.register('qualificationCertificate')}
                 required
                 size="small"
                 InputLabelProps={{ shrink: true }}
                 label="Qualification /Certificate"
-                style={{ width: '160px' }}
               />
-            </div>
-            <div>
               <TextField
                 {...props.register('placeIssues')}
                 required
                 size="small"
                 InputLabelProps={{ shrink: true }}
                 label="Place Issues"
-                style={{ width: '160px' }}
               />
             </div>
-            <div>
+            <div className={s.date}>
               <TextField
                 {...props.register('dateIssues')}
                 required
@@ -37,10 +33,7 @@ const QualificationCertificatesTableDialog = props => {
                 InputLabelProps={{ shrink: true }}
                 type="date"
                 label="Date Issues"
-                style={{ width: '160px' }}
               />
-            </div>
-            <div>
               <TextField
                 {...props.register('expireDate')}
                 required
@@ -48,7 +41,6 @@ const QualificationCertificatesTableDialog = props => {
                 InputLabelProps={{ shrink: true }}
                 type="date"
                 label="Expire Date"
-                style={{ width: '160px' }}
               />
             </div>
           </div>

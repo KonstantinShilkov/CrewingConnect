@@ -11,45 +11,45 @@ const PassportsTableDialog = props => {
         <DialogTitle>Add Passport</DialogTitle>
         <DialogContent>
           <div className={s.newPassportContainer}>
-            <Controller
-              control={props.control}
-              name="nationality"
-              render={({ field }) => <CountrySelectDialogs field={field} />}
-            />
-            <TextField
-              {...props.register('number')}
-              required
-              size="small"
-              InputLabelProps={{ shrink: true }}
-              label="Number"
-              style={{ width: '160px' }}
-            />
-            <TextField
-              {...props.register('placeIssues')}
-              required
-              size="small"
-              InputLabelProps={{ shrink: true }}
-              label="Place Issues"
-              style={{ width: '160px' }}
-            />
-            <TextField
-              {...props.register('dateIssues')}
-              required
-              size="small"
-              InputLabelProps={{ shrink: true }}
-              type="date"
-              label="Date Issues"
-              style={{ width: '160px' }}
-            />
-            <TextField
-              {...props.register('expireDate')}
-              required
-              size="small"
-              InputLabelProps={{ shrink: true }}
-              type="date"
-              label="Expire Date"
-              style={{ width: '160px' }}
-            />
+            <div className={s.countryNumber}>
+              <Controller
+                control={props.control}
+                name="nationality"
+                render={({ field }) => <CountrySelectDialogs field={field} />}
+              />
+              <TextField
+                {...props.register('number')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Number"
+              />
+            </div>
+            <div className={s.datePlace}>
+              <TextField
+                {...props.register('placeIssues')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Place Issues"
+              />
+              <TextField
+                {...props.register('dateIssues')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                type="date"
+                label="Date Issues"
+              />
+              <TextField
+                {...props.register('expireDate')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                type="date"
+                label="Expire Date"
+              />
+            </div>
           </div>
         </DialogContent>
         <DialogActions>

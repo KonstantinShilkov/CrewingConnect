@@ -5,13 +5,20 @@ import { Grid, IconButton, TextField } from '@mui/material';
 import { UserContext } from '../../context/user-context';
 import Preloader from '../../common/Preloader';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import defaultAvatar from '../../assets/images/defaultAvatar.jpeg';
+import defaultAvatar from '../../assets/images/defaultAvatar.png';
 import { Card } from '@mui/joy';
 import ProfileTable from './ProfileTable';
 
 const Profile = () => {
-  const { currentUserData, isFetching } = useContext(UserContext);
+  const { currentUserData, isFetching, uploadAvatar, avatar } = useContext(UserContext);
   const dayjs = require('dayjs');
+
+  const handleAvatarChange = event => {
+    const file = event.target.files[0];
+    if (file) {
+      uploadAvatar(file);
+    }
+  };
 
   if (isFetching) {
     return (
@@ -116,7 +123,15 @@ const Profile = () => {
                 />
               </div>
               <div className={s.avatar}>
-                <img src={currentUserData.photo || defaultAvatar} className={s.avatar} />
+                <label htmlFor="avatarInput">
+                  <img src={avatar || defaultAvatar} className={s.avatar} />
+                </label>
+                <input
+                  id="avatarInput"
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={handleAvatarChange}
+                />
               </div>
               <div className={s.button}>
                 <NavLink to="/profile/edit/maininfo">

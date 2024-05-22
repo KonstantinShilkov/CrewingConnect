@@ -19,8 +19,8 @@ import AlertDialogSlide from '../../../common/DeleteNotification';
 import SeamanBookIdTableDialog from './SeamanBookIdTableDialog';
 
 const columns = [
-  { id: 'national', label: 'National' },
-  { id: 'number', label: 'Number' },
+  { id: 'national', label: 'National', minWidth: 130 },
+  { id: 'number', label: 'Number', minWidth: 100 },
   { id: 'placeIssues', label: 'Place Issues' },
   { id: 'dateIssues', label: 'Date Issues' },
   { id: 'expireDate', label: 'Expire Date' },
@@ -153,7 +153,7 @@ const SeamanBookIdTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[3, 10, 15]}
+        rowsPerPageOptions={[3]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
