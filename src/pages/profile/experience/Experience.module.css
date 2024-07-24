@@ -5,31 +5,45 @@
   align-self: center;
 }
 
-.newCourseContainer {
+.newExperienceContainer {
   display: flex;
-  flex: 1;
   flex-direction: column;
   min-width: 500px;
   gap: 15px;
   margin-top: 10px;
 }
-.courses {
+
+.vesselNameType {
   display: flex;
   flex: 1;
   width: 100%;
+  gap: 15px;
 }
 
-.courses > div {
+.vesselNameType > div {
   width: 100%;
   flex-grow: 1;
 }
-.remarks {
+.tradeEngine {
   display: flex;
   flex: 1;
   width: 100%;
+  gap: 15px;
 }
 
-.remarks > div {
+.tradeEngine > div {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.companyRank {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 15px;
+}
+
+.companyRank > div {
   width: 100%;
   flex-grow: 1;
 }
@@ -37,6 +51,7 @@
 .date {
   display: flex;
   flex: 1;
+  width: 100%;
   gap: 15px;
 }
 
@@ -44,12 +59,15 @@
   width: 100%;
   flex-grow: 1;
 }
+
 .tableContainer {
   border-radius: 5px;
+  /* margin-top: 52px; */
 }
 .tableHeader {
   background-color: rgba(237, 239, 241, 0.707);
 }
+
 .card {
   width: 875px;
   height: 400px;

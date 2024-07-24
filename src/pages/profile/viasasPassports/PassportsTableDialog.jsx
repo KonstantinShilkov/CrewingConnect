@@ -6,17 +6,26 @@ import { Controller } from 'react-hook-form';
 
 const PassportsTableDialog = props => {
   return (
-    <Dialog open={props.open} onClose={props.handleClose}>
+    <Dialog className={s.dialog} open={props.open} onClose={props.handleClose}>
       <form onSubmit={props.handleSubmit(props.saveButtonClick)}>
         <DialogTitle>Add Passport</DialogTitle>
         <DialogContent>
           <div className={s.newPassportContainer}>
-            <div className={s.countryNumber}>
+            <div className={s.countryPlace}>
               <Controller
                 control={props.control}
                 name="nationality"
                 render={({ field }) => <CountrySelectDialogs field={field} />}
               />
+              <TextField
+                {...props.register('placeIssues')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Place Issues"
+              />
+            </div>
+            <div className={s.number}>
               <TextField
                 {...props.register('number')}
                 required
@@ -25,14 +34,7 @@ const PassportsTableDialog = props => {
                 label="Number"
               />
             </div>
-            <div className={s.datePlace}>
-              <TextField
-                {...props.register('placeIssues')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Place Issues"
-              />
+            <div className={s.date}>
               <TextField
                 {...props.register('dateIssues')}
                 required
@@ -54,7 +56,9 @@ const PassportsTableDialog = props => {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose}>Cancel</Button>
-          <Button type="submit">Add Passport</Button>
+          <Button className={s.addButton} type="submit">
+            Add
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

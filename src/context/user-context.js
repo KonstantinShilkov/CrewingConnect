@@ -12,6 +12,7 @@ import { useSnackbar } from 'notistack';
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { calculateAge, calculateTotalExperienceInDays } from '../utils';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+// import { courses } from '../utils/index'; // This import to be used in case to add a new group of courses to firebase. on the 110line a function
 
 const initialData = {
   isAuth: false,
@@ -29,6 +30,7 @@ function UserContextProvider({ children }) {
   const [currentUserData, setCurrentUserData] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const countriesCollectionRef = doc(db, 'commondata', 'countries');
+  const coursesCollectionRef = doc(db, 'commondata', 'courses');
   const [avatar, setAvatar] = useState();
 
   const onAuthState = () => {
@@ -69,7 +71,6 @@ function UserContextProvider({ children }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
       const user = userCredential.user;
-      // console.log(user);
       setIsAuth(true);
       setDoc(doc(db, 'users', user.uid), {
         email: user.email,
@@ -103,6 +104,16 @@ function UserContextProvider({ children }) {
       console.log(error);
     }
   };
+  // In case to add some additional courses or change existing
+  // uploadCourses to be used in case to add a new group of courses to firebase
+  // const uploadCourses = async () => {
+  //   try {
+  //     await setDoc(coursesCollectionRef, { courses }); // Upload the courses array
+  //     console.log('Courses uploaded successfully');
+  //   } catch (error) {
+  //     console.error('Error uploading courses:', error);
+  //   }
+  // };
 
   const updateMainInfoData = async data => {
     const userDoc = doc(db, 'users', currentUserUid);
@@ -517,6 +528,7 @@ function UserContextProvider({ children }) {
     updateCourseData,
     deleteCourseData,
     countriesCollectionRef,
+    coursesCollectionRef,
     uploadAvatar,
     getAvatar,
     avatar,

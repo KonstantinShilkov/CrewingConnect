@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { useCountries } from './hooks/useCountries';
 import Preloader from './Preloader';
 
-const CountrySelectDialogs = ({ field, initialNationality }) => {
+const CountrySelectDialogs = ({ field }) => {
   const { countries, isFetchingCountries, getCountries } = useCountries();
 
   return (

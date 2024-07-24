@@ -2,7 +2,7 @@ import React from 'react';
 import s from './AskAI.module.css';
 import { useForm } from 'react-hook-form';
 import { IconButton, TextField } from '@mui/material';
-import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
+import MicIcon from '@mui/icons-material/Mic';
 import { useAskAI } from './hooks/useAskAI';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user-context';
@@ -18,12 +18,12 @@ const AskAI = () => {
     formState: { errors },
     reset,
   } = useForm();
+
   const buttonOnClickAsk = data => {
     if (data.question !== '') {
       getAnswer(data);
+      reset();
     }
-
-    reset();
   };
 
   if (isFetching) {
@@ -45,7 +45,7 @@ const AskAI = () => {
             style={{ width: '300px' }}
           />
           <IconButton type="submit">
-            <PsychologyAltIcon />
+            <MicIcon />
           </IconButton>
         </div>
       </form>

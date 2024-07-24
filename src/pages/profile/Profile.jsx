@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import s from './Profile.module.css';
 import { NavLink } from 'react-router-dom';
-import { Grid, IconButton, TextField } from '@mui/material';
+import { Avatar, Grid, IconButton, TextField } from '@mui/material';
 import { UserContext } from '../../context/user-context';
 import Preloader from '../../common/Preloader';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import defaultAvatar from '../../assets/images/defaultAvatar.png';
 import { Card } from '@mui/joy';
 import ProfileTable from './ProfileTable';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const Profile = () => {
   const { currentUserData, isFetching, uploadAvatar, avatar } = useContext(UserContext);
@@ -86,11 +87,11 @@ const Profile = () => {
                   }}
                 />
               </div>
-              <div className={s.availibaleDate}>
+              <div className={s.availableDate}>
                 <TextField
                   size="small"
                   fullWidth
-                  label="Availibale Date"
+                  label="Available Date"
                   style={{ width: '150px' }}
                   value={
                     currentUserData.availableDate
@@ -124,7 +125,7 @@ const Profile = () => {
               </div>
               <div className={s.avatar}>
                 <label htmlFor="avatarInput">
-                  <img src={avatar || defaultAvatar} className={s.avatar} />
+                  <Avatar sx={{ width: 180, height: 208 }} variant="rounded" src={avatar} />
                 </label>
                 <input
                   id="avatarInput"
@@ -132,14 +133,21 @@ const Profile = () => {
                   style={{ display: 'none' }}
                   onChange={handleAvatarChange}
                 />
+                <div className={s.button}>
+                  <NavLink to="/profile/edit/maininfo">
+                    <IconButton size="large">
+                      <EditNoteIcon />
+                    </IconButton>
+                  </NavLink>
+                </div>
               </div>
-              <div className={s.button}>
+              {/* <div className={s.button}>
                 <NavLink to="/profile/edit/maininfo">
                   <IconButton size="large">
                     <EditNoteIcon />
                   </IconButton>
                 </NavLink>
-              </div>
+              </div> */}
             </div>
           </Grid>
           <Grid item xs={12}>

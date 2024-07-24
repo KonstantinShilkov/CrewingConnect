@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './Experince.module.css';
+import s from './Experience.module.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 
 const ExperienceTableDialog = props => {
@@ -9,7 +9,7 @@ const ExperienceTableDialog = props => {
         <DialogTitle>Add Experience</DialogTitle>
         <DialogContent>
           <div className={s.newExperienceContainer}>
-            <div>
+            <div className={s.vesselNameType}>
               <TextField
                 {...props.register('vesselName')}
                 required
@@ -18,28 +18,6 @@ const ExperienceTableDialog = props => {
                 label="Vessel Name"
                 style={{ width: '160px' }}
               />
-            </div>
-            <div>
-              <TextField
-                {...props.register('typeTrade')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Type/kW or Area/DW"
-                style={{ width: '160px' }}
-              />
-            </div>
-            <div>
-              <TextField
-                {...props.register('engineType')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Steam or Motor"
-                style={{ width: '160px' }}
-              />
-            </div>
-            <div>
               <TextField
                 {...props.register('vesselType')}
                 required
@@ -49,7 +27,25 @@ const ExperienceTableDialog = props => {
                 style={{ width: '160px' }}
               />
             </div>
-            <div>
+            <div className={s.tradeEngine}>
+              <TextField
+                {...props.register('typeTrade')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Type/kW or Area/DW"
+                style={{ width: '160px' }}
+              />
+              <TextField
+                {...props.register('engineType')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Steam or Motor"
+                style={{ width: '160px' }}
+              />
+            </div>
+            <div className={s.companyRank}>
               <TextField
                 {...props.register('companyName')}
                 required
@@ -58,8 +54,6 @@ const ExperienceTableDialog = props => {
                 label="Company Name"
                 style={{ width: '160px' }}
               />
-            </div>
-            <div>
               <TextField
                 {...props.register('rank')}
                 required
@@ -69,7 +63,7 @@ const ExperienceTableDialog = props => {
                 style={{ width: '160px' }}
               />
             </div>
-            <div>
+            <div className={s.date}>
               <TextField
                 {...props.register('fromDate')}
                 required
@@ -79,8 +73,6 @@ const ExperienceTableDialog = props => {
                 label="From"
                 style={{ width: '160px' }}
               />
-            </div>
-            <div>
               <TextField
                 {...props.register('tillDate')}
                 required
@@ -95,7 +87,9 @@ const ExperienceTableDialog = props => {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose}>Cancel</Button>
-          <Button type="submit">Add Experience</Button>
+          <Button className={s.addButton} type="submit">
+            Add
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

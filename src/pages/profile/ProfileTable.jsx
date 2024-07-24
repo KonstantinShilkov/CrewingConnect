@@ -49,12 +49,16 @@ const ProfileTable = () => {
 
   return (
     <div className={s.table}>
-      <TableContainer>
+      <TableContainer className={s.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                  className={s.tableHeader}>
                   {column.label}
                 </TableCell>
               ))}

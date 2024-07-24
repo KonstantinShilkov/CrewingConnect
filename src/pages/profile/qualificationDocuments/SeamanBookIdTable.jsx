@@ -10,13 +10,13 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
 import AlertDialogSlide from '../../../common/DeleteNotification';
 import SeamanBookIdTableDialog from './SeamanBookIdTableDialog';
+import AddButton from '../../../common/AddButton';
 
 const columns = [
   { id: 'national', label: 'National', minWidth: 130 },
@@ -102,18 +102,23 @@ const SeamanBookIdTable = () => {
 
   return (
     <div>
-      <div className={s.addSeamanBookButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
-      <TableContainer>
+      <TableContainer className={s.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                  className={s.tableHeader}>
+                  {column.id === 'delete' ? (
+                    <div>
+                      <AddButton handleClickOpen={handleClickOpen} />
+                    </div>
+                  ) : (
+                    column.label
+                  )}
                 </TableCell>
               ))}
             </TableRow>

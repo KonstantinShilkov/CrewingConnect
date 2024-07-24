@@ -11,27 +11,11 @@ const LicensesTableDialog = props => {
         <DialogTitle>Add License</DialogTitle>
         <DialogContent>
           <div className={s.newLicensesContainer}>
-            <div className={s.countryGrade}>
+            <div className={s.nationalPlace}>
               <Controller
                 control={props.control}
                 name="national"
                 render={({ field }) => <CountrySelectDialogs field={field} />}
-              />
-              <TextField
-                {...props.register('gradeOfLicenses')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Grade of Licenses"
-              />
-            </div>
-            <div className={s.numberPlace}>
-              <TextField
-                {...props.register('number')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Number"
               />
               <TextField
                 {...props.register('placeIssues')}
@@ -41,7 +25,14 @@ const LicensesTableDialog = props => {
                 label="Place Issues"
               />
             </div>
-            <div className={s.typeDate}>
+            <div className={s.gradeType}>
+              <TextField
+                {...props.register('gradeOfLicenses')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Grade of Licenses"
+              />
               <TextField
                 {...props.register('licenseType')}
                 required
@@ -49,6 +40,17 @@ const LicensesTableDialog = props => {
                 InputLabelProps={{ shrink: true }}
                 label="Licenses Type (S or M)"
               />
+            </div>
+            <div className={s.number}>
+              <TextField
+                {...props.register('number')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Number"
+              />
+            </div>
+            <div className={s.date}>
               <TextField
                 {...props.register('dateIssues')}
                 required
@@ -70,7 +72,9 @@ const LicensesTableDialog = props => {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose}>Cancel</Button>
-          <Button type="submit">Add Licenses</Button>
+          <Button className={s.addButton} type="submit">
+            Add
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

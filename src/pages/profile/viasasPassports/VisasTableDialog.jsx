@@ -39,7 +39,9 @@ const VisasTableDialog = props => {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose}>Cancel</Button>
-          <Button type="submit">Add Visa</Button>
+          <Button className={s.addButton} type="submit">
+            Add
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

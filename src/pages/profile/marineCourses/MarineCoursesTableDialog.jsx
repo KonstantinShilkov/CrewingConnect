@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './MarineCourses.module.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Controller } from 'react-hook-form';
+import CourseSelectDialogs from '../../../common/CourseSelectDialogs';
 
 const MarineCoursesTableDialog = props => {
   return (
@@ -9,17 +11,24 @@ const MarineCoursesTableDialog = props => {
         <DialogTitle>Add Marine Course</DialogTitle>
         <DialogContent>
           <div className={s.newCourseContainer}>
-            <div>
-              <TextField
-                {...props.register('courseAttended')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Course Attended"
-                style={{ width: '500px' }}
+            <div className={s.courses}>
+              <Controller
+                control={props.control}
+                name="courseAttended"
+                render={({ field }) => <CourseSelectDialogs field={field} />}
               />
             </div>
-            <div>
+            <div className={s.remarks}>
+              <TextField
+                {...props.register('remarks')}
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Remarks"
+                style={{ width: '160px' }}
+              />
+            </div>
+
+            <div className={s.date}>
               <TextField
                 {...props.register('dateIssues')}
                 required
@@ -29,8 +38,6 @@ const MarineCoursesTableDialog = props => {
                 label="Date Attended"
                 style={{ width: '160px' }}
               />
-            </div>
-            <div>
               <TextField
                 {...props.register('expireDate')}
                 size="small"
@@ -40,20 +47,13 @@ const MarineCoursesTableDialog = props => {
                 style={{ width: '160px' }}
               />
             </div>
-            <div>
-              <TextField
-                {...props.register('remarks')}
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Remarks"
-                style={{ width: '160px' }}
-              />
-            </div>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose}>Cancel</Button>
-          <Button type="submit">Add Course</Button>
+          <Button className={s.addButton} type="submit">
+            Add
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

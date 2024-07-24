@@ -11,12 +11,21 @@ const SeamanBookIdTableDialog = props => {
         <DialogTitle>Seaman's Book / Identification Documents</DialogTitle>
         <DialogContent>
           <div className={s.newSeamanBookContainer}>
-            <div className={s.nationalityNumber}>
+            <div className={s.nationalPlace}>
               <Controller
                 control={props.control}
                 name="national"
                 render={({ field }) => <CountrySelectDialogs field={field} />}
               />
+              <TextField
+                {...props.register('placeIssues')}
+                required
+                size="small"
+                InputLabelProps={{ shrink: true }}
+                label="Place Issues"
+              />
+            </div>
+            <div className={s.number}>
               <TextField
                 {...props.register('number')}
                 required
@@ -25,14 +34,8 @@ const SeamanBookIdTableDialog = props => {
                 label="Number"
               />
             </div>
-            <div className={s.datePlace}>
-              <TextField
-                {...props.register('placeIssues')}
-                required
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                label="Place Issues"
-              />
+
+            <div className={s.date}>
               <TextField
                 {...props.register('dateIssues')}
                 required
@@ -54,7 +57,9 @@ const SeamanBookIdTableDialog = props => {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose}>Cancel</Button>
-          <Button type="submit">Add Seaman's book or id</Button>
+          <Button className={s.addButton} type="submit">
+            Add
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

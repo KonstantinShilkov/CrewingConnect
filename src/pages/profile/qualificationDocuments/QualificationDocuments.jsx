@@ -31,8 +31,12 @@ const QualificationDocuments = () => {
       <Card className={s.card}>
         <div className={s.toggleButton}>
           <ToggleButtonGroup value={value} onChange={handleChange}>
-            <Button value="licenses">Licenses </Button>
-            <Button value="seamanbookid">Seafarer's Book/Id</Button>
+            <Button value="licenses" className={s.licensesButton}>
+              Licenses
+            </Button>
+            <Button value="seamanbookid" className={s.seamanbookButton}>
+              Seafarer's Book/Id
+            </Button>
             <Button value="certificates">Qualifications / Certificates</Button>
           </ToggleButtonGroup>
         </div>

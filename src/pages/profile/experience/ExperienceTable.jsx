@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import s from './Experince.module.css';
+import s from './Experience.module.css';
 import {
   Button,
   Table,
@@ -10,7 +10,6 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,16 +17,18 @@ import { pink } from '@mui/material/colors';
 import AlertDialogSlide from '../../../common/DeleteNotification';
 import ExperienceTableDialog from './ExperienceTableDialog';
 import _ from 'lodash';
+import AddButton from '../../../common/AddButton';
+import { calculateTotalExperienceInDays } from '../../../utils';
 
 const columns = [
   { id: 'vesselName', label: 'Vessel Name', minWidth: 100 },
-  { id: 'typeTrade', label: 'Type / kW; Trading/DW', minWidth: 85 },
-  { id: 'engineType', label: 'Type (S/M)', minWidth: 75 },
-  { id: 'vesselType', label: 'Vessel Type' },
-  { id: 'companyName', label: 'Company Name' },
+  { id: 'typeTrade', label: 'Type/Trading', minWidth: 95 },
+  { id: 'engineType', label: 'S / M', minWidth: 55 },
+  { id: 'vesselType', label: 'Vessel' },
+  { id: 'companyName', label: 'Company' },
   { id: 'rank', label: 'Rank' },
-  { id: 'fromDate', label: 'From', minWidth: 85 },
-  { id: 'tillDate', label: 'Till', minWidth: 85 },
+  { id: 'fromDate', label: 'From', minWidth: 75 },
+  { id: 'tillDate', label: 'Till', minWidth: 75 },
   { id: 'delete', label: '' },
 ];
 const createData = (
@@ -91,7 +92,10 @@ const ExperienceTable = () => {
   };
 
   const saveButtonClick = data => {
-    updateExperienceData(data);
+    // updateExperienceData(data);
+    console.log(data);
+    const experienceInDays = calculateTotalExperienceInDays(data.fromDate, data.tillDate);
+    console.log(experienceInDays);
     setOpen(false);
     reset();
   };
@@ -119,24 +123,28 @@ const ExperienceTable = () => {
 
   return (
     <div>
-      <div className={s.addExperienceButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
-      <TableContainer>
+      <TableContainer className={s.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                  className={s.tableHeader}>
+                  {column.id === 'delete' ? (
+                    <div>
+                      <AddButton handleClickOpen={handleClickOpen} />
+                    </div>
+                  ) : (
+                    column.label
+                  )}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {sortedRows.map((row, index) => ( */}
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
               <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                 {columns.map(column => {
@@ -144,7 +152,7 @@ const ExperienceTable = () => {
                   return (
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'delete' ? (
-                        <div className={s.deleteExperineceButton}>
+                        <div>
                           <Button onClick={handleClickOpenDeleteDialog}>
                             <DeleteIcon sx={{ color: pink[500] }} />
                           </Button>

@@ -59,7 +59,7 @@ const ProfileContacts = () => {
                   {...register('mobPhone')}
                   size="small"
                   style={{ width: '247px' }}
-                  label="Mobile Pnone"
+                  label="Mobile Phone"
                   InputLabelProps={{ shrink: true }}
                   placeholder=" + (Country code) number "
                 />
@@ -82,7 +82,7 @@ const ProfileContacts = () => {
                   label="Home Address"
                   InputLabelProps={{ shrink: true }}
                   style={{ width: '510px' }}
-                  placeholder="Country, City, Steet , Apartment "
+                  placeholder="Country, Region, City, Street, Apartment "
                 />
               </div>
               <div className={s.nearestAirport}>
@@ -92,7 +92,7 @@ const ProfileContacts = () => {
                   label="Nearest Airport"
                   InputLabelProps={{ shrink: true }}
                   style={{ width: '247px' }}
-                  placeholder="Country, City, Airport Name or Code Name"
+                  placeholder="Country, Region, City, Airport Name or Code"
                 />
               </div>
               {buttonSaveIsActive && (

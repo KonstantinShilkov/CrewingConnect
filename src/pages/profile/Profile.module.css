@@ -43,14 +43,7 @@
 }
 
 .button {
-  flex: 1;
-  margin-left: 290px;
-}
-.avatar {
-  width: 160px;
-  height: 180px;
-  border-radius: 5px;
-  margin-left: 42px;
+  margin-left: 45px;
 }
 
 .avatarContainer {
@@ -62,6 +55,22 @@
   margin-left: -50px;
 }
 
+.avatar {
+  display: flex;
+  flex: 1;
+  align-items: end;
+  /* width: 160px;
+  height: 180px;
+  border-radius: 5px; */
+  margin-left: 82px;
+}
+
+.tableContainer {
+  border-radius: 5px;
+}
+.tableHeader {
+  background-color: rgba(237, 239, 241, 0.707);
+}
 .card {
   width: 522px;
   height: 580px;

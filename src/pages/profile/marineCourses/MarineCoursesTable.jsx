@@ -10,13 +10,13 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
 import AlertDialogSlide from '../../../common/DeleteNotification';
 import MarineCoursesTableDialog from './MarineCoursesTableDialog';
+import AddButton from '../../../common/AddButton';
 
 const columns = [
   { id: 'courseAttended', label: 'Marine Course Attended' },
@@ -38,19 +38,24 @@ const MarineCoursesTable = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const dayjs = require('dayjs');
 
+  const formatDate = date => {
+    return date && dayjs(date).isValid() ? dayjs(date).format('DD-MM-YYYY') : '';
+  };
+
   useEffect(() => {
     if (currentUserData && currentUserData.courses) {
       const rows = currentUserData.courses.map((course, index) =>
         createData(
           course.courseAttended,
           dayjs(course.dateIssues).format('DD-MM-YYYY'),
-          dayjs(course.expireDate).format('DD-MM-YYYY'),
+          formatDate(course.expireDate),
           course.remarks,
           course.id,
           index
         )
       );
       setRows(rows);
+      console.log(currentUserData.courses);
     }
   }, [currentUserData]);
 
@@ -59,6 +64,7 @@ const MarineCoursesTable = () => {
     register,
     reset,
     formState: { errors },
+    control,
   } = useForm();
 
   const handleChangePage = (event, newPage) => {
@@ -72,6 +78,7 @@ const MarineCoursesTable = () => {
 
   const saveButtonClick = data => {
     updateCourseData(data);
+    console.log(data);
     setOpen(false);
     reset();
   };
@@ -99,18 +106,23 @@ const MarineCoursesTable = () => {
 
   return (
     <div>
-      <div className={s.addCourseButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
-      <TableContainer>
+      <TableContainer className={s.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                  className={s.tableHeader}>
+                  {column.id === 'delete' ? (
+                    <div>
+                      <AddButton handleClickOpen={handleClickOpen} />
+                    </div>
+                  ) : (
+                    column.label
+                  )}
                 </TableCell>
               ))}
             </TableRow>
@@ -150,7 +162,7 @@ const MarineCoursesTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[3, 10, 15]}
+        rowsPerPageOptions={[3]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
@@ -165,6 +177,7 @@ const MarineCoursesTable = () => {
         handleSubmit={handleSubmit}
         saveButtonClick={saveButtonClick}
         register={register}
+        control={control}
       />
     </div>
   );

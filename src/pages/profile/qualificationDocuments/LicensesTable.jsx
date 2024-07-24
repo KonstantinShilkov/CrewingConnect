@@ -10,22 +10,22 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../context/user-context';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
 import AlertDialogSlide from '../../../common/DeleteNotification';
 import LicensesTableDialog from './LicensesTableDialog';
+import AddButton from '../../../common/AddButton';
 
 const columns = [
-  { id: 'national', label: 'National', minWidth: 130 },
-  { id: 'gradeOfLicenses', label: 'Grade of Licenses', minWidth: 120 },
-  { id: 'licenseType', label: 'Type (S/M)', minWidth: 75 },
+  { id: 'national', label: 'National', minWidth: 95 },
+  { id: 'gradeOfLicenses', label: 'Grade', minWidth: 95 },
+  { id: 'licenseType', label: 'S / M', minWidth: 35 },
   { id: 'number', label: 'Number', minWidth: 100 },
   { id: 'placeIssues', label: 'Place Issues', minWidth: 100 },
-  { id: 'dateIssues', label: 'Date Issues', minWidth: 85 },
-  { id: 'expireDate', label: 'Expire Date', minWidth: 85 },
+  { id: 'dateIssues', label: 'Date Issues', minWidth: 75 },
+  { id: 'expireDate', label: 'Expire Date', minWidth: 75 },
   { id: 'delete', label: '' },
 ];
 const createData = (
@@ -115,18 +115,23 @@ const LicensesTable = () => {
 
   return (
     <div>
-      <div className={s.addLicensesButton}>
-        <Button onClick={handleClickOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div>
-      <TableContainer>
+      <TableContainer className={s.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                  className={s.tableHeader}>
+                  {column.id === 'delete' ? (
+                    <div>
+                      <AddButton handleClickOpen={handleClickOpen} />
+                    </div>
+                  ) : (
+                    column.label
+                  )}
                 </TableCell>
               ))}
             </TableRow>

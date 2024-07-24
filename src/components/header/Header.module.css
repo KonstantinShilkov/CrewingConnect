@@ -7,9 +7,10 @@
   display: flex;
   flex: 1;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: auto;
   gap: 15px;
-  margin: 14px 24px;
+  margin: 5px 15px;
 }
 
 .hiddenContainer {
@@ -32,14 +33,19 @@
 
 .wrapper {
   display: flex;
-  /* height: 60px; */
-  background-color: rgb(227, 228, 238);
+  background-color: rgba(124, 171, 194, 0.506);
   align-items: self-end;
   border-bottom: 1px solid black;
-  /* width: 100wv; */
+  min-width: 910px;
 }
 
 .emailLogout {
   display: flex;
   gap: 26px;
+}
+
+.nameSurname {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }

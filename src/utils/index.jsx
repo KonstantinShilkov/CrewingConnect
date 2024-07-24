@@ -22,6 +22,7 @@ export const calculateTotalExperienceInDays = (fromDate, tillDate) => {
     daysInFirstMonth = fromDate.endOf('month').date() - fromDate.date() + 1;
   }
   totalDays += daysInFirstMonth;
+  console.log(totalDays);
 
   const daysInLastMonth = tillDate.date();
   totalDays += daysInLastMonth;
@@ -30,11 +31,17 @@ export const calculateTotalExperienceInDays = (fromDate, tillDate) => {
   if (fromDate.date() !== 1) {
     fromDate = fromDate.add(1, 'month').startOf('month');
   }
-  if (tillDate.date() !== tillDate.endOf('month').date()) {
-    tillDate = tillDate.startOf('month');
-  } else {
-    tillDate = tillDate.add(1, 'month').startOf('month');
-  }
+  // if (tillDate.date() !== tillDate.endOf('month').date()) {
+  //   tillDate = tillDate.startOf('month');
+  // tillDate = tillDate.subtract(1, 'month').endOf('month');
+
+  // tillDate = tillDate.startOf('month');
+  // }
+  // } else {
+  //   tillDate = tillDate.add(1, 'month').startOf('month');
+  // }
+  console.log(tillDate);
+  console.log(fromDate);
 
   let fullMonths = tillDate.diff(fromDate, 'month');
   console.log(fullMonths);
@@ -76,3 +83,8 @@ export const updatedFilteredExperienceInDays = experienceInDays => {
 
 //   return totalDays;
 // };
+
+// This array to be used in case to add a new group of courses
+// export const courses = [
+//   { course: 'any new course to upload on the Firebase Store' },
+// ];

@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import s from './Experince.module.css';
+import React, { useContext } from 'react';
+import s from './Experience.module.css';
 import { Card } from '@mui/joy';
 import { UserContext } from '../../../context/user-context';
 import Preloader from '../../../common/Preloader';
