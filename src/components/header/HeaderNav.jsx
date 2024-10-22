@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Header.module.css';
 import { UserContext } from '../../context/user-context';
+import AccountMenu from '../AccountMenu';
 
 const HeaderNav = () => {
-  const { logout, isAuth, currentUserEmail } = useContext(UserContext);
+  const { logout, isAuth, currentUserData, isFetching, avatar } = useContext(UserContext);
 
   return (
     <nav className={s.navContainer}>
@@ -21,23 +22,22 @@ const HeaderNav = () => {
           style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
           Contacts
         </NavLink>
+        <NavLink
+          className={s.item}
+          to="askai"
+          style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
+          Ask AI
+        </NavLink>
       </div>
 
       {isAuth ? (
-        <div className={s.emailLogout}>
-          <NavLink
-            className={s.item}
-            to="profile"
-            style={({ isActive }) => (isActive ? { color: 'SteelBlue' } : { color: 'inherit' })}>
-            {currentUserEmail}
-          </NavLink>
-
-          <NavLink
-            className={s.item}
-            onClick={logout}
-            style={({ isActive }) => (isActive ? { color: 'inherit' } : { color: 'inherit' })}>
-            Logout
-          </NavLink>
+        <div className={s.profileMenu}>
+          <AccountMenu
+            logout={logout}
+            currentUserData={currentUserData}
+            isFetching={isFetching}
+            avatar={avatar}
+          />
         </div>
       ) : (
         <NavLink

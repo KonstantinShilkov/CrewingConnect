@@ -16,7 +16,6 @@ const ProfileNavbar = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
     navigate(`/profile/edit/${newValue}`);
   };
   return (
@@ -31,7 +30,10 @@ const ProfileNavbar = () => {
             aria-label="profile tabs">
             <Tab value="maininfo" label="Main Info" />
             <Tab value="contacts" label="Contacts" />
-            <Tab value="visaspasports" label="Visas/Pasports" />
+            <Tab value="visaspassports" label="Visas/Passports" />
+            <Tab value="qualificationdoc" label="Qualification Docs" />
+            <Tab value="experience" label="Sea Experience" />
+            <Tab value="courses" label="Marine Courses" />
           </Tabs>
         </Box>
       </div>

@@ -1,16 +1,25 @@
 import React, { useContext } from 'react';
 import s from './Profile.module.css';
 import { NavLink } from 'react-router-dom';
-import { Grid, IconButton, TextField } from '@mui/material';
+import { Avatar, Grid, IconButton, TextField } from '@mui/material';
 import { UserContext } from '../../context/user-context';
 import Preloader from '../../common/Preloader';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import defaultAvatar from '../../assets/images/defaultAvatar.jpeg';
+import defaultAvatar from '../../assets/images/defaultAvatar.png';
 import { Card } from '@mui/joy';
 import ProfileTable from './ProfileTable';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const Profile = () => {
-  const { currentUserData, isFetching } = useContext(UserContext);
+  const { currentUserData, isFetching, uploadAvatar, avatar } = useContext(UserContext);
+  const dayjs = require('dayjs');
+
+  const handleAvatarChange = event => {
+    const file = event.target.files[0];
+    if (file) {
+      uploadAvatar(file);
+    }
+  };
 
   if (isFetching) {
     return (
@@ -78,13 +87,17 @@ const Profile = () => {
                   }}
                 />
               </div>
-              <div className={s.availibaleDate}>
+              <div className={s.availableDate}>
                 <TextField
                   size="small"
                   fullWidth
-                  label="Availibale Date"
+                  label="Available Date"
                   style={{ width: '150px' }}
-                  value={currentUserData.availableDate ? currentUserData.availableDate : ''}
+                  value={
+                    currentUserData.availableDate
+                      ? dayjs(currentUserData.availableDate).format('DD.MM.YYYY')
+                      : ''
+                  }
                   InputLabelProps={{ shrink: true }}
                   InputProps={{
                     readOnly: true,
@@ -111,15 +124,30 @@ const Profile = () => {
                 />
               </div>
               <div className={s.avatar}>
-                <img src={currentUserData.photo || defaultAvatar} className={s.avatar} />
+                <label htmlFor="avatarInput">
+                  <Avatar sx={{ width: 180, height: 208 }} variant="rounded" src={avatar} />
+                </label>
+                <input
+                  id="avatarInput"
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={handleAvatarChange}
+                />
+                <div className={s.button}>
+                  <NavLink to="/profile/edit/maininfo">
+                    <IconButton size="large">
+                      <EditNoteIcon />
+                    </IconButton>
+                  </NavLink>
+                </div>
               </div>
-              <div className={s.button}>
+              {/* <div className={s.button}>
                 <NavLink to="/profile/edit/maininfo">
                   <IconButton size="large">
                     <EditNoteIcon />
                   </IconButton>
                 </NavLink>
-              </div>
+              </div> */}
             </div>
           </Grid>
           <Grid item xs={12}>

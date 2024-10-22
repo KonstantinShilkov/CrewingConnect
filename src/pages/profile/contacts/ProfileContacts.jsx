@@ -19,6 +19,13 @@ const ProfileContacts = () => {
   } = useForm();
 
   useEffect(() => {
+    setValue('mobPhone', currentUserData.mobPhone);
+    setValue('email', currentUserData.email);
+    setValue('homeAddress', currentUserData.homeAddress);
+    setValue('nearestAirport', currentUserData.nearestAirport);
+  }, [setValue]);
+
+  useEffect(() => {
     if (
       watch().mobPhone !== currentUserData.mobPhone ||
       watch().email !== currentUserData.email ||
@@ -30,13 +37,6 @@ const ProfileContacts = () => {
       setButtonSaveIsActive(false);
     }
   }, [watch()]);
-
-  useEffect(() => {
-    setValue('mobPhone', currentUserData.mobPhone);
-    setValue('email', currentUserData.email);
-    setValue('homeAddress', currentUserData.homeAddress);
-    setValue('nearestAirport', currentUserData.nearestAirport);
-  }, [setValue, currentUserData]);
 
   const saveButtonClick = data => {
     updateContactsData(data);
@@ -55,35 +55,34 @@ const ProfileContacts = () => {
           <Grid item xs={12}>
             <form onSubmit={handleSubmit(saveButtonClick)}>
               <div className={s.phoneEmail}>
-                <div>
-                  <TextField
-                    {...register('mobPhone')}
-                    size="small"
-                    style={{ width: '247px' }}
-                    label="Mobile Pnone"
-                    placeholder=" + (Country code) number "
-                  />
-                </div>
-                <div>
-                  <TextField
-                    {...register('email')}
-                    size="small"
-                    style={{ width: '247px' }}
-                    label="Email"
-                    type="email"
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </div>
+                <TextField
+                  {...register('mobPhone')}
+                  size="small"
+                  style={{ width: '247px' }}
+                  label="Mobile Phone"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder=" + (Country code) number "
+                />
+                <TextField
+                  {...register('email')}
+                  size="small"
+                  style={{ width: '247px' }}
+                  label="Email"
+                  type="email"
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
               </div>
               <div className={s.homeAddress}>
                 <TextField
                   {...register('homeAddress')}
                   size="small"
                   label="Home Address"
+                  InputLabelProps={{ shrink: true }}
                   style={{ width: '510px' }}
-                  placeholder="Country, City, Steet , Apartment "
+                  placeholder="Country, Region, City, Street, Apartment "
                 />
               </div>
               <div className={s.nearestAirport}>
@@ -91,8 +90,9 @@ const ProfileContacts = () => {
                   {...register('nearestAirport')}
                   size="small"
                   label="Nearest Airport"
+                  InputLabelProps={{ shrink: true }}
                   style={{ width: '247px' }}
-                  placeholder="Country, City, Airport Name or Code Name"
+                  placeholder="Country, Region, City, Airport Name or Code"
                 />
               </div>
               {buttonSaveIsActive && (

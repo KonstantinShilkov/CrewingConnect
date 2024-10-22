@@ -1,0 +1,133 @@
+.preloader {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-self: center;
+}
+
+.addLicensesButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+  margin-right: 17px;
+}
+
+.addSeamanBookButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+  margin-right: 49px;
+}
+
+.addQualificationCertificateButton {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+  margin-right: 53px;
+}
+
+.newLicensesContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  gap: 15px;
+  margin-top: 10px;
+}
+.nationalPlace {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 15px;
+}
+
+.nationalPlace > div {
+  width: 100%;
+  flex-grow: 1;
+}
+.gradeType {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 15px;
+}
+
+.gradeType > div {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.date {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 15px;
+}
+
+.date > div {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.number {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.number > div {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.newSeamanBookContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.newQualificationCertificateContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  gap: 15px;
+  margin-top: 10px;
+}
+.qualificationPlace {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 15px;
+}
+.qualificationPlace > div {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.toggleButton {
+  display: flex;
+  justify-content: center;
+}
+
+.licensesButton {
+  width: 201px;
+}
+.seamanbookButton {
+  width: 201px;
+}
+.tableContainer {
+  border-radius: 5px;
+}
+.tableHeader {
+  background-color: rgba(237, 239, 241, 0.707);
+}
+.card {
+  height: 400px;
+  width: 875px;
+}
+
+.addButton {
+  width: 71px;
+  margin-right: 15px;
+}

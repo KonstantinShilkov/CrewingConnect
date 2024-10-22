@@ -1,9 +1,3 @@
-.preloader {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-self: center;
-}
 .contactsContainer {
   display: flex;
 }
@@ -11,30 +5,50 @@
 .phoneEmail {
   display: flex;
   flex: 1;
-  gap: 16px;
-  margin: 15px;
+  width: 100%;
+  width: calc(100% - 40px);
+  gap: 30px;
+  margin: 20px;
+}
+
+.phoneEmail > div {
+  flex-grow: 1;
 }
 
 .homeAddress {
   display: flex;
   flex: 1;
-  margin: 15px;
+  width: 100%;
+  width: calc(100% - 40px);
+  gap: 30px;
+  margin: 20px;
 }
+.homeAddress > div {
+  flex-grow: 1;
+}
+
 .nearestAirport {
   display: flex;
   flex: 1;
-  margin: 15px;
+  width: 100%;
+  width: calc(100% - 40px);
+  gap: 30px;
+  margin: 20px;
+}
+
+.nearestAirport > div {
+  flex-grow: 1;
 }
 
 .button {
   display: flex;
   flex: 1;
   justify-content: end;
-  margin-right: 15px;
-  margin-top: 190px;
+  margin-right: 20px;
+  margin-top: 175px;
 }
 
 .card {
-  width: 538px;
   height: 400px;
+  width: 875px;
 }
