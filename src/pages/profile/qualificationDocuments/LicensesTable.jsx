@@ -92,8 +92,8 @@ const LicensesTable = () => {
     reset();
   };
 
-  const handleDelete = passportId => {
-    deleteLicensesData(passportId);
+  const handleDelete = licenseId => {
+    deleteLicensesData(licenseId);
     setOpenDeleteDialog(false);
   };
   const handleClickOpen = () => {

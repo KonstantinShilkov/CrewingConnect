@@ -44,9 +44,9 @@ const AskAI = () => {
             InputLabelProps={{ shrink: true }}
             style={{ width: '300px' }}
           />
-          <IconButton type="submit">
+          {/* <IconButton type="submit">
             <MicIcon />
-          </IconButton>
+          </IconButton> */}
         </div>
       </form>
       {isFetchingAnswer ? (

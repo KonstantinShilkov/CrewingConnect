@@ -1,3 +1,5 @@
+# For the proper start you have start node server (commad: node server.js), (to be able use page Ask AI with yandex gpt) and after (command : npm start )
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
