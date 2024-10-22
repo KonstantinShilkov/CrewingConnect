@@ -11,6 +11,7 @@
 .app-wrapper-content {
   display: flex;
   flex: 1;
+  justify-content: center;
   background-color: rgb(165, 214, 244);
   min-width: 910px;
 }

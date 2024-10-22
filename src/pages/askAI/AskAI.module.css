@@ -13,6 +13,11 @@
   align-items: center;
 }
 
+.inputTextField {
+  border-radius: 6px;
+  background-color: rgb(168, 214, 242);
+}
+
 .answerCard {
   display: flex;
   flex: 1;
